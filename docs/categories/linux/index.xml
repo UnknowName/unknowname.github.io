@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on UnknowName</title>
+    <link>http://www.unknowname.cn/categories/linux/</link>
+    <description>Recent content in Linux on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 07 Oct 2021 16:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu命令速记</title>
+      <link>http://www.unknowname.cn/post/linux/ubuntu/</link>
+      <pubDate>Thu, 07 Oct 2021 16:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/ubuntu/</guid>
+      <description>CentOS官方已停止维护了，作为曾经的Linux服务器操作系统的霸主也不免有衰落的这一天。以后，就要和Ubuntu说你好了。 系统管理 搜索包</description>
+    </item>
+    
+    <item>
+      <title>如何优雅的扩展Linux磁盘</title>
+      <link>http://www.unknowname.cn/post/linux/aliyun-disk-extend/</link>
+      <pubDate>Tue, 18 May 2021 14:45:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/aliyun-disk-extend/</guid>
+      <description>前提条件 对于数据库的应用来说，扩展磁盘是免不了会发生的事情。但是数据库一般都是重要的业务组件，很可能不能接受停机的情况发生。那么在前期规划就</description>
+    </item>
+    
+    <item>
+      <title>基于bind的DNS主备服务搭建指南</title>
+      <link>http://www.unknowname.cn/post/linux/named/</link>
+      <pubDate>Fri, 19 Mar 2021 18:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/named/</guid>
+      <description>基础概念 正解 将主机名解析为IP地址。如将www.qq.com解析至1.1.1.1。这是一般应用场景 反解 将IP解析为主机名。如上面将1.1.1</description>
+    </item>
+    
+    <item>
+      <title>Bash/Shell语法速览与技巧</title>
+      <link>http://www.unknowname.cn/post/linux/bash/</link>
+      <pubDate>Tue, 02 Mar 2021 17:45:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/bash/</guid>
+      <description>Shell基础语法 循环 while循环 while死循环 1 2 3 4 5 while true do echo &amp;#34;whle loop&amp;#34; sleep 10 done for循环 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 # 范围循环 for</description>
+    </item>
+    
+    <item>
+      <title>本地Repo仓库搭建</title>
+      <link>http://www.unknowname.cn/post/linux/linix-repo/</link>
+      <pubDate>Fri, 26 Feb 2021 09:31:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/linix-repo/</guid>
+      <description>将本地系统的/etc/yum.repos.d/目录中的yum源同步至本地，这样本地局域网就可以使用内网的yum源，加快速度 安装工具 1 yum install nginx yum-utils</description>
+    </item>
+    
+    <item>
+      <title>NGINX配置文件详解</title>
+      <link>http://www.unknowname.cn/post/nginx/nginx-conf/</link>
+      <pubDate>Fri, 26 Feb 2021 09:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/nginx-conf/</guid>
+      <description>此文罗列下主要配置文件的参数含义 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54</description>
+    </item>
+    
+    <item>
+      <title>Rsync 同步文件</title>
+      <link>http://www.unknowname.cn/post/linux/linux-rsync/</link>
+      <pubDate>Fri, 26 Feb 2021 08:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/linux-rsync/</guid>
+      <description>rsync 同步不同主机的文件时，一个作为服务端，另一个作为客户端。在服务端，一般称为rsyncd 服务端 安装 1 yum install rsync -y 准备配置文件/etc/rsync</description>
+    </item>
+    
+    <item>
+      <title>OpenResty基于Lua依据IP简单灰度</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-lua-backend/</link>
+      <pubDate>Fri, 25 Dec 2020 19:43:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-lua-backend/</guid>
+      <description>需求: 根据不同IP返回不同后端，实现一个简单版的一个灰度发布功能 使用到的模块 https://github.com/openresty/lua-nginx-module#synopsis 该模块已内置于OpenResty可以直接使用 方法一 OpenRe</description>
+    </item>
+    
+    <item>
+      <title>OpenResty基于Lua实现根据HTTP头限速</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-lua-limit/</link>
+      <pubDate>Mon, 21 Dec 2020 09:37:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-lua-limit/</guid>
+      <description>OpenResty简要介绍 引用官方一段介绍: OpenResty® 是一个基于 Nginx 与 Lua 的高性能 Web 平台，其内部集成了大量精良的 Lua 库、第三方模块以及大</description>
+    </item>
+    
+    <item>
+      <title>OpenResty动态后端热加载</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-upsync-backend/</link>
+      <pubDate>Mon, 23 Nov 2020 12:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-upsync-backend/</guid>
+      <description>使用到的模块: https://github.com/weibocom/nginx-upsync-module 通过第三方注册中心(Etcd/Consul)，NGINX/OpenResty从第三方拿后端信息，实现同步。该模块在修改后端注</description>
+    </item>
+    
+    <item>
+      <title>OpenResty配合GeoIP2识别客户端所在城市</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-geoip2/</link>
+      <pubDate>Tue, 27 Oct 2020 09:31:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-geoip2/</guid>
+      <description>GeoIP数据太老，不能识别城市了，新项目升级为GeoIP2。要下载免费数据库文件，需要在官网进行注册。 用到的开源项目 https://github.com/maxmind/libmaxminddb https://github.com/leev/ngx_http_geoip2_module 免费的城市与国家数</description>
+    </item>
+    
+    <item>
+      <title>OpenResty后端HTTP健康检查</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-upstream-check/</link>
+      <pubDate>Fri, 23 Oct 2020 12:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-upstream-check/</guid>
+      <description>使用到的模块: https://github.com/openresty/lua-resty-upstream-healthcheck NGINX默认自带的健康检查仅仅是检查后端服务器的端口（TCP层）是不是通的，应用层（HTTP）的异常并不能被检测到。 1 2 3</description>
+    </item>
+    
+    <item>
+      <title>LDAP Replication同步</title>
+      <link>http://www.unknowname.cn/post/ldap/ldap-repl/</link>
+      <pubDate>Sun, 01 Mar 2020 09:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ldap/ldap-repl/</guid>
+      <description>原文: http://www.openldap.org/doc/admin24/replication.html 基础 OpenLDAP复制基于syncrepl进程。它有两个角色。一个是provider,另一个是consumer。以下是配置Prov</description>
+    </item>
+    
+    <item>
+      <title>LDAP SUDO 基本的schema模板解释</title>
+      <link>http://www.unknowname.cn/post/ldap/ldap-schema/</link>
+      <pubDate>Thu, 27 Feb 2020 22:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ldap/ldap-schema/</guid>
+      <description>Sudo LDAP条目Schema解析 1 2 3 4 5 6 dn: cn=defaults,ou=SUDOers,dc=xueshandai,dc=com objectClass: top objectClass: sudoRole cn: defaults description: Default sudoOption&amp;#39;s go here sudoOption: env_keep+=SSH_AUTH_SOCKSUDO 一个sudoRole就是一个LDAP中的sudo用户。默认的sudo</description>
+    </item>
+    
+    <item>
+      <title>Linux使用LDAP认证</title>
+      <link>http://www.unknowname.cn/post/ldap/ldap-centos/</link>
+      <pubDate>Thu, 27 Feb 2020 21:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ldap/ldap-centos/</guid>
+      <description>Ubuntu 有一个坑，因为Ubuntu默认是不让ROOT登陆的。所发，新用户登陆进系统只有一般权限。又因为Ubuntu默认预安装的sudo程序是没有加</description>
+    </item>
+    
+    <item>
+      <title>LDAP简介</title>
+      <link>http://www.unknowname.cn/post/ldap/ldap-init/</link>
+      <pubDate>Thu, 27 Feb 2020 20:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ldap/ldap-init/</guid>
+      <description>LDAP可以看成是一个目录服务 完整条目解读: dn：cn=cc,ou=imcuser-test-ld,dc=zhjdtest,dc=com LD</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>windows on UnknowName</title>
+    <link>http://www.unknowname.cn/categories/windows/</link>
+    <description>Recent content in windows on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 01 Nov 2021 16:40:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Windows清理大文件内容</title>
+      <link>http://www.unknowname.cn/post/windows/clean-file-null/</link>
+      <pubDate>Mon, 01 Nov 2021 16:40:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/windows/clean-file-null/</guid>
+      <description>Linux环境下，清理大文件可以用cat /dev/null &amp;gt; filename重定向，没想到Windows也是支持类似的命令，特记录下 在Powershell命</description>
+    </item>
+    
+  </channel>
+</rss>

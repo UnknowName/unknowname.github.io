@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>MySQL分区总结 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="MySQL分区" /><meta name="keywords" content="MySQL分区, MySQL Partion" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/database/mysql/mysql-partion/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="MySQL分区总结" />
+<meta property="og:description" content="MySQL分区" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/database/mysql/mysql-partion/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-03-30T20:32:11&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-30T20:32:11&#43;08:00" />
+
+<meta itemprop="name" content="MySQL分区总结">
+<meta itemprop="description" content="MySQL分区"><meta itemprop="datePublished" content="2021-03-30T20:32:11&#43;08:00" />
+<meta itemprop="dateModified" content="2021-03-30T20:32:11&#43;08:00" />
+<meta itemprop="wordCount" content="1980">
+<meta itemprop="keywords" content="MySQL," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MySQL分区总结"/>
+<meta name="twitter:description" content="MySQL分区"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">MySQL分区总结</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-03-30 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> Database </a>
+            </div>
+          <span class="more-meta"> 约 1980 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#前提">前提</a>
+          <ul>
+            <li><a href="#分区表的限制">分区表的限制</a></li>
+          </ul>
+        </li>
+        <li><a href="#mysql支持的分区模式"><code>MySQL</code>支持的分区模式</a>
+          <ul>
+            <li><a href="#range模式"><code>RANGE</code>模式</a></li>
+            <li><a href="#list模式基于散列模式"><code>LIST</code>模式。基于散列模式</a></li>
+            <li><a href="#hash模式"><code>HASH</code>模式</a></li>
+            <li><a href="#linear-hash"><code>LINEAR HASH</code></a></li>
+            <li><a href="#key"><code>Key</code></a></li>
+            <li><a href="#columns"><code>COLUMNS</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#分区的管理">分区的管理</a>
+          <ul>
+            <li><a href="#为分区表增加分区">为分区表增加分区</a></li>
+            <li><a href="#删除分区">删除分区</a></li>
+            <li><a href="#查看分区表的相关信息">查看分区表的相关信息</a></li>
+            <li><a href="#未分区与分区之间的数据转移">未分区与分区之间的数据转移</a></li>
+          </ul>
+        </li>
+        <li><a href="#子分区">子分区</a></li>
+        <li><a href="#各种分区对null值的差异与及分区分配">各种分区对<code>NULL</code>值的差异与及分区分配</a>
+          <ul>
+            <li><a href="#range"><code>RANGE</code></a></li>
+            <li><a href="#list"><code>LIST</code></a></li>
+            <li><a href="#hash"><code>HASH</code></a></li>
+            <li><a href="#key-1"><code>KEY</code></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="前提">前提</h2>
+<ul>
+<li>检查是否打开分区功能</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s2">&#34;%partition%&#34;</span><span class="err">\</span><span class="k">G</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>为<code>1</code>或<code>YES</code>表示打开</p>
+<h3 id="分区表的限制">分区表的限制</h3>
+<ul>
+<li>
+<p>一个表最多只能有1024个分区</p>
+</li>
+<li>
+<p>如果分区字段中有主键或者唯一索引的列，那么所有主键列和唯一索引列都必须包含进来</p>
+</li>
+<li>
+<p>分区表中无法使用外键约束</p>
+</li>
+</ul>
+<h2 id="mysql支持的分区模式"><code>MySQL</code>支持的分区模式</h2>
+<h3 id="range模式"><code>RANGE</code>模式</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">t</span><span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">)</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span> 
+<span class="n">partition</span> <span class="k">by</span> <span class="n">range</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>  <span class="p">(</span>
+<span class="n">partition</span> <span class="n">p0</span>  <span class="k">values</span> <span class="k">less</span> <span class="k">than</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+<span class="n">partition</span> <span class="n">p1</span> <span class="k">values</span> <span class="k">less</span> <span class="k">than</span><span class="p">(</span><span class="mi">40</span><span class="p">))</span>
+<span class="n">partition</span> <span class="n">p2</span> <span class="k">values</span> <span class="k">less</span> <span class="k">than</span> <span class="k">maxvalue</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其他说明:</p>
+<ul>
+<li>
+<p>分区表<code>p0</code>只能保存<code>id</code>值小于<code>20</code>。<code>p1</code>是大于<code>20</code>小于<code>40</code></p>
+</li>
+<li>
+<p><code>MAXVALUE</code>，表示正无穷大。所有大于<code>40</code>的值都会放入该分区</p>
+</li>
+<li>
+<p>一般<code>RANGE</code>分区用于<code>DATETIME</code>列的数据。而且只对<code>YEAR()</code>,<code>TO_DAYS(</code>),<code>TO_SECONDS()</code>,<code>UNIX_TIMESTAMP()</code>这类函数进行了优化选择（避免全分区扫描）</p>
+</li>
+</ul>
+<h3 id="list模式基于散列模式"><code>LIST</code>模式。基于散列模式</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">test</span><span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">,</span><span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span> 
+<span class="n">partition</span> <span class="k">by</span> <span class="n">list</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="p">(</span>
+<span class="n">partition</span> <span class="n">p0</span> <span class="k">values</span> <span class="k">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span>
+<span class="n">partition</span> <span class="n">p1</span> <span class="k">values</span> <span class="k">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">));</span>  
+</code></pre></td></tr></table>
+</div>
+</div><p>说明:</p>
+<ul>
+<li>注意，使用上面语句分区后，只能存储<code>0</code>-<code>9</code>的数字。因为只定义了这些</li>
+</ul>
+<h3 id="hash模式"><code>HASH</code>模式</h3>
+<p>尽量将数据均匀地分布到预先定义的各个分区中。保证各分区的数据量大致都一样。基于将要进行哈希分区的列值指定一个列值或表达式，以及指定被分区的表将要分割成的分区数量。</p>
+<p>有两种创建方式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="n">table_hash</span><span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">,</span><span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
+<span class="n">partition</span> <span class="k">by</span> <span class="n">hash</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="n">partitions</span> <span class="mi">4</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>或者</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">t_hash</span><span class="p">(</span><span class="n">a</span> <span class="nb">int</span><span class="p">,</span><span class="n">b</span> <span class="n">datetime</span><span class="p">)</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span> 
+<span class="n">partition</span> <span class="k">by</span> <span class="n">hash</span><span class="p">(</span><span class="k">YEAR</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="n">partitions</span> <span class="mi">4</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面的语句表示根据年份<code>HASH</code>，分为四个表</p>
+<h3 id="linear-hash"><code>LINEAR HASH</code></h3>
+<p>语法同<code>HASH</code>一样，将关键字修改为<code>liner hash</code>即可。优点是增加、删除、合并分区将变得更加快捷。缺点在于同HASH对比，数据没前者分布均匀。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">t_linear_hash</span><span class="p">(</span><span class="n">a</span> <span class="nb">int</span><span class="p">,</span><span class="n">b</span> <span class="n">datetime</span><span class="p">)</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span>
+<span class="n">partition</span> <span class="k">by</span> <span class="n">linear</span> <span class="n">hash</span><span class="p">(</span><span class="k">YEAR</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="n">partition</span> <span class="mi">4</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="key"><code>Key</code></h3>
+<p><code>Key</code>分区和<code>HASH</code>分区相似，不同之处在于<code>HASH</code>分区使用用户定义的函数进行分区。<code>key</code>分区使用数据库提供的函数进行分区。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">t_key</span><span class="p">(</span><span class="n">a</span> <span class="nb">int</span><span class="p">,</span><span class="n">b</span> <span class="n">datetime</span><span class="p">)</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span>
+<span class="n">partition</span> <span class="k">by</span> <span class="k">key</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">partitions</span> <span class="mi">4</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="columns"><code>COLUMNS</code></h3>
+<p>前面指定分区的列值数据类型须为整型。如果不是整型需要使用函数转化，如将<code>datetime</code>通过<code>YEAR()</code>转化。<code>COLUMNS</code>可以直接使用非整型的数据进行分区。<code>RANGE COLUMNS</code>对多个列的值进行分区。</p>
+<p>支持的数据类型多:</p>
+<ul>
+<li>整型除<code>FLOAT DECIMAL</code>都支持</li>
+<li>日期类型除<code>DATE</code>和<code>DATETIME</code></li>
+<li>其余不支持字符串除<code>BLOB</code>和<code>TEXT</code>不支持</li>
+<li>其他支持</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">t_columns_range</span><span class="p">(</span><span class="n">a</span> <span class="nb">int</span><span class="p">,</span><span class="n">b</span> <span class="n">datetime</span><span class="p">,</span><span class="n">d</span> <span class="n">datetime</span><span class="p">)</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span>
+<span class="n">partition</span> <span class="k">by</span> <span class="n">range</span> <span class="n">columns</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">d</span><span class="p">)</span> <span class="p">(</span>
+<span class="n">partition</span> <span class="n">p0</span> <span class="k">values</span> <span class="k">less</span> <span class="k">than</span><span class="p">(</span><span class="s1">&#39;2009-01-01&#39;</span><span class="p">,</span><span class="s1">&#39;2009-01-01&#39;</span><span class="p">),</span>
+<span class="n">partition</span> <span class="n">p1</span> <span class="k">values</span> <span class="k">less</span> <span class="k">than</span><span class="p">(</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用分区后注意的地方:</p>
+<ul>
+<li>
+<p>查询语句只要使用分区的列进行过滤时，<code>MySQL</code>才只扫描数据所在的分区。如果过滤条件不是分区的列。还是会扫描所有分区</p>
+</li>
+<li>
+<p>分区后，要在使用<code>WHERE</code>子句中尽量使用分区的键，避免全表扫描。只在一个分区上扫描。不然，对提升性能无帮助。</p>
+</li>
+<li>
+<p>不论创建何种类型的分区，如果表中存在主键或者唯一索引时，分区列必须是唯一索引的一个组成部分。</p>
+</li>
+</ul>
+<h2 id="分区的管理">分区的管理</h2>
+<h3 id="为分区表增加分区">为分区表增加分区</h3>
+<p>增加<code>p2</code>分区，大于<code>40</code>至无穷大存入该分区表中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="k">add</span> <span class="n">partition</span><span class="p">(</span><span class="n">partition</span> <span class="n">p2</span> <span class="k">values</span> <span class="k">less</span> <span class="k">than</span> <span class="k">maxvalue</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="删除分区">删除分区</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">alter</span> <span class="k">table</span> <span class="n">t</span> <span class="k">drop</span> <span class="n">partition</span> <span class="n">p0</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在查询时注意。<code>MySQL</code>优化器只能对<code>YEAR()</code>,<code>TO_DAYS()</code>,<code>TO_SECONDS()</code>,<code>UNIX_TIMESTAMP()</code>这几类函数进行优化选择。在查询时，根据分区键信息，只查询指定分区。</p>
+<h3 id="查看分区表的相关信息">查看分区表的相关信息</h3>
+<p><code>MySQL</code>中自带的<code>information_schema</code>库中的<code>PARTITIONS</code>表。可以根据表名与<code>TABLE_SCHEMA</code>来过滤。<code>TABLE_SCHEMA</code>表示表所在的数据库。通过该表，可以查看表分区名称，以及各分区表的记录行数等信息。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> 
+    <span class="n">information_schema</span><span class="p">.</span><span class="n">PARTITIONS</span> 
+<span class="k">where</span>
+    <span class="n">table_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span>  <span class="k">AND</span> <span class="k">table_name</span><span class="o">=</span><span class="s2">&#34;your_table_name&#34;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>table_rows</code>列反映了每个分区中记录的数值<code>partition_method</code>表示分区的类型</p>
+<h3 id="未分区与分区之间的数据转移">未分区与分区之间的数据转移</h3>
+<p>语法: <code>ALTER TABLE ....... EXCHANGE PARTITION</code></p>
+<p>如果非分区表的数据为空，相当于将分区中的数据导入非分区中。若分区中的数据为空，相当于将非分区中的数据导入分区中。当两表需要相同的列定义，另<code>AUTO_INCREMENT</code>列将被重置。</p>
+<p>如，将分区表<code>test</code>表中的数据转换至未分区的<code>test2</code>中。</p>
+<ol>
+<li>
+<p>先依<code>test</code>表创建一个新表，并将分区信息删除</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">test2</span> <span class="k">like</span> <span class="n">test</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">test2</span> <span class="n">remove</span> <span class="n">partitioning</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>将<code>test</code>中的分区数据，依分区导入<code>test2</code>中。这里假设<code>test</code>有两二个分区<code>p0</code>,<code>p1</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">alter</span> <span class="k">table</span> <span class="n">test</span> <span class="n">exchange</span> <span class="n">partition</span> <span class="n">p0</span> <span class="k">with</span> <span class="k">table</span> <span class="n">test2</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>两个表中只能有一个表是空的，如果两个表中都有数据，会报错。所有每个分区的数据需要放入不同的空表中。不能集中放在同一个表中。</p>
+</li>
+</ol>
+<h2 id="子分区">子分区</h2>
+<p>子分区是在分区的基础上再进行分区。有时也称这种分区为复合分区。<code>MySQL</code>数据库允许在<code>RANGE</code>和<code>LIST</code>的分区上再进行<code>HASH</code>或者<code>KEY</code>的子分区</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">ts</span><span class="p">(</span><span class="n">a</span> <span class="nb">int</span><span class="p">,</span><span class="n">b</span> <span class="k">data</span><span class="p">)</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span>
+<span class="n">partition</span> <span class="k">by</span> <span class="n">range</span><span class="p">(</span><span class="k">YEAR</span><span class="p">(</span><span class="n">B</span><span class="p">)),</span>
+<span class="n">subpartiton</span> <span class="k">by</span> <span class="n">hash</span><span class="p">(</span><span class="n">TO_DAYS</span><span class="p">(</span><span class="n">b</span><span class="p">)),</span>
+<span class="n">subpartitions</span> <span class="mi">2</span><span class="p">(</span>
+   <span class="n">partition</span> <span class="n">p0</span> <span class="k">values</span> <span class="k">less</span> <span class="k">than</span><span class="p">(</span><span class="mi">1990</span><span class="p">),</span>
+   <span class="n">partition</span> <span class="n">p1</span> <span class="k">values</span> <span class="k">less</span> <span class="k">than</span><span class="p">(</span><span class="mi">2000</span><span class="p">),</span>
+   <span class="n">partition</span> <span class="n">p2</span> <span class="k">values</span> <span class="k">less</span> <span class="k">than</span> <span class="k">maxvalue</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>子分区建立要注意的地方：</p>
+<ul>
+<li>
+<p>每个子分区的数量必须相同</p>
+</li>
+<li>
+<p>要在一个分区表的任何分区上使用<code>subpartiton</code>来明确定义任何子分区，就必须定义所有的子分区。</p>
+</li>
+</ul>
+<h2 id="各种分区对null值的差异与及分区分配">各种分区对<code>NULL</code>值的差异与及分区分配</h2>
+<h3 id="range"><code>RANGE</code></h3>
+<p>将<code>NULL</code>值视为最小值，将含用<code>NULL</code>的数据存放在最左边。<code>less than</code> 最小的分区中</p>
+<h3 id="list"><code>LIST</code></h3>
+<p>需要在分区中明确定义可以放入NULL，否则，在存放数据时会报错</p>
+<h3 id="hash"><code>HASH</code></h3>
+<p>将含有<code>NULL</code>值的记录返回为0</p>
+<h3 id="key-1"><code>KEY</code></h3>
+<p>同HASH方法</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">MySQL</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/flink/flink-init/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Flink 入门简要笔记</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/database/mysql/mysql-backup/">
+            <span class="next-text nav-default">MySQL xtrabackup工具使用</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

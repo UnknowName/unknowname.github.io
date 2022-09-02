@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/linux/</link>
+    <description>Recent content in linux on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 18 May 2021 14:45:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何优雅的扩展Linux磁盘</title>
+      <link>http://www.unknowname.cn/post/linux/aliyun-disk-extend/</link>
+      <pubDate>Tue, 18 May 2021 14:45:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/aliyun-disk-extend/</guid>
+      <description>前提条件 对于数据库的应用来说，扩展磁盘是免不了会发生的事情。但是数据库一般都是重要的业务组件，很可能不能接受停机的情况发生。那么在前期规划就</description>
+    </item>
+    
+    <item>
+      <title>基于bind的DNS主备服务搭建指南</title>
+      <link>http://www.unknowname.cn/post/linux/named/</link>
+      <pubDate>Fri, 19 Mar 2021 18:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/named/</guid>
+      <description>基础概念 正解 将主机名解析为IP地址。如将www.qq.com解析至1.1.1.1。这是一般应用场景 反解 将IP解析为主机名。如上面将1.1.1</description>
+    </item>
+    
+    <item>
+      <title>Bash/Shell语法速览与技巧</title>
+      <link>http://www.unknowname.cn/post/linux/bash/</link>
+      <pubDate>Tue, 02 Mar 2021 17:45:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/bash/</guid>
+      <description>Shell基础语法 循环 while循环 while死循环 1 2 3 4 5 while true do echo &amp;#34;whle loop&amp;#34; sleep 10 done for循环 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 # 范围循环 for</description>
+    </item>
+    
+    <item>
+      <title>本地Repo仓库搭建</title>
+      <link>http://www.unknowname.cn/post/linux/linix-repo/</link>
+      <pubDate>Fri, 26 Feb 2021 09:31:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/linix-repo/</guid>
+      <description>将本地系统的/etc/yum.repos.d/目录中的yum源同步至本地，这样本地局域网就可以使用内网的yum源，加快速度 安装工具 1 yum install nginx yum-utils</description>
+    </item>
+    
+    <item>
+      <title>Rsync 同步文件</title>
+      <link>http://www.unknowname.cn/post/linux/linux-rsync/</link>
+      <pubDate>Fri, 26 Feb 2021 08:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/linux-rsync/</guid>
+      <description>rsync 同步不同主机的文件时，一个作为服务端，另一个作为客户端。在服务端，一般称为rsyncd 服务端 安装 1 yum install rsync -y 准备配置文件/etc/rsync</description>
+    </item>
+    
+  </channel>
+</rss>

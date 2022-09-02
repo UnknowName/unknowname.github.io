@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>OpenResty动态后端热加载 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="OpenResty实现动态后端服务器" /><meta name="keywords" content="OpenResty, NGINX, 动态后端" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/nginx/openresty-upsync-backend/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="OpenResty动态后端热加载" />
+<meta property="og:description" content="OpenResty实现动态后端服务器" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/nginx/openresty-upsync-backend/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-11-23T12:11:11&#43;08:00" />
+<meta property="article:modified_time" content="2020-11-23T12:11:11&#43;08:00" />
+
+<meta itemprop="name" content="OpenResty动态后端热加载">
+<meta itemprop="description" content="OpenResty实现动态后端服务器"><meta itemprop="datePublished" content="2020-11-23T12:11:11&#43;08:00" />
+<meta itemprop="dateModified" content="2020-11-23T12:11:11&#43;08:00" />
+<meta itemprop="wordCount" content="418">
+<meta itemprop="keywords" content="NGINX," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenResty动态后端热加载"/>
+<meta name="twitter:description" content="OpenResty实现动态后端服务器"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">OpenResty动态后端热加载</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-11-23 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+          <span class="more-meta"> 约 418 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#实践">实践</a>
+          <ul>
+            <li><a href="#1-准备consul">1. 准备<code>Consul</code></a></li>
+            <li><a href="#2-nginxopenresty">2. <code>NGINX/OpenResty</code></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>使用到的模块: <a href="https://github.com/weibocom/nginx-upsync-module">https://github.com/weibocom/nginx-upsync-module</a></p>
+<p>通过第三方注册中心(<code>Etcd/Consul</code>)，<code>NGINX/OpenResty</code>从第三方拿后端信息，实现同步。该模块在修改后端注册中心时，无需重载(<code>reload</code>)<code>NGINX/OpenResty</code>。</p>
+<h2 id="实践">实践</h2>
+<h3 id="1-准备consul">1. 准备<code>Consul</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">consul</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">consul</span><span class="w">
+</span><span class="w">  </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx-consul</span><span class="w">
+</span><span class="w">  </span><span class="nt">net</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span><span class="w">  </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">./data:/consul/data</span><span class="w">
+</span><span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="l">consul agent</span><span class="w">
+</span><span class="w">           </span>-<span class="l">server</span><span class="w">
+</span><span class="w">           </span>-<span class="l">ui</span><span class="w">
+</span><span class="w">           </span>-<span class="l">client=IP.Address</span><span class="w">
+</span><span class="w">           </span>-<span class="l">bind=IP.Address</span><span class="w">
+</span><span class="w">           </span>-<span class="l">advertise=IP.Address</span><span class="w">
+</span><span class="w">           </span>-<span class="l">data-dir=/consul/data</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 启动Consule</span>
+docker-compose up -d
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-nginxopenresty">2. <code>NGINX/OpenResty</code></h3>
+<ol>
+<li>
+<p>安装</p>
+<p>因为该模块不是标准模块，需要将相关产品的源码下载下来，通过<code>--add-module</code>重新编译，将模块整合进去，此处略&hellip;</p>
+</li>
+<li>
+<p>配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">...
+upstream test {
+  upsync IP:PORT/v1/kv/upstreams/UPSTREAM_NAME/ upsync_timeout=10s upsync_interval=5000ms upsync_type=consul strong_dependency=off;
+  upsync_dump_path servers_test.conf;
+  include servers_test.conf;
+  server 127.0.0.1:8090 backup;
+}
+...
+# 查看当前后端的主机
+location = /upstream-show {
+    allow IP.Address;
+    deny all;
+    upstream_show;
+}
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>有一个小<code>Bug</code>，第一次启动时，要往<code>servers_test.conf</code>文件里面写入至少一台后端，不然会因为<code>upstream</code>内没有可用的<code>server</code>而导致主进程无法启动。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># serers_test.conf
+server 127.0.0.1:9099;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>注册后端服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 格式</span>
+curl -XPUT IP:PORT/v1/kv/upstreams/UPSTREAM_NAME/SERVER_ADDR:PORT
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>启动即可。通过<code>ConsulAddress:8500</code>管理地址可以删除<code>KEY</code>观察后端效果</p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-11-23
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/nginx/">NGINX</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/nginx/openresty-lua-limit/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">OpenResty基于Lua实现根据HTTP头限速</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/nginx/openresty-geoip2/">
+            <span class="next-text nav-default">OpenResty配合GeoIP2识别客户端所在城市</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

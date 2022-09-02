@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/kubernetes/</link>
+    <description>Recent content in Kubernetes on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 19 Jan 2022 11:15:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ingress NGINX annotations</title>
+      <link>http://www.unknowname.cn/post/k8s/ingress-nginx-annotations/</link>
+      <pubDate>Wed, 19 Jan 2022 11:15:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/ingress-nginx-annotations/</guid>
+      <description>今天看到文章说IngressNGINX实现灰度，仔细看原来是通过annotations来实现，于是简单的查了下官网，发现有几个有意思的ann</description>
+    </item>
+    
+    <item>
+      <title>Ingress NGINX与Kubernetes版本支持一览</title>
+      <link>http://www.unknowname.cn/post/k8s/ingress-nginx-k8s-version/</link>
+      <pubDate>Sat, 04 Dec 2021 11:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/ingress-nginx-k8s-version/</guid>
+      <description>Ingress-nginx官方的支持列表只是显示最近的几个版本，对应很早就上了船的用户来说，我想没有几个人会轻易的去升级K8S的版本。当需要</description>
+    </item>
+    
+    <item>
+      <title>基于Prometheus-adapter的自定义指标的HPA</title>
+      <link>http://www.unknowname.cn/post/k8s/custom-metrics-hpa/</link>
+      <pubDate>Wed, 15 Sep 2021 10:21:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/custom-metrics-hpa/</guid>
+      <description>此为关于Prometheus-adapter的第二篇，其一基础以及安装请见其一. 虽然有Kube-Prometheus与Prometheus-</description>
+    </item>
+    
+    <item>
+      <title>NGINX Ingress路由增加前缀</title>
+      <link>http://www.unknowname.cn/post/k8s/nginx-ingress-add-prefix/</link>
+      <pubDate>Fri, 27 Aug 2021 14:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/nginx-ingress-add-prefix/</guid>
+      <description>需求场景 通过URL可以快速区分与判断是那个服务 集团性的公司，将不同业务通过统一域名对外，提升SEO权重 样例文件 ing.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14</description>
+    </item>
+    
+    <item>
+      <title>Prometheus-adapter与kube-prometheus安装联动</title>
+      <link>http://www.unknowname.cn/post/k8s/prometheos-adpater/</link>
+      <pubDate>Sat, 31 Jul 2021 10:21:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/prometheos-adpater/</guid>
+      <description>组件介绍 Kube-Prometheus 项目用来方便在Kubernetes中安装Prometheus Prometheus-adapter用来将Prometheus采集到的</description>
+    </item>
+    
+    <item>
+      <title>Kubectl 多集群连接</title>
+      <link>http://www.unknowname.cn/post/k8s/kubectl/</link>
+      <pubDate>Wed, 28 Jul 2021 11:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/kubectl/</guid>
+      <description>设置KUBECONFIG环境变量 以下假设有两个配置kubeconfig。两个集群的contexts[i].context.name和clus</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes使用NFS作为StorageClass</title>
+      <link>http://www.unknowname.cn/post/k8s/k8s-nfs-pv/</link>
+      <pubDate>Fri, 19 Mar 2021 19:30:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/k8s-nfs-pv/</guid>
+      <description>官方文档: https://github.com/kubernetes-incubator/external-storage NFS端配置 安装服务 1 2 3 4 5 6 7 8 9 # 安装NFS服务 yum -y install nfs-utils rpcbind # 设置共享目录参数 echo &amp;#34;/data/nfs 128.0.255.0/16(rw, no_root_squash)&amp;#34; &amp;gt; /etc/exports # 启动服务 systemctl enable rpcbind &amp;amp;&amp;amp; systemctl start rpcbind systemctl enable nfs &amp;amp;&amp;amp; systemctl</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes安装Nginx Ingress以及优化</title>
+      <link>http://www.unknowname.cn/post/k8s/k8s-nginx-ingress/</link>
+      <pubDate>Tue, 02 Mar 2021 13:25:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/k8s-nginx-ingress/</guid>
+      <description>NGINX Ingress官方的YAML文件是以Deployment方式运行的，这样就会有坑，Pod会到处跑，即使加上nodeSecetor，也是会有</description>
+    </item>
+    
+    <item>
+      <title>CoreDNS 配置示例</title>
+      <link>http://www.unknowname.cn/post/k8s/coredns/</link>
+      <pubDate>Mon, 01 Mar 2021 11:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/coredns/</guid>
+      <description>corefile 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 .:53 { hosts { 172.18.171.110 host1 172.18.203.237 host2 172.18.203.240 test.testdomain.cn cache 60 reload 1m # 一定要加下面语句 fallthrough } errors health kubernetes cluster.local in-addr.arpa ip6.arpa { pods insecure upstream fallthrough in-addr.arpa ip6.arpa</description>
+    </item>
+    
+    <item>
+      <title>Istio快速实践一览</title>
+      <link>http://www.unknowname.cn/post/k8s/istio/</link>
+      <pubDate>Mon, 01 Mar 2021 11:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/istio/</guid>
+      <description>Istio GatewayIngress 步骤: 创建Gateway 创建VirtualService 样例文件 gateway.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 apiVersion:networking.istio.io/v1alpha3kind:Gatewaymetadata:name:www-test-iospec:selector:istio:ingressgateway# use Istio default gateway implementationservers:- port:number:80name:httpprotocol:HTTPhosts:- &amp;#34;www.test.io&amp;#34; virtualserver.yaml 1 2 3 4 5 6 7 8 9 10 11 12</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes给予指定NameSpace的控制权限</title>
+      <link>http://www.unknowname.cn/post/k8s/k8s-rbac-ns/</link>
+      <pubDate>Sun, 11 Oct 2020 11:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/k8s-rbac-ns/</guid>
+      <description>因网上都是基于命令行，网上给的方案不适用于通过Dashboard访问的方案。要微调下就可以。 创建ServiceAccount 1 2 3 4 5 6 7 8</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes基于Kubeadm安装</title>
+      <link>http://www.unknowname.cn/post/k8s/k8s-install/</link>
+      <pubDate>Tue, 11 Aug 2020 10:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/k8s-install/</guid>
+      <description>kubeadm是官方提供的安装工具，自1.18.5以来，用它来安装非常简单。但官方的指导文档主要是基于单机版的，这里记录下集群版安装思路。 一</description>
+    </item>
+    
+  </channel>
+</rss>

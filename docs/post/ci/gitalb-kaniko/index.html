@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>GitLab使用Kaniko构建镜像 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="GitLab使用Kaniko构建镜像" /><meta name="keywords" content="GitLab Runner, GitLab CI/CD" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/ci/gitalb-kaniko/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="GitLab使用Kaniko构建镜像" />
+<meta property="og:description" content="GitLab使用Kaniko构建镜像" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/ci/gitalb-kaniko/" /><meta property="article:section" content="post" />
+
+<meta property="article:modified_time" content="2022-02-15T17:15:11&#43;08:00" />
+
+<meta itemprop="name" content="GitLab使用Kaniko构建镜像">
+<meta itemprop="description" content="GitLab使用Kaniko构建镜像">
+<meta itemprop="dateModified" content="2022-02-15T17:15:11&#43;08:00" />
+<meta itemprop="wordCount" content="409">
+<meta itemprop="keywords" content="CI/CD,GitLab," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GitLab使用Kaniko构建镜像"/>
+<meta name="twitter:description" content="GitLab使用Kaniko构建镜像"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">GitLab使用Kaniko构建镜像</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-15 </span>
+        <div class="post-category">
+            <a href="/categories/tools/"> tools </a>
+            </div>
+          <span class="more-meta"> 约 409 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#安装docker类型的gitlabrunner">安装<code>Docker</code>类型的<code>GitLabRunner</code></a></li>
+        <li><a href="#lets-do-it"><code>Let's Do it</code></a></li>
+        <li><a href="#优化">优化</a>
+          <ul>
+            <li><a href="#基础镜像缓存">基础镜像缓存</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="安装docker类型的gitlabrunner">安装<code>Docker</code>类型的<code>GitLabRunner</code></h2>
+<p>一定要是<code>Docker</code>类型的<code>GitLabRunner</code>，之前测试时，没注意到这一点，一直测试没通过</p>
+<p>详情参考之前<a href="./post/ci/gitlab-ci/">文章</a></p>
+<h2 id="lets-do-it"><code>Let's Do it</code></h2>
+<p><code>.gitlab-ci.yaml</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">variables</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">REGISTRY</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;registry.cn-shenzhen.aliyuncs.com/siss&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">REGISTRY_LOCAL</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;hub.siss.io:5000/siss&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">before_script</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">PROJECT=${CI_PROJECT_NAMESPACE}</span><span class="w">
+</span><span class="w">  </span>- <span class="l">ENV=${CI_ENVIRONMENT_NAME}</span><span class="w">
+</span><span class="w">  </span>- <span class="l">NAMESPACE=${PROJECT}</span><span class="w">
+</span><span class="w">  </span>- <span class="l">APP=${CI_PROJECT_NAME}</span><span class="w">
+</span><span class="w">  </span>- <span class="l">export TAG=$(date +%Y-%m-%d)</span><span class="w">
+</span><span class="w">  </span>- <span class="l">IMAGE=${REGISTRY}/${CI_PROJECT_NAMESPACE}_${CI_PROJECT_NAME}</span><span class="w">
+</span><span class="w">  </span>- <span class="l">LOCAL_IMAGE=${REGISTRY_LOCAL}/${CI_PROJECT_NAMESPACE}_${CI_PROJECT_NAME}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">stages</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">build image</span><span class="w">
+</span><span class="w">  </span>- <span class="l">deploy to k8s</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 相同stage名称定义多个时，并行执行</span><span class="w">
+</span><span class="w"></span><span class="nt">build-by-host</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l">build image</span><span class="w">
+</span><span class="w">  </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l">delayed</span><span class="w">
+</span><span class="w">  </span><span class="nt">start_in</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="l">seconds</span><span class="w">
+</span><span class="w">  </span><span class="nt">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">master</span><span class="w">
+</span><span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">echo ${TAG}</span><span class="w">
+</span><span class="w">    </span>- <span class="l">docker build -t ${LOCAL_IMAGE} .</span><span class="w">
+</span><span class="w">    </span>- <span class="l">docker login -u admin -p 123456 ${REGISTRY_LOCAL}</span><span class="w">
+</span><span class="w">    </span>- <span class="l">docker push ${LOCAL_IMAGE}</span><span class="w">
+</span><span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">dev</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">build-by-kaniko</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l">build image</span><span class="w">
+</span><span class="w">  </span><span class="nt">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">master</span><span class="w">
+</span><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">raydoom/kaniko-project-executor:debug</span><span class="w">
+</span><span class="w">    </span><span class="nt">entrypoint</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;&#34;</span><span class="p">]</span><span class="w">
+</span><span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c"># 仓库验证信息通过配置文件挂载的方式，挂载进了kaniko的容器内部/kaniko/.docker/config.json</span><span class="w">
+</span><span class="w">    </span>- <span class="p">&gt;-</span><span class="sd">
+</span><span class="sd">     /kaniko/executor --insecure --skip-tls-verify
+</span><span class="sd">     --cache=true
+</span><span class="sd">     --cache-dir /cache
+</span><span class="sd">     --context &#34;${CI_PROJECT_DIR}&#34;  
+</span><span class="sd">     --dockerfile &#34;${CI_PROJECT_DIR}/Dockerfile&#34; 
+</span><span class="sd">     --destination &#34;${LOCAL_IMAGE}&#34;</span><span class="w">     
+</span><span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">kaniko</span><span class="w">
+</span><span class="w">    
+</span><span class="w"></span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l">deploy to k8s</span><span class="w">
+</span><span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">dev</span><span class="w">
+</span><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">http://dev.siss.io/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}</span><span class="w">
+</span><span class="w">  </span><span class="nt">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">master</span><span class="w">
+</span><span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">echo &#34;image=${LOCAL_IMAGE}:${TAG}&#34;</span><span class="w">
+</span><span class="w">    </span>- <span class="l">${HOME}/deploy.sh ${LOCAL_IMAGE}</span><span class="w">
+</span><span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">dev</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="优化">优化</h2>
+<h3 id="基础镜像缓存">基础镜像缓存</h3>
+<p>将基础镜像<code>nginx:alpine</code>缓存至宿主机的<code>/cache</code>目录,在<code>config.toml</code>中，<code>/cache</code>目录挂载进容器里面的<code>/cache</code>目录里面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker run --rm <span class="se">\
+</span><span class="se"></span>        -v /cache:/cache <span class="se">\
+</span><span class="se"></span>        gcr.io/kaniko-project/warmer:latest <span class="se">\
+</span><span class="se"></span>        --cache-dir<span class="o">=</span>/cache <span class="se">\
+</span><span class="se"></span>        --image<span class="o">=</span>ImageName1 <span class="se">\
+</span><span class="se"></span>        --image<span class="o">=</span>ImageName2
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-15
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/ci/cd/">CI/CD</a>
+          <a href="/tags/gitlab/">GitLab</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/database/mysql/mysql-repl/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">MySQL5.7 Replication</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/leetcode/215/">
+            <span class="next-text nav-default">堆方法解leetcode之215-数组中的第K个最大元素</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

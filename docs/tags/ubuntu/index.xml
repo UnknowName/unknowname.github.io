@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ubuntu on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/ubuntu/</link>
+    <description>Recent content in ubuntu on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 07 Oct 2021 16:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu命令速记</title>
+      <link>http://www.unknowname.cn/post/linux/ubuntu/</link>
+      <pubDate>Thu, 07 Oct 2021 16:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/ubuntu/</guid>
+      <description>CentOS官方已停止维护了，作为曾经的Linux服务器操作系统的霸主也不免有衰落的这一天。以后，就要和Ubuntu说你好了。 系统管理 搜索包</description>
+    </item>
+    
+  </channel>
+</rss>

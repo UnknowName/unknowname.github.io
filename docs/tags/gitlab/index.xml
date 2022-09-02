@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitLab on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/gitlab/</link>
+    <description>Recent content in GitLab on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 15 Feb 2022 17:15:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitLab使用Kaniko构建镜像</title>
+      <link>http://www.unknowname.cn/post/ci/gitalb-kaniko/</link>
+      <pubDate>Tue, 15 Feb 2022 17:15:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ci/gitalb-kaniko/</guid>
+      <description>安装Docker类型的GitLabRunner 一定要是Docker类型的GitLabRunner，之前测试时，没注意到这一点，一直测试没通过</description>
+    </item>
+    
+    <item>
+      <title>GitLab CI/CD实践</title>
+      <link>http://www.unknowname.cn/post/ci/gitlab-ci/</link>
+      <pubDate>Sun, 28 Feb 2021 16:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ci/gitlab-ci/</guid>
+      <description>简述 GitLab现已集成CI/CD功能。默认每个项目，都会自动启用CI/CD功能。但要使用，还需要配合Gitlab-Runner才可正常运行</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>滑动窗口 on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</link>
+    <description>Recent content in 滑动窗口 on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 31 Dec 2021 13:37:00 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>滑动窗口方法解leetcode之438-找到字符串中所有字母异位词</title>
+      <link>http://www.unknowname.cn/post/leetcode/438/</link>
+      <pubDate>Fri, 31 Dec 2021 13:37:00 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/leetcode/438/</guid>
+      <description>原题连接 题目描述: 给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。 输入: s = &amp;ldquo;abab&amp;rdquo;, p = &amp;ldquo;ab&amp;rdquo; 输出:</description>
+    </item>
+    
+    <item>
+      <title>滑动窗口方法解leetcode之424-替换后的最长重复字符</title>
+      <link>http://www.unknowname.cn/post/leetcode/424/</link>
+      <pubDate>Sat, 25 Dec 2021 10:37:00 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/leetcode/424/</guid>
+      <description>原题连接 给你一个仅由大写英文字母组成的字符串，你可以将任意位置上的字符替换成另外的字符，总共可最多替换 k 次。在执行上述操作后，找到包含重复字</description>
+    </item>
+    
+    <item>
+      <title>滑动窗口解leetcode之1446-连续字符</title>
+      <link>http://www.unknowname.cn/post/leetcode/1446/</link>
+      <pubDate>Wed, 01 Dec 2021 14:33:00 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/leetcode/1446/</guid>
+      <description>滑动容器类型运用还不是很熟练，特记录一下，用于以后温习。 原题链接 题目描述: 给你一个字符串 s ，字符串的「能量」定义为：只包含一种字符的最长非空</description>
+    </item>
+    
+  </channel>
+</rss>

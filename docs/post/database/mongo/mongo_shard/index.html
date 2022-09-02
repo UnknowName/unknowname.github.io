@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>MongoDB分片 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="MongoDB分片" /><meta name="keywords" content="MongoDB, MongoDB shard" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/database/mongo/mongo_shard/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="MongoDB分片" />
+<meta property="og:description" content="MongoDB分片" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/database/mongo/mongo_shard/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-10-12T13:35:11&#43;08:00" />
+<meta property="article:modified_time" content="2020-10-12T13:35:11&#43;08:00" />
+
+<meta itemprop="name" content="MongoDB分片">
+<meta itemprop="description" content="MongoDB分片"><meta itemprop="datePublished" content="2020-10-12T13:35:11&#43;08:00" />
+<meta itemprop="dateModified" content="2020-10-12T13:35:11&#43;08:00" />
+<meta itemprop="wordCount" content="1278">
+<meta itemprop="keywords" content="MongoDB," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MongoDB分片"/>
+<meta name="twitter:description" content="MongoDB分片"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">MongoDB分片</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-12 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> Database </a>
+            </div>
+          <span class="more-meta"> 约 1278 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#速览">速览</a></li>
+        <li><a href="#分片键的确定">分片键的确定</a></li>
+        <li><a href="#片键策略">片键策略</a></li>
+        <li><a href="#配置">配置</a>
+          <ul>
+            <li><a href="#mongodb配置"><code>MongoDB</code>配置</a></li>
+            <li><a href="#集合配置">集合配置</a></li>
+          </ul>
+        </li>
+        <li><a href="#分片管理">分片管理</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="速览">速览</h2>
+<p>官方建议至少三台以上,分片的前提需要副本集.</p>
+<ul>
+<li>
+<p>分片解决的问题</p>
+<ul>
+<li>增加可用RAM</li>
+<li>增加可用磁盘空间</li>
+<li>减轻单台服务器压力</li>
+<li>处理单个<code>mongod</code>无法承受的吞吐量</li>
+</ul>
+</li>
+<li>
+<p>分片的对象是数据库中的集合，分片的键是集合的键</p>
+</li>
+<li>
+<p>复制集设置成分片后,客户端需要连接<code>mongos</code>进程</p>
+</li>
+<li>
+<p>分片的键不能是数组</p>
+</li>
+</ul>
+<h2 id="分片键的确定">分片键的确定</h2>
+<ul>
+<li>
+<p>数据分发</p>
+<ul>
+<li>
+<p>升序片键</p>
+<p>随着时间稳定增长的字段,如<code>data</code>, <code>objectID</code></p>
+</li>
+<li>
+<p>随机分发的片键</p>
+<p>不同分片随机分配,各分片数据会比较均衡.随机分发的键可是用户名,邮件地址,<code>UUID</code>,散列值等实现</p>
+</li>
+<li>
+<p>基于位置的片键</p>
+<p>根据位置进行分片,如IP地址,经纬度,地址等</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="片键策略">片键策略</h2>
+<ul>
+<li>
+<p>散列片键</p>
+<p>如果追求的是数据的加载的极速,散列是最佳选择.</p>
+<p>散列片键不支持浮点数,浮点数被取整数进行散列.<code>1.99</code>与<code>1</code>散列结果是一样的</p>
+<p>缺点:</p>
+<ul>
+<li>无法做范围查询</li>
+<li>不支持<code>uniq</code>索引</li>
+<li>不能使用数组字段</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 创建一个散列索引</span>
+db.collection.createIndex<span class="o">({</span><span class="s2">&#34;KeyName&#34;</span>: <span class="s2">&#34;hashed&#34;</span><span class="o">})</span><span class="p">;</span>
+
+<span class="c1"># 对集合进行分片</span>
+sh.shardCollection<span class="o">(</span><span class="s2">&#34;dbName.collectionName&#34;</span>, <span class="o">{</span><span class="s2">&#34;KeyName&#34;</span>: <span class="s2">&#34;hashed&#34;</span><span class="o">})</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>GridFS</code>散列片键</p>
+<p>需要配合<code>GridFS</code>文件系统,此处略</p>
+</li>
+<li>
+<p>流水策略</p>
+<p>如果有些服务器性能比较强悍,希望性能强大的机器处理更多负载.流水策略一般配合<code>tag</code>处理.</p>
+</li>
+</ul>
+<h2 id="配置">配置</h2>
+<p>分片需要<code>mongod</code>进程运行在分片模式下</p>
+<h3 id="mongodb配置"><code>MongoDB</code>配置</h3>
+<ul>
+<li>
+<p>启动配置服务器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 先启动配置服务器.生产环境时,就运行在三台不同的主机上,启动参数一致</span>
+mongod --configsvr --dbpath /data/db
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>启动<code>mongos</code>进程</p>
+<p><code>mongos</code>进程可以运行任意个,但是它们的启动参数列表必须一致</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># mongos进程不需要指定数据目录,它会从配置服务器获取数据加载到本地</span>
+mongos --configdb config-1:27019,config-2:27019,config-3:27019
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>将复制集转换为分片</p>
+<p>连入<code>mongos</code>进程,将复制集添加进来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ReplicationName作为分片的名称</span>
+sh.addShard<span class="o">(</span><span class="s2">&#34;ReplicationName/server-1:27017,server-2:27017,server-3:27017&#34;</span><span class="o">)</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="集合配置">集合配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">
+<span class="c1"># 先说明那个数据库要启用分片</span>
+sh.enableSharding<span class="o">(</span><span class="s2">&#34;DBName&#34;</span><span class="o">)</span><span class="p">;</span>
+<span class="c1"># 在要分片集合上面创建索引</span>
+use DBName<span class="p">;</span>
+db.users.createIndex<span class="o">({</span><span class="s2">&#34;username&#34;</span>: 1<span class="o">})</span><span class="p">;</span>
+<span class="c1"># 在对集合进行进行分片,指定分片键为索引键</span>
+ sh.shardCollection<span class="o">(</span><span class="s2">&#34;test.users&#34;</span>, <span class="o">{</span><span class="s2">&#34;username&#34;</span>: 1<span class="o">})</span>
+<span class="c1"># 查看状态</span>
+sh.status<span class="o">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="分片管理">分片管理</h2>
+<ul>
+<li>
+<p>分片配置信息</p>
+<p>分片的所有配置信息,全部存储在配置服务器的的<code>config</code>数据库中.永远都不要边入配置服务器中修改<code>config</code>数据库,应该连入<code>mongos</code>进程,再通过<code>use config</code>来查找或者修改里面的内容</p>
+<ul>
+<li><code>config.shards</code> 记录所有分片信息</li>
+<li><code>config.databases</code> 记录集群中所有数据库信息</li>
+<li><code>config.collections</code> 记录所有分片集合信息</li>
+<li><code>config.chunks</code> 记录集合中所有块的信息</li>
+<li><code>config.changelog</code> 记录迁移记录,可以用于性能诊断</li>
+<li><code>config.settings</code> 记录当前负载均衡器与块大小设置信息</li>
+</ul>
+</li>
+<li>
+<p>分片服务器之间连接信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">    <span class="c1"># 只有在分片的mongos和mongod上此命令才有有效</span>
+    db.adminCommand<span class="o">({</span><span class="s2">&#34;connPoolStats&#34;</span>: 1<span class="o">})</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>增加服务器</p>
+<ul>
+<li>
+<p>增加<code>mongos</code></p>
+<p><code>mongos</code>增加很简单，只要启动命令<code>--configdb</code>参数和之前一样即可，它就会自动加入到现有集群中</p>
+</li>
+<li>
+<p>增加分片服务器</p>
+<p>新新的复制集添加即可,通过<code>sh.addShard()</code></p>
+</li>
+<li>
+<p>指定负载均衡的操作时间</p>
+<p>默认系统时刻都在负载均衡，有时会影响性能。需要指定负载均衡的时间。可以通过<code>config.settings</code>设置时间</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">use config<span class="p">;</span>
+db.settings.update<span class="o">(</span>
+    <span class="o">{</span><span class="s2">&#34;_id&#34;</span>: <span class="s2">&#34;balancer&#34;</span><span class="o">}</span>, 
+    <span class="o">{</span><span class="s2">&#34;</span><span class="nv">$set</span><span class="s2">&#34;</span>: <span class="o">{</span><span class="s2">&#34;activeWindow&#34;</span>: <span class="o">{</span><span class="s2">&#34;start&#34;</span>: <span class="s2">&#34;23:00&#34;</span>, <span class="s2">&#34;stop&#34;</span>:<span class="s2">&#34; 01:00&#34;</span><span class="o">}}}</span>, <span class="nb">true</span><span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>修改块大小</p>
+<p>默认<code>MongoDB</code>的分片块大小是<code>64MB</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">use config<span class="p">;</span>
+<span class="c1"># 查看当前配置</span>
+db.settings.findOne<span class="o">()</span><span class="p">;</span>
+<span class="c1"># 修改为32</span>
+db.settings.save<span class="o">({</span><span class="s2">&#34;_id&#34;</span>: <span class="s2">&#34;chunksize&#34;</span>, <span class="s2">&#34;value&#34;</span>: 32<span class="o">})</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>刷新配置</p>
+<p>如果<code>mongos</code>没有从配置服务器中读到最新的配置，可以通过刷新配置命令更新配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 如果刷新后仍然配置没更新，则需要重启所有的mongos或mongod进程</span>
+db.adminCommand<span class="o">({</span><span class="s2">&#34;flushRouterConfig&#34;</span>: 1<span class="o">})</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-10-12
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mongodb/">MongoDB</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/database/mongo/mongo_repl/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">MongoDB复制集实战</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/database/mongo/mongo/">
+            <span class="next-text nav-default">MongoDB基础</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

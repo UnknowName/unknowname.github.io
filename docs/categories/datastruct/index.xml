@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DataStruct on UnknowName</title>
+    <link>http://www.unknowname.cn/categories/datastruct/</link>
+    <description>Recent content in DataStruct on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 16 Jun 2021 16:55:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/datastruct/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang 图简单实现</title>
+      <link>http://www.unknowname.cn/post/datastruct/graph/</link>
+      <pubDate>Wed, 16 Jun 2021 16:55:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/datastruct/graph/</guid>
+      <description>断断续续啃数据结构的图，折腾了一个月，这拖延症不轻。经典教材主要还是基于邻接表，Bing搜索的Golang实现并不是基于它，这样学习起来就有</description>
+    </item>
+    
+  </channel>
+</rss>

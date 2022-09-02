@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Xtrabackup源码编译安装 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="xtrabackup源码编译安装" /><meta name="keywords" content="xtrabackup install by arm, xtrabackup arm64 compile, xtrabackup arm dockerfile" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/database/mysql/xtrabackup-install-by-arm/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Xtrabackup源码编译安装" />
+<meta property="og:description" content="xtrabackup源码编译安装" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/database/mysql/xtrabackup-install-by-arm/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-09-14T09:08:11&#43;08:00" />
+<meta property="article:modified_time" content="2021-10-08T15:35:11&#43;08:00" />
+
+<meta itemprop="name" content="Xtrabackup源码编译安装">
+<meta itemprop="description" content="xtrabackup源码编译安装"><meta itemprop="datePublished" content="2021-09-14T09:08:11&#43;08:00" />
+<meta itemprop="dateModified" content="2021-10-08T15:35:11&#43;08:00" />
+<meta itemprop="wordCount" content="1147">
+<meta itemprop="keywords" content="MySQL," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Xtrabackup源码编译安装"/>
+<meta name="twitter:description" content="xtrabackup源码编译安装"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Xtrabackup源码编译安装</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-09-14 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> Database </a>
+            <a href="/categories/tools/"> tools </a>
+            </div>
+          <span class="more-meta"> 约 1147 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#还原">还原</a>
+          <ul>
+            <li><a href="#1-应用备份集">1. 应用备份集</a></li>
+            <li><a href="#2-启动">2. 启动</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><code>xtrabackup</code>好用，但奈何国外对<code>ARM</code>架构支持不是很好，官网并没有现成的<code>ARM</code>包，只能源码编译了。本镜像适用于<code>MySQL5.7</code>系列。</p>
+<p><code>Dockerfile</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> centos:7</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">ENV</span> <span class="nv">PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span>:/usr/local/xtrabackup/bin <span class="se">\
+</span><span class="se"></span>    <span class="nv">TZ</span><span class="o">=</span>Asia/Shanghai<span class="err">
+</span><span class="err"></span><span class="k">COPY</span> ./CMakeLists.txt  /tmp/CMakeLists.txt<span class="err">
+</span><span class="err"></span><span class="k">RUN</span> yum install epel-release -y  --nogpgcheck  <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> yum clean all <span class="o">&amp;&amp;</span> yum makecache <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> yum install --nogpgcheck -y git wget make cmake3 python3-sphinx openssl-devel libaio libaio-devel gcc gcc-c++ libaio libaio-devel automake <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> yum install -y --nogpgcheck autoconf bison libtool ncurses-devel autoconf bison libtool libgcrypt-devel <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> yum install -y --nogpgcheck libev-devel ncurses-devel libgcrypt-devel libev-devel libcurl-devel zlib-devel libcurl-devel vim-common <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">cd</span> tmp <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> git clone https://github.com/percona/percona-xtrabackup.git <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">cd</span> percona-xtrabackup <span class="o">&amp;&amp;</span> git checkout 2.4 <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> rm -rf /tmp/percona-xtrabackup/storage/innobase/CMakeLists.txt <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> cp /tmp/CMakeLists.txt /tmp/percona-xtrabackup/storage/innobase/CMakeLists.txt <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /tmp/percona-xtrabackup <span class="o">&amp;&amp;</span> cmake3 -DWITH_MAN_PAGES<span class="o">=</span>OFF -DDOWNLOAD_BOOST<span class="o">=</span>ON -DWITH_BOOST<span class="o">=</span>/tmp -B ./ <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> cp /usr/include/sys/prctl.h /tmp/percona-xtrabackup/sql/ <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> sed -i <span class="s1">&#39;/mysqld.daemon.h/a #include &#34;prctl.h&#34;&#39;</span>  /tmp/percona-xtrabackup/sql/mysqld.cc <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> make <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> make install <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> rm -rf /tmp/* <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> yum remove -y python3-sphinx gcc git gcc-c++ automake cmake3 make vim-common <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> yum clean all<span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>CMakeLists.txt</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt"># Copyright (c) 2006, 2020, Oracle and/or its affiliates. All rights reserved.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2.0,
+# as published by the Free Software Foundation.
+#
+# This program is also distributed with certain software (including
+# but not limited to OpenSSL) that is licensed under separate terms,
+# as designated in a particular file or component or in included license
+# documentation.  The authors of MySQL hereby grant you an additional
+# permission to link the program and your derivative works with the
+# separately licensed software that they have included with MySQL.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License, version 2.0, for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+# This is the CMakeLists for InnoDB
+
+INCLUDE(innodb.cmake)
+
+SET(INNOBASE_SOURCES
+        api/api0api.cc
+        api/api0misc.cc
+        btr/btr0btr.cc
+        btr/btr0cur.cc
+        btr/btr0pcur.cc
+        btr/btr0sea.cc
+        btr/btr0bulk.cc
+        buf/buf0block_hint.cc
+        buf/buf0buddy.cc
+        buf/buf0buf.cc
+        buf/buf0dblwr.cc
+        buf/buf0checksum.cc
+        buf/buf0dump.cc
+        buf/buf0flu.cc
+        buf/buf0lru.cc
+        buf/buf0rea.cc
+        data/data0data.cc
+        data/data0type.cc
+        dict/dict0boot.cc
+        dict/dict0crea.cc
+        dict/dict0dict.cc
+        dict/dict0load.cc
+        dict/dict0mem.cc
+        dict/dict0stats.cc
+        dict/dict0stats_bg.cc
+        eval/eval0eval.cc
+        eval/eval0proc.cc
+        fil/fil0fil.cc
+        fsp/fsp0fsp.cc
+        fsp/fsp0file.cc
+        fsp/fsp0space.cc
+        fsp/fsp0sysspace.cc
+        fut/fut0fut.cc
+        fut/fut0lst.cc
+        ha/ha0ha.cc
+        ha/ha0storage.cc
+        ha/hash0hash.cc
+        fts/fts0fts.cc
+        fts/fts0ast.cc
+        fts/fts0blex.cc
+        fts/fts0config.cc
+        fts/fts0opt.cc
+        fts/fts0pars.cc
+        fts/fts0que.cc
+        fts/fts0sql.cc
+        fts/fts0tlex.cc
+        gis/gis0geo.cc
+        gis/gis0rtree.cc
+        gis/gis0sea.cc
+        fts/fts0plugin.cc
+        handler/ha_innodb.cc
+        handler/ha_innopart.cc
+        handler/handler0alter.cc
+        handler/i_s.cc
+        ibuf/ibuf0ibuf.cc
+        lock/lock0iter.cc
+        lock/lock0prdt.cc
+        lock/lock0lock.cc
+        lock/lock0wait.cc
+        log/log0log.cc
+        log/log0recv.cc
+        mach/mach0data.cc
+        mem/mem0mem.cc
+        mtr/mtr0log.cc
+        mtr/mtr0mtr.cc
+        os/os0file.cc
+        os/os0proc.cc
+        os/os0event.cc
+        os/os0thread.cc
+        page/page0cur.cc
+        page/page0page.cc
+        page/page0zip.cc
+        pars/lexyy.cc
+        pars/pars0grm.cc
+        pars/pars0opt.cc
+        pars/pars0pars.cc
+        pars/pars0sym.cc
+        que/que0que.cc
+        read/read0read.cc
+        rem/rem0cmp.cc
+        rem/rem0rec.cc
+        row/row0ext.cc
+        row/row0ftsort.cc
+        row/row0import.cc
+        row/row0ins.cc
+        row/row0merge.cc
+        row/row0mysql.cc
+        row/row0log.cc
+        row/row0purge.cc
+        row/row0row.cc
+        row/row0sel.cc
+        row/row0trunc.cc
+        row/row0uins.cc
+        row/row0umod.cc
+        row/row0undo.cc
+        row/row0upd.cc
+        row/row0quiesce.cc
+        row/row0vers.cc
+        srv/srv0conc.cc
+        srv/srv0mon.cc
+        srv/srv0srv.cc
+        srv/srv0start.cc
+        sync/sync0arr.cc
+        sync/sync0rw.cc
+        sync/sync0debug.cc
+        sync/sync0sync.cc
+        trx/trx0i_s.cc
+        trx/trx0purge.cc
+        trx/trx0rec.cc
+        trx/trx0roll.cc
+        trx/trx0rseg.cc
+        trx/trx0sys.cc
+        trx/trx0trx.cc
+        trx/trx0undo.cc
+        usr/usr0sess.cc
+        ut/ut0byte.cc
+        ut/ut0crc32.cc
+        ut/ut0dbg.cc
+        ut/ut0list.cc
+        ut/ut0mem.cc
+        ut/ut0new.cc
+        ut/ut0rbt.cc
+        ut/ut0rnd.cc
+        ut/ut0ut.cc
+        ut/ut0vec.cc
+        ut/ut0wqueue.cc)
+
+IF(WITH_INNODB)
+  # Legacy option
+  SET(WITH_INNOBASE_STORAGE_ENGINE TRUE)
+ENDIF()
+
+UNSET(NUMA_LIBRARY)
+IF(HAVE_LIBNUMA)
+   SET(NUMA_LIBRARY &#34;numa&#34;)
+ENDIF()
+
+MYSQL_ADD_PLUGIN(innobase ${INNOBASE_SOURCES} STORAGE_ENGINE
+  MANDATORY
+  MODULE_OUTPUT_NAME ha_innodb
+  LINK_LIBRARIES ${ZLIB_LIBRARY} ${LZ4_LIBRARY} ${NUMA_LIBRARY})
+
+# Remove -DMYSQL_SERVER, it breaks embedded build
+SET_TARGET_PROPERTIES(innobase PROPERTIES COMPILE_DEFINITIONS &#34;&#34;)
+
+IF(WITH_INNOBASE_STORAGE_ENGINE)
+  ADD_DEPENDENCIES(innobase GenError)
+ENDIF()
+
+INCLUDE(${MYSQL_CMAKE_SCRIPT_DIR}/compile_flags.cmake)
+# Avoid generating Hardware Capabilities due to crc32 instructions
+IF(CMAKE_SYSTEM_NAME MATCHES &#34;SunOS&#34; AND CMAKE_SYSTEM_PROCESSOR MATCHES &#34;i386&#34;)
+  MY_CHECK_CXX_COMPILER_FLAG(&#34;-Wa,-nH&#34; HAVE_WA_NH)
+  IF(HAVE_WA_NH)
+    ADD_COMPILE_FLAGS(
+      ut/ut0crc32.cc
+      COMPILE_FLAGS &#34;-Wa,-nH&#34;
+    )
+  ENDIF()
+ENDIF()
+
+MY_CHECK_CXX_COMPILER_FLAG(&#34;-Wcast-function-type&#34; HAVE_CAST_FUNCTION_TYPE)
+IF(HAVE_CAST_FUNCTION_TYPE)
+  ADD_COMPILE_FLAGS(fts/fts0pars.cc
+    COMPILE_FLAGS &#34;-Wno-cast-function-type&#34;)
+ENDIF()
+
+# A GCC bug causes crash when compiling these files on ARM64 with -O1+
+# Compile them with -O0 as a workaround.
+IF(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_PROCESSOR MATCHES &#34;aarch64&#34;)
+  # Bug was fixed in GCC 5.2, so workaround only needed &lt; 5.2
+  EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} -dumpversion
+                  OUTPUT_VARIABLE GCC_VERSION)
+  IF(GCC_VERSION VERSION_LESS 5.2)
+    INCLUDE(${MYSQL_CMAKE_SCRIPT_DIR}/compile_flags.cmake)
+    ADD_COMPILE_FLAGS(
+      btr/btr0btr.cc
+      btr/btr0cur.cc
+      buf/buf0buf.cc
+      gis/gis0sea.cc
+      handler/handler0alter.cc
+      mtr/mtr0mtr.cc
+      row/row0merge.cc
+      row/row0mysql.cc
+      row/row0trunc.cc
+      srv/srv0srv.cc
+      fts/fts0fts.cc
+      COMPILE_FLAGS &#34;-O0&#34;
+      )
+  ENDIF()
+ENDIF()
+
+# Must be after all ADD_DEFINITIONS() to be inherited by the
+# &#39;xtrabackup&#39; subdirectory
+ADD_SUBDIRECTORY(xtrabackup)
+</code></pre></td></tr></table>
+</div>
+</div><p><code>backup.sh</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span><span class="nb">export</span> PATH
+<span class="nb">set</span> -e
+
+<span class="nv">backup_date</span><span class="o">=</span><span class="k">$(</span>date +%Y%m%d<span class="k">)</span>
+<span class="nv">delete_date</span><span class="o">=</span><span class="k">$(</span>date --date <span class="s2">&#34;3 days ago&#34;</span> +%Y%m%d<span class="k">)</span>
+<span class="nv">backup_dir</span><span class="o">=</span><span class="s2">&#34;/backup&#34;</span>
+<span class="nv">container_name</span><span class="o">=</span><span class="s2">&#34;mysql-prod&#34;</span>
+<span class="nv">user</span><span class="o">=</span><span class="s2">&#34;root&#34;</span>
+<span class="nv">pass</span><span class="o">=</span><span class="s2">&#34;pass&#34;</span>
+<span class="nv">host</span><span class="o">=</span><span class="s2">&#34;10.0.2.174&#34;</span>
+<span class="nv">port</span><span class="o">=</span><span class="m">3306</span>
+
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">backup_date</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+  mkdir -p <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">backup_date</span><span class="si">}</span>
+<span class="k">fi</span>
+
+<span class="c1"># Use Container</span>
+docker run --rm -i <span class="se">\
+</span><span class="se"></span>       --volumes-from <span class="si">${</span><span class="nv">container_name</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>       -v <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">backup_date</span><span class="si">}</span>:/backup <span class="se">\
+</span><span class="se"></span>       unknowname/xtrabackup:2.4.22 <span class="se">\
+</span><span class="se"></span>       xtrabackup --host<span class="o">=</span><span class="si">${</span><span class="nv">host</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>                  --port<span class="o">=</span><span class="si">${</span><span class="nv">port</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>                  --user<span class="o">=</span><span class="si">${</span><span class="nv">user</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>                  --password<span class="o">=</span><span class="si">${</span><span class="nv">pass</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>                  --target-dir<span class="o">=</span>/backup <span class="se">\
+</span><span class="se"></span>                  --backup &gt; out.log
+<span class="k">if</span> <span class="o">[</span> <span class="k">$(</span><span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+  rm -rf <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">delete_date</span><span class="si">}</span>
+<span class="k">fi</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="还原">还原</h2>
+<h3 id="1-应用备份集">1. 应用备份集</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker run --rm -v /data/backup/20211007:/backup unknowname/xtrabackup:2.4.22 <span class="se">\
+</span><span class="se"></span>xtrabackup prepare --target-dir<span class="o">=</span>/backup
+<span class="c1"># 复制一份出来，防止异常污染到了原备份集</span>
+cp -r /data/backup/20211007  tmp
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-启动">2. 启动</h3>
+<p><code>docker-compose.yml</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">mysql</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">mysql:5.7.30_arm</span><span class="w">
+</span><span class="w">  </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">  </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">mysql-tmp</span><span class="w">
+</span><span class="w">  </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="m">3308</span><span class="p">:</span><span class="m">3306</span><span class="w">
+</span><span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">TZ=Asia/Shanghai</span><span class="w">
+</span><span class="w">    </span><span class="c"># 帐号验证信息为原帐号密码，这里指定无效</span><span class="w">
+</span><span class="w">    </span><span class="c"># - MYSQL_ROOT_PASSWORD=password</span><span class="w">
+</span><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">./tmp:/var/lib/mysql</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>启动容器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker-compose up -d
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-10-08
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">MySQL</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/k8s/custom-metrics-hpa/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">基于Prometheus-adapter的自定义指标的HPA</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/graylog/graylog-faq/">
+            <span class="next-text nav-default">Graylog常见一些问题处理</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

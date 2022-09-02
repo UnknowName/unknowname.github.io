@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/mysql/</link>
+    <description>Recent content in MySQL on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 26 May 2022 17:25:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL binlog远程备份</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-binlog-backup/</link>
+      <pubDate>Thu, 26 May 2022 17:25:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-binlog-backup/</guid>
+      <description>MySQL版本5.6及以上支持远程备份binlog. 简单记录下，有需要的时候可以用得上 docker-compose.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 binlog-backup:image:mysqlcontainer_name:mysql-binlog-backupnet:hostrestart:alwaysvolumes:- ./data:/dataenvironments:- TZ=Asia/Shanghai- MYSQL_ROOT_PASSWORD=passwordcommand:mysqlbinlog --read-from-remote-server \--raw</description>
+    </item>
+    
+    <item>
+      <title>MySQL5.7 Replication</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-repl/</link>
+      <pubDate>Fri, 18 Feb 2022 14:32:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-repl/</guid>
+      <description>之前一直有一个疑问，就是从master中备份数据后，在还原到slave主机的这段时间，如果master一直在写，当使用master_auto</description>
+    </item>
+    
+    <item>
+      <title>Xtrabackup源码编译安装</title>
+      <link>http://www.unknowname.cn/post/database/mysql/xtrabackup-install-by-arm/</link>
+      <pubDate>Tue, 14 Sep 2021 09:08:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/xtrabackup-install-by-arm/</guid>
+      <description>xtrabackup好用，但奈何国外对ARM架构支持不是很好，官网并没有现成的ARM包，只能源码编译了。本镜像适用于MySQL5.7系列。 Dockerfile</description>
+    </item>
+    
+    <item>
+      <title>MySQL归档脚本</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-migration/</link>
+      <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-migration/</guid>
+      <description>贴一个迁移MySQL数据库的脚本 脚本主要实现将原库的ibd文件复制出来后，通过IMPORT TABLESPACE还原回去 使用前提 原表的ibd文</description>
+    </item>
+    
+    <item>
+      <title>MySQL推荐配置</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-conf/</link>
+      <pubDate>Thu, 13 May 2021 11:32:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-conf/</guid>
+      <description>mysqld.cnf 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 character_set_server = utf8mb4 # InnoDB</description>
+    </item>
+    
+    <item>
+      <title>MySQL TableSpace表空间</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-tablespce/</link>
+      <pubDate>Wed, 21 Apr 2021 10:32:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-tablespce/</guid>
+      <description>What TableSpace 表空间是一个存储位置，可以保存实际的底层数据库对象的数据。在MySQL里面，它主要存储InnoDB存储引擎的底层数据。它在物理数据和逻辑</description>
+    </item>
+    
+    <item>
+      <title>MySQL分区总结</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-partion/</link>
+      <pubDate>Tue, 30 Mar 2021 20:32:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-partion/</guid>
+      <description>前提 检查是否打开分区功能 1 show variables like &amp;#34;%partition%&amp;#34;\G 为1或YES表示打开 分区表的限制 一个表最多只能有1024个分区 如果分区字段中有主键或者唯一索引的列，那么所</description>
+    </item>
+    
+    <item>
+      <title>MySQL xtrabackup工具使用</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-backup/</link>
+      <pubDate>Mon, 29 Mar 2021 19:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-backup/</guid>
+      <description>xtrabackup安装 原生的mysqldump在库还小的时候还勉强可以用，一旦超过2/30G的时候就很费时。这个时候xtrabackup就</description>
+    </item>
+    
+    <item>
+      <title>MySQL Cluster增加数据节点</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-cluster-mang/</link>
+      <pubDate>Sat, 12 Sep 2020 12:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-cluster-mang/</guid>
+      <description>添加新数据节点 添加新数据节点之前已经存在的表 的重新分配不是自动的，但是可以使用MySQL或另一个MySQL客户端应用程序中的简单SQL语句来</description>
+    </item>
+    
+    <item>
+      <title>MySQL Cluster安装</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-cluster-install/</link>
+      <pubDate>Fri, 11 Sep 2020 16:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-cluster-install/</guid>
+      <description>知道相关概念后，实际上手搭建一把。因为现在有Docker这个工具，吃螃蟹现在也方便多了，感谢无私的程序员，下面是基于Docker+docke</description>
+    </item>
+    
+    <item>
+      <title>MySQL Cluster基础介绍</title>
+      <link>http://www.unknowname.cn/post/database/mysql/mysql-cluster-base/</link>
+      <pubDate>Fri, 11 Sep 2020 12:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/mysql-cluster-base/</guid>
+      <description>存在的局限 以下列举的比较重要的，更多限制请参照官方文档 不支持临时表TEMPORARY 不支持在TEXT和BLOB列上创建索引 不支持FULLTE</description>
+    </item>
+    
+  </channel>
+</rss>

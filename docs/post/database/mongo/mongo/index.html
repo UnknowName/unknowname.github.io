@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>MongoDB基础 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="MongoDB基础" /><meta name="keywords" content="MongoDB" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/database/mongo/mongo/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="MongoDB基础" />
+<meta property="og:description" content="MongoDB基础" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/database/mongo/mongo/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-10-11T12:35:11&#43;08:00" />
+<meta property="article:modified_time" content="2020-10-11T12:35:11&#43;08:00" />
+
+<meta itemprop="name" content="MongoDB基础">
+<meta itemprop="description" content="MongoDB基础"><meta itemprop="datePublished" content="2020-10-11T12:35:11&#43;08:00" />
+<meta itemprop="dateModified" content="2020-10-11T12:35:11&#43;08:00" />
+<meta itemprop="wordCount" content="2299">
+<meta itemprop="keywords" content="MongoDB," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MongoDB基础"/>
+<meta name="twitter:description" content="MongoDB基础"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">MongoDB基础</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-11 </span>
+        <div class="post-category">
+            <a href="/categories/database/"> Database </a>
+            </div>
+          <span class="more-meta"> 约 2299 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#特点span-idtd">特点<span id="td"/></a></li>
+            <li><a href="#crudspan-idcrud">CRUD<span id="crud"/></a></li>
+            <li><a href="#修改器span-idxgq">修改器<span id="xgq"/></a></li>
+            <li><a href="#查询span-id-query">查询<span id ="query"/></a></li>
+            <li><a href="#管理span-idmanager">管理<span id="manager"/></a></li>
+            <li><a href="#索引span-idindex">索引<span id="index"/></a></li>
+            <li><a href="#特殊集合与索引span-idcollection">特殊集合与索引<span id="collection"/></a></li>
+            <li><a href="#聚合span-idjh">聚合<span id="jh"/></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="特点span-idtd">特点<span id="td"/></h3>
+<ul>
+<li>
+<p>索引</p>
+<pre><code>  支持通用二级索引、唯一索引、复合索引、地理空间索引、全文索引
+</code></pre>
+</li>
+<li>
+<p>聚合</p>
+<pre><code>  支持聚合管道(aggreation pipeline)
+</code></pre>
+</li>
+<li>
+<p>特殊集合类型</p>
+<pre><code>  基于时间失效的集合，适用于像日志,session场景
+</code></pre>
+</li>
+<li>
+<p>文件存储</p>
+<pre><code>  GridFS
+</code></pre>
+</li>
+</ul>
+<h3 id="crudspan-idcrud">CRUD<span id="crud"/></h3>
+<ul>
+<li>
+<p>插入</p>
+<pre><code> /* 单条记录 */
+ doc = {&quot;username&quot;: &quot;username&quot;, &quot;from&quot;: &quot;china&quot;, &quot;birth&quot;: 1990};
+ db.users.insert(doc);
+ /* 多条记录 */
+ docs = [{&quot;user&quot;: &quot;user1&quot;}, {&quot;user&quot;:&quot;user2&quot;}, {&quot;user&quot;: &quot;user3&quot;}]
+ db.users.insertMany(docs);
+</code></pre>
+</li>
+<li>
+<p>删除</p>
+<pre><code>  /* 删除user集合的所有内容,但保留user集合本身 */
+  db.user.remove();
+  /* 整个集合都删除，包括集合本身 */
+  db.user.drop();
+  /* 删除user集合中name为unknow的用户 */
+  db.user.remove({&quot;name&quot;:&quot;unknow&quot;});
+</code></pre>
+</li>
+<li>
+<p>更新</p>
+<pre><code>  /* 先从集合中读取一个用户，修改属性后再更新 */
+  old_user = db.user.findOne({&quot;name&quot;:&quot;name1&quot;});
+  old_user.username = &quot;newname&quot;;
+  db.user.update({&quot;name&quot;:&quot;name1&quot;}, old_user);
+  /* 如果存在多条如name:name1的文档时，则需要通过_id键来进行更新 */
+</code></pre>
+</li>
+</ul>
+<h3 id="修改器span-idxgq">修改器<span id="xgq"/></h3>
+<ul>
+<li>
+<p>更新修改器</p>
+<ul>
+<li>
+<p><code>$inc</code>  指定的KEY键自增值V,如果键不存在，创建它，并赋值</p>
+<pre><code>  /* 更新name:name1的age 加1。第三个参数是如果文档不存在就创建*/ 
+  db.user.update({&quot;name&quot;:&quot;name1&quot;}, {&quot;$inc&quot;: {&quot;age&quot;: 1}}, true});
+</code></pre>
+</li>
+<li>
+<p><code>$set</code> 修改指定字段的值，如果字段不存在则创建并赋值</p>
+<pre><code>  db.user.update({&quot;name&quot;:&quot;name1&quot;}, {&quot;$set&quot;: {&quot;country&quot;: &quot;china&quot;}});
+</code></pre>
+</li>
+<li>
+<p><code>$unset</code> 如果字段存在，移除该字段，如果不存在，什么也不做</p>
+</li>
+<li>
+<p><code>$push</code> 向数组末尾添加元素，如果数组不存在，则创建它</p>
+<pre><code>  db.user.update({&quot;name&quot;:&quot;name1&quot;}, {&quot;$push&quot;: {&quot;favirute&quot;: &quot;swimming&quot;}});
+</code></pre>
+</li>
+<li>
+<p><code>$pull</code> 匹配所有文档中的数组，并删除数组中给定的KEY?测试下来是删除一个？</p>
+<pre><code>  docs = [
+      {&quot;name&quot;:&quot;name1&quot;, &quot;favirute&quot;: [&quot;swimming&quot;,&quot;football&quot;]},
+      {&quot;name&quot;:&quot;name2&quot;, &quot;favirute&quot;: [&quot;swimming&quot;,&quot;football2&quot;]},
+      {&quot;name&quot;:&quot;name3&quot;, &quot;favirute&quot;: [&quot;swimming&quot;,&quot;football3&quot;]},
+  ];
+  db.users.insertMany(docs);
+  db.users.update({}, {&quot;$pull&quot;: {&quot;favirute&quot;: &quot;swimming&quot;}});
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="查询span-id-query">查询<span id ="query"/></h3>
+<ul>
+<li>
+<p><code>find</code></p>
+<pre><code>  /* 查询所有文档 */
+  db.collection.find();
+
+  /* 查询指定KEY具有指定值的文档 */
+  db.collection.find({&quot;name&quot;:&quot;name1&quot;, &quot;country&quot;: &quot;china&quot;})
+
+  /* 指定需要返回的键 */
+  db.collection.find({}, {&quot;name&quot;:1})
+
+  /* 指定不需要返回的键 */
+  db.collection.find({}, {&quot;_id&quot;: 0})
+
+  /* 条件查询，查询年龄大于18，小于40的文档 */
+  db.collection.find({&quot;age&quot;: {&quot;$gt&quot;: 18, &quot;$lt&quot;: 40}})
+
+  /* 包含查询,$in包含, $nin不包含 */
+  db.collection.find({&quot;number&quot;: {&quot;$in&quot;: [75, 28.87]}})
+
+  /* $or查询,接受一个列表 */
+  db.collection.find(
+      &quot;$or&quot;: [
+          {&quot;number&quot;: {&quot;$in&quot;: [987,&quot;234&quot;]}},
+          {&quot;winner&quot;: true}
+      ]
+  )
+
+  /* not,取反 */
+  db.collection.find({&quot;$not&quot;: {&quot;number&quot;:{&quot;$in&quot;: [2, 5, &quot;9&quot;]}}})
+
+  /* $exists 判断键是存在与否 */
+  db.collection.find({&quot;key&quot;: {&quot;$exists&quot;: true}})
+
+  /* 正则表达式,注意没有使用双引号 */
+  db.collection.find({&quot;name&quot;: /abc/})
+</code></pre>
+</li>
+<li>
+<p>数组查询</p>
+<pre><code>  /* likes是数组，则匹配数组中既有swimming又有reading的文档 */
+  db.collection.find(
+      {&quot;likes&quot;: {&quot;$all&quot;: [&quot;swimming&quot;, &quot;reading&quot;]}}
+  )
+
+  /* size 查询数组长度 */
+  db.collection.find({&quot;likes&quot;: {&quot;$size&quot;: 3}})
+
+  /* slice 返回匹配文档的数组的切片 */
+  db.collection.find(
+      {&quot;name&quot;:&quot;name1&quot;},
+      {&quot;likes&quot;: {&quot;$slice&quot;:[2, 4]}}
+  )
+
+  /* 数组最后的值 */
+  db.collection.find(
+      {&quot;name&quot;:&quot;name1&quot;},
+      {&quot;likes&quot;: {&quot;$slice&quot;: -1}}
+  )
+
+  /* 只匹配数组范围查询.数组内的所有数都需要满足下面的条件 */
+  db.collection.find({&quot;likes&quot;:
+      {&quot;$elemMatch&quot;: {&quot;$gt&quot;: 10, &quot;$lt&quot;: 20}}
+  })
+</code></pre>
+</li>
+<li>
+<p>内联文档查询</p>
+<pre><code>  /* 内联文档查询使用.运算符 */
+  {  
+      &quot;name&quot;: {&quot;first_name&quot;: &quot;cheng&quot;, &quot;last_name&quot;: &quot;name2&quot;},
+      &quot;age&quot;: 30
+  }
+  db.collection.find({&quot;name.first_name&quot;: &quot;cheng&quot;})
+
+  /* 多条件查询内联文档时，也可以使用$elemMatch
+  db.collection.find({
+      &quot;name&quot;: {
+          &quot;$elemMatch: {
+              &quot;fist_name&quot;: &quot;cheng&quot;, &quot;age&quot;:{&quot;$gt&quot;: 30}
+          }
+      }
+  })
+
+  /* $where 官方建议禁用该功能，可以执行任何JavaScript语句 */
+</code></pre>
+</li>
+<li>
+<p>查询选项</p>
+<ul>
+<li>
+<p><code>limit</code> 限制返回的数目</p>
+<pre><code>  db.collection.find().limit(5)
+</code></pre>
+</li>
+<li>
+<p><code>skip</code> 跳过前面指定的文档</p>
+<pre><code>  db.collection.find().skip(3)
+</code></pre>
+</li>
+<li>
+<p><code>sort</code> 接受一个对象作为参数，作为排序的键</p>
+<pre><code>  /* 1为升序，-1为降序 */
+  db.collecton.find().sort({&quot;age&quot;: 1, &quot;username&quot;: -1})
+
+  /* 以上三个参数组合使用 */
+  db.collection.find().skip(50).limit(50).sort({&quot;age&quot;: 1})
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="管理span-idmanager">管理<span id="manager"/></h3>
+<ul>
+<li>数据库授权</li>
+</ul>
+<p><code>MongoDB</code>默认是不开启授权的，服务启动后可以直接进入。要开启授权，需要做二步:</p>
+<pre><code>    # 服务端使用--auth启动
+    mongod --auth
+
+    # 创建用户，并指定用户权限的库
+    use admin;
+    db.auth(&quot;root&quot;, &quot;pass&quot;); 
+    use mydb;
+    db.createUser(
+        {user: &quot;user&quot;, pwd: &quot;123456&quot;,
+        roles: [{role: &quot;readWrite&quot;, db: &quot;mydb&quot;}]}
+    );
+</code></pre>
+<p>完整角色可参考https://docs.mongodb.com/manual/reference/built-in-roles/</p>
+<ul>
+<li>
+<p>删除用户</p>
+<p>在删除用户前，需要通过先<code>admin</code>授权后再切换至指定要删除用户所在<code>db</code>上。再执行删除</p>
+<pre><code>  use admin;
+  db.auth(&quot;root&quot;, &quot;pass&quot;);
+  use mydb;
+  db.dropUser(&quot;user&quot;);
+</code></pre>
+</li>
+<li>
+<p>修改用户</p>
+<p>貌似不生效，但官网例子的确是这样，先存一疑&hellip;</p>
+<pre><code>  db.updateUser(
+      &quot;username&quot;,
+      {
+          pwd: &quot;newpwd&quot;,
+          roles: [{role: &quot;readWrite&quot;, db: &quot;newdb&quot;}]
+      }
+  );
+</code></pre>
+</li>
+<li>
+<p>查询当前DB中执行的任务</p>
+<pre><code>  db.currentOp()
+</code></pre>
+</li>
+</ul>
+<h3 id="索引span-idindex">索引<span id="index"/></h3>
+<ul>
+<li>
+<p>索引覆盖</p>
+<pre><code> 如果查询只需要查询索引中包含的字段，而无需返回整个文档。当一个索引包含用户请求的所有字段，就称为索引覆盖。
+ 应该优先使用索引覆盖。在查询中指定不需要返回的列。
+</code></pre>
+</li>
+<li>
+<p>多键索引</p>
+<pre><code>  如果索引键在文档中是一个数组，那么这个索引就会被标记为多键索引。被标记为多键索引后，就无法再变成非多键索引。除非删除索引后重建索引。
+</code></pre>
+</li>
+<li>
+<p>索引类型</p>
+<ul>
+<li>
+<p>唯一索引： 索引键的值不能有重复，必须唯一</p>
+<pre><code>  db.collection.createIndex({&quot;name&quot;: 1}, {&quot;uniq&quot;: true})
+</code></pre>
+</li>
+<li>
+<p>复合唯一索引</p>
+</li>
+<li>
+<p>稀疏索引：  该键可以不存在，但是存在时，其值就必须唯一</p>
+<pre><code>  db.collection.createIndex({&quot;name&quot;: 1}, {&quot;sparse&quot;: true});
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>索引管理<span id="index-manager"/></p>
+<ul>
+<li>
+<p>创建</p>
+<p>索引创建很费资源，默认它为阻塞所有读/写请求，直到索引创建完毕。如果在运行的服务器中创建索引，使用<code>background</code>选项，让<code>MongoDB</code>在后台创建索引。</p>
+<pre><code>  db.collection.createIndex();
+</code></pre>
+</li>
+<li>
+<p>查询</p>
+<pre><code>  db.collection.getIndexes();
+</code></pre>
+</li>
+<li>
+<p>删除</p>
+<pre><code>  db.collection.dropIndex(IndexName);
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="特殊集合与索引span-idcollection">特殊集合与索引<span id="collection"/></h3>
+<ul>
+<li>
+<p>固定集合</p>
+<p>类似循环队列，设置大小后当集合达到指定大小后，新数据会覆盖老数据。固定集合在使用之前需要显式创建。</p>
+<p>如果要限定固定集合的文档数量，<code>size</code>与<code>max</code>都需要指定。最终先达到限制的条件来决定文档的删除。</p>
+<pre><code> /* 创建大小固定为100 000 Byte大小,最大文档数为1000的集合 */
+ db.createCollection(&quot;name&quot;, {&quot;capped&quot;: true, &quot;size&quot;: 100000, &quot;max&quot;: 1000})
+
+ /* 将已存在的集合转换为固定集合 */
+ db.runCommand({&quot;convertToCapped&quot;: &quot;collectName&quot;, &quot;size&quot;: 10000, &quot;max&quot;: 1000});
+</code></pre>
+</li>
+<li>
+<p>TTL索引</p>
+<p>创建了该索引的文档，到达老化时间后，会被<code>MongoDB</code>自动删除。</p>
+<pre><code>  db.collection.createIndex({&quot;lastUpdate&quot;: 1}, {&quot;expireAfterSecs&quot;: 60 * 60 * 24}, {&quot;background&quot;: true})
+</code></pre>
+</li>
+<li>
+<p>全文本索引</p>
+<p>一个文档只能包含一个全文本索引，但全文本索引可以包含多个字段</p>
+<pre><code>  /* 将文档的title设置为全文本索引 */
+  db.collection.createIndex({&quot;title&quot;: &quot;text&quot;});
+
+  /* 通过全文本索引来搜索文档 */
+  db.runCommand({&quot;text&quot;: &quot;collectionName&quot;, &quot;search&quot;: &quot;ask hn&quot;})
+</code></pre>
+</li>
+<li>
+<p>地理空间索引</p>
+</li>
+<li>
+<p>2d索引</p>
+</li>
+</ul>
+<h3 id="聚合span-idjh">聚合<span id="jh"/></h3>
+<ul>
+<li>
+<p>操作符简介</p>
+<ul>
+<li>
+<p><code>$match</code></p>
+<p>用于对文档进行筛选，匹配符合条件的文档</p>
+<pre><code>  {&quot;$match&quot;: {&quot;name&quot;: &quot;name1&quot;}}
+</code></pre>
+</li>
+<li>
+<p><code>$project</code></p>
+<p>可以从文档中提取字段，重命名字段，指定要返回的字段</p>
+<pre><code>  /* 指定返回的字段 */
+  {&quot;$project&quot;: {&quot;name&quot;: 1, &quot;_id&quot;: 0}}
+
+  /* 将结果返回并重命名_id为userId */
+  {&quot;$project&quot;: {&quot;userId&quot;: &quot;_id&quot;,  &quot;_id&quot;: 0}}
+</code></pre>
+</li>
+<li>
+<p><code>$project</code>表达式</p>
+<ul>
+<li><code>$add</code> 给定的列相加</li>
+<li><code>$subtract</code> 第一列减去第二列</li>
+<li><code>$multipy</code> 两个或者多个表达式相乘，积为结果</li>
+<li><code>$divde</code> 接受两个表达式，第一个除以第二个的商作为结果</li>
+<li><code>$mod</code> 接受两个表达式，第一个除以第二个的余数作为结果</li>
+<li><code>$substr</code> 子串字节</li>
+<li><code>$concat</code> 两个或者多个表达式，连接字符串</li>
+<li><code>toLower</code> 参数为字符串，返回小写形式</li>
+<li><code>toUpper</code> 参数为字符串，返回大写形式</li>
+<li><code>$cmp</code> 接受两个表达，判断大小。返回0/1/-1</li>
+<li><code>strcasecmp</code> 字符串比较，区分大小写</li>
+<li><code>$cond</code> 三元操作符</li>
+<li><code>ifNull</code> [<code>expr</code>, <code>replaeExpr</code>] 如果<code>expr</code>为<code>null</code>，返回<code>repleExpr</code>.否则返回<code>expr</code></li>
+</ul>
+</li>
+<li>
+<p><code>$group</code></p>
+<p>将文档根据不同字段的值进行分组。要分组的字段传给<code>$group</code>的<code>_id</code></p>
+<pre><code>  /* 根据name字段进行分组 */
+  db.collection.aggregate({&quot;group&quot;: {&quot;_id&quot;: &quot;$name&quot;}})
+</code></pre>
+<ul>
+<li>
+<p><code>$group</code>操作符</p>
+<ul>
+<li>
+<p><code>$sum</code></p>
+<pre><code>  db.collection.aggregate(
+      &quot;$group&quot;: {
+          &quot;_id&quot;: &quot;$age&quot;,
+          &quot;total&quot;: {&quot;$sum&quot;: &quot;$age&quot;}
+      }
+  )
+</code></pre>
+</li>
+<li>
+<p><code>$avg</code></p>
+</li>
+<li>
+<p><code>$max</code></p>
+</li>
+<li>
+<p><code>$min</code></p>
+</li>
+<li>
+<p><code>$first</code></p>
+</li>
+<li>
+<p><code>$last</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>$unwind</code></p>
+<p>将内联文档里面的文档进行拆分</p>
+</li>
+<li>
+<p><code>$sort</code></p>
+<p>可以根据任何字段进行排序。如果要对大量文档进行排序，建议在管道第一阶段进行排序</p>
+</li>
+<li>
+<p><code>$limit</code></p>
+</li>
+<li>
+<p><code>$skip</code></p>
+</li>
+<li>
+<p><code>$distinct</code></p>
+<p>给定键的不同值</p>
+<pre><code>  db.runCommand({&quot;$distinct&quot;: &quot;collectName&quot;, &quot;key&quot;:　&quot;name&quot;})</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-10-11
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mongodb/">MongoDB</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/database/mongo/mongo_shard/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">MongoDB分片</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/k8s/k8s-rbac-ns/">
+            <span class="next-text nav-default">Kubernetes给予指定NameSpace的控制权限</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

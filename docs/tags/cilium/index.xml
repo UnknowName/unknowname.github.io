@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cilium on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/cilium/</link>
+    <description>Recent content in Cilium on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 16 Dec 2021 15:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/cilium/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cilium for Kubernetes</title>
+      <link>http://www.unknowname.cn/post/k8s/cilium/</link>
+      <pubDate>Thu, 16 Dec 2021 15:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/cilium/</guid>
+      <description>Cilium准备都要把Istio干翻了，还是值得研究下。那么根据官方文档来踩下坑，记录下，方便下次折腾。 注意: 由于Cilium的eBPF功能</description>
+    </item>
+    
+  </channel>
+</rss>

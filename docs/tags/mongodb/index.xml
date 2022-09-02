@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MongoDB on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/mongodb/</link>
+    <description>Recent content in MongoDB on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 13 Oct 2020 21:40:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MongoDB状态管理</title>
+      <link>http://www.unknowname.cn/post/database/mongo/mongo_debug/</link>
+      <pubDate>Tue, 13 Oct 2020 21:40:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mongo/mongo_debug/</guid>
+      <description>当前服务器正在进行的操作 1 2 3 4 # 查询服务器所有正在Running的操作 db.currentOp(); # 只查找对dbName.collectionName的操作 db.currentOp({&amp;#34;ns&amp;#34;:&amp;#34;dbName.collectionName&amp;#34;}) 终止操</description>
+    </item>
+    
+    <item>
+      <title>MongoDB复制集实战</title>
+      <link>http://www.unknowname.cn/post/database/mongo/mongo_repl/</link>
+      <pubDate>Tue, 13 Oct 2020 13:40:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mongo/mongo_repl/</guid>
+      <description>配置 不同机器的MongoDB服务进程使用相同启动参数运行: 1 mongod --replSet rs0 -f /etc/mongod.conf 三台机器运行起来后，再在三台当中任何一台中执行: 1 2 3 4 5 6 7 8 9 10 11</description>
+    </item>
+    
+    <item>
+      <title>MongoDB分片</title>
+      <link>http://www.unknowname.cn/post/database/mongo/mongo_shard/</link>
+      <pubDate>Mon, 12 Oct 2020 13:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mongo/mongo_shard/</guid>
+      <description>速览 官方建议至少三台以上,分片的前提需要副本集. 分片解决的问题 增加可用RAM 增加可用磁盘空间 减轻单台服务器压力 处理单个mongod无法承受的</description>
+    </item>
+    
+    <item>
+      <title>MongoDB基础</title>
+      <link>http://www.unknowname.cn/post/database/mongo/mongo/</link>
+      <pubDate>Sun, 11 Oct 2020 12:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mongo/mongo/</guid>
+      <description>特点 索引 支持通用二级索引、唯一索引、复合索引、地理空间索引、全文索引 聚合 支持聚合管道(aggreation pipeline) 特殊集合类型 基于时间失效的集合，</description>
+    </item>
+    
+  </channel>
+</rss>

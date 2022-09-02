@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tools on UnknowName</title>
+    <link>http://www.unknowname.cn/categories/tools/</link>
+    <description>Recent content in tools on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 10 Mar 2022 16:31:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sonar scan code</title>
+      <link>http://www.unknowname.cn/post/ci/sonar-init/</link>
+      <pubDate>Thu, 10 Mar 2022 16:31:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ci/sonar-init/</guid>
+      <description>Requirement Docker版本需要20.10及以上 1 yum install -y docker-ce SonarQube Install docker-compose.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 sonarqube:image:sonarqube:communitycontainer_name:sonarenvironment:SONAR_JDBC_URL:jdbc:postgresql://128.0.100.170:5432/sonarSONAR_JDBC_USERNAME:sonarSONAR_JDBC_PASSWORD:sonarvolumes:- ./sonarqube_data:/opt/sonarqube/data- ./sonarqube_extensions:/opt/sonarqube/extensions- ./sonarqube_logs:/opt/sonarqube/logsports:- &amp;#34;9000:9000&amp;#34;db:image:postgres:12container_name:sonar-dbnet:hostenvironment:POSTGRES_USER:sonarPOSTGRES_PASSWORD:sonarvolumes:- ./sql_config:/var/lib/postgresql- ./sql_data:/var/lib/postgresql/data 访问9000端口即为Son</description>
+    </item>
+    
+    <item>
+      <title>GitLab使用Kaniko构建镜像</title>
+      <link>http://www.unknowname.cn/post/ci/gitalb-kaniko/</link>
+      <pubDate>Tue, 15 Feb 2022 17:15:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ci/gitalb-kaniko/</guid>
+      <description>安装Docker类型的GitLabRunner 一定要是Docker类型的GitLabRunner，之前测试时，没注意到这一点，一直测试没通过</description>
+    </item>
+    
+    <item>
+      <title>Xtrabackup源码编译安装</title>
+      <link>http://www.unknowname.cn/post/database/mysql/xtrabackup-install-by-arm/</link>
+      <pubDate>Tue, 14 Sep 2021 09:08:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/database/mysql/xtrabackup-install-by-arm/</guid>
+      <description>xtrabackup好用，但奈何国外对ARM架构支持不是很好，官网并没有现成的ARM包，只能源码编译了。本镜像适用于MySQL5.7系列。 Dockerfile</description>
+    </item>
+    
+    <item>
+      <title>Graylog常见一些问题处理</title>
+      <link>http://www.unknowname.cn/post/graylog/graylog-faq/</link>
+      <pubDate>Mon, 30 Aug 2021 10:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/graylog-faq/</guid>
+      <description>查询提示Try recalculating your index ranges. MongoDB端操作 1 2 3 4 mongo use graylog; db.index_ranges.drop() exit Graylog端 进入Graylog管理页，进入system-&amp;gt;indice</description>
+    </item>
+    
+    <item>
+      <title>K8S集群上部署Ceph</title>
+      <link>http://www.unknowname.cn/post/ceph/k8s-install-ceph/</link>
+      <pubDate>Wed, 03 Mar 2021 13:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ceph/k8s-install-ceph/</guid>
+      <description>现在都讲究云原生，Rook是一个云原生存储开源项目。基于它部署Ceph将十分简单方便 安装Ceph集群。下载Rook相应的Release包，并</description>
+    </item>
+    
+    <item>
+      <title>Ceph介绍</title>
+      <link>http://www.unknowname.cn/post/ceph/ceph-intr/</link>
+      <pubDate>Wed, 03 Mar 2021 13:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ceph/ceph-intr/</guid>
+      <description>概念介绍 Ceph是一个开源的分布式系统，提供多种存储方式。 一个Ceph集群由两种类型的后台进程（Daemon）组成。OSD Daemon和Ce</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch常用API</title>
+      <link>http://www.unknowname.cn/post/es/es-api/</link>
+      <pubDate>Mon, 01 Mar 2021 19:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/es/es-api/</guid>
+      <description>索引API 查看所有索引 curl -XGET http://es:9200/_cat/indices?pretty 删除指定索引 curl -XDELETE http://es:9200/IndexName 索引配置信息 curl -XGET http://es:9200/IndexName/_settings?pretty 取消所有索引只读模式 curl -XPUT -H &amp;quot;Content-type: application/json&amp;quot; http://es:9200/_settings -d &#39;{ &amp;quot;index.blocks.read_only_allow_delete&amp;quot;:&amp;quot;false&amp;quot; }&#39; 索引重命名 curl -XPOST -H &amp;quot;Content-type: application/json&amp;quot; http://es:9200/_reindex -d &#39;{ &amp;quot;source&amp;quot;: { &amp;quot;index&amp;quot;: &amp;quot;OldName&amp;quot; },</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch正确重启维护</title>
+      <link>http://www.unknowname.cn/post/es/es-stop/</link>
+      <pubDate>Mon, 01 Mar 2021 14:12:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/es/es-stop/</guid>
+      <description>加大延迟索引复制时间 1 2 3 4 5 curl -XPUT -H &amp;#34;Content-type: application/json&amp;#34; http://es:9200/_all/_settings -d &amp;#39;{ &amp;#34;settings&amp;#34;: { &amp;#34;index.unassigned.node_left.delayed_timeout&amp;#34;: &amp;#34;5m&amp;#34; } }&amp;#39; 通过API，临时禁用索引分片 1 2 3 4 5 curl -XPUT -H &amp;#34;Content-type: application/json&amp;#34; http://es:9200/_cluster/settings -d &amp;#39;{ &amp;#34;transient&amp;#34; : { &amp;#34;cluster.routing.allocation.enable&amp;#34; : &amp;#34;none&amp;#34; } }&amp;#39; 停止Elas</description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch 重要的配置项</title>
+      <link>http://www.unknowname.cn/post/es/es-conf/</link>
+      <pubDate>Mon, 01 Mar 2021 13:48:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/es/es-conf/</guid>
+      <description>示例elasticsearch.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 # 默认数据副本数index.number_of_replicas:1</description>
+    </item>
+    
+    <item>
+      <title>GitLab CI/CD实践</title>
+      <link>http://www.unknowname.cn/post/ci/gitlab-ci/</link>
+      <pubDate>Sun, 28 Feb 2021 16:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ci/gitlab-ci/</guid>
+      <description>简述 GitLab现已集成CI/CD功能。默认每个项目，都会自动启用CI/CD功能。但要使用，还需要配合Gitlab-Runner才可正常运行</description>
+    </item>
+    
+    <item>
+      <title>Graylog收集Nginx访问日志</title>
+      <link>http://www.unknowname.cn/post/graylog/nginx-log-to-graylog/</link>
+      <pubDate>Sun, 28 Feb 2021 15:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/nginx-log-to-graylog/</guid>
+      <description>Nginx端配置 因为NGINX的access_log语法是支持发送至远端的syslog的，我们就是利用这一特性来实现。既然可以收集至Gray</description>
+    </item>
+    
+    <item>
+      <title>Graylog增加节点</title>
+      <link>http://www.unknowname.cn/post/graylog/graylog-add-node/</link>
+      <pubDate>Sun, 28 Feb 2021 12:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/graylog-add-node/</guid>
+      <description>如果要完全实现高可用，那么Graylog三个组件都需要做到。官方并没有给出具体实施细节，但是官方给出了指导方案 MongoDB 需要做成复制集，并且使用Gr</description>
+    </item>
+    
+    <item>
+      <title>Graylog安装及介绍</title>
+      <link>http://www.unknowname.cn/post/graylog/graylog/</link>
+      <pubDate>Sun, 28 Feb 2021 10:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/graylog/</guid>
+      <description>Graylog日志收集服务 介绍 Graylog是一个集中日志收集与检索系统。可以将它看成是一个EFK组合。它的底层搜索提供也是Elastics</description>
+    </item>
+    
+  </channel>
+</rss>

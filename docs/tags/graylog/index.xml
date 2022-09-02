@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>graylog on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/graylog/</link>
+    <description>Recent content in graylog on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 30 Aug 2021 10:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/graylog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Graylog常见一些问题处理</title>
+      <link>http://www.unknowname.cn/post/graylog/graylog-faq/</link>
+      <pubDate>Mon, 30 Aug 2021 10:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/graylog-faq/</guid>
+      <description>查询提示Try recalculating your index ranges. MongoDB端操作 1 2 3 4 mongo use graylog; db.index_ranges.drop() exit Graylog端 进入Graylog管理页，进入system-&amp;gt;indice</description>
+    </item>
+    
+    <item>
+      <title>Graylog收集Nginx访问日志</title>
+      <link>http://www.unknowname.cn/post/graylog/nginx-log-to-graylog/</link>
+      <pubDate>Sun, 28 Feb 2021 15:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/nginx-log-to-graylog/</guid>
+      <description>Nginx端配置 因为NGINX的access_log语法是支持发送至远端的syslog的，我们就是利用这一特性来实现。既然可以收集至Gray</description>
+    </item>
+    
+    <item>
+      <title>Graylog增加节点</title>
+      <link>http://www.unknowname.cn/post/graylog/graylog-add-node/</link>
+      <pubDate>Sun, 28 Feb 2021 12:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/graylog-add-node/</guid>
+      <description>如果要完全实现高可用，那么Graylog三个组件都需要做到。官方并没有给出具体实施细节，但是官方给出了指导方案 MongoDB 需要做成复制集，并且使用Gr</description>
+    </item>
+    
+    <item>
+      <title>Graylog安装及介绍</title>
+      <link>http://www.unknowname.cn/post/graylog/graylog/</link>
+      <pubDate>Sun, 28 Feb 2021 10:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/graylog/</guid>
+      <description>Graylog日志收集服务 介绍 Graylog是一个集中日志收集与检索系统。可以将它看成是一个EFK组合。它的底层搜索提供也是Elastics</description>
+    </item>
+    
+  </channel>
+</rss>

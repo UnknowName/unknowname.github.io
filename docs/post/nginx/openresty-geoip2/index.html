@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>OpenResty配合GeoIP2识别客户端所在城市 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="OpenResty识别来访者城市" /><meta name="keywords" content="OpenResty, GeoIP, GeoIP2" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/nginx/openresty-geoip2/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="OpenResty配合GeoIP2识别客户端所在城市" />
+<meta property="og:description" content="OpenResty识别来访者城市" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/nginx/openresty-geoip2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-10-27T09:31:11&#43;08:00" />
+<meta property="article:modified_time" content="2020-10-27T09:31:11&#43;08:00" />
+
+<meta itemprop="name" content="OpenResty配合GeoIP2识别客户端所在城市">
+<meta itemprop="description" content="OpenResty识别来访者城市"><meta itemprop="datePublished" content="2020-10-27T09:31:11&#43;08:00" />
+<meta itemprop="dateModified" content="2020-10-27T09:31:11&#43;08:00" />
+<meta itemprop="wordCount" content="584">
+<meta itemprop="keywords" content="NGINX," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenResty配合GeoIP2识别客户端所在城市"/>
+<meta name="twitter:description" content="OpenResty识别来访者城市"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">OpenResty配合GeoIP2识别客户端所在城市</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-27 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+          <span class="more-meta"> 约 584 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#安装">安装</a></li>
+        <li><a href="#配置">配置</a></li>
+        <li><a href="#有可能会遇到的坑">有可能会遇到的坑</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><code>GeoIP</code>数据太老，不能识别城市了，新项目升级为<code>GeoIP2</code>。要下载免费数据库文件，需要在官网进行注册。</p>
+<p>用到的开源项目</p>
+<ul>
+<li><a href="https://github.com/maxmind/libmaxminddb">https://github.com/maxmind/libmaxminddb</a></li>
+<li><a href="https://github.com/leev/ngx_http_geoip2_module">https://github.com/leev/ngx_http_geoip2_module</a></li>
+</ul>
+<p>免费的城市与国家数据库下载</p>
+<ul>
+<li><a href="https://dev.maxmind.com/geoip/geoip2/geolite2/">https://dev.maxmind.com/geoip/geoip2/geolite2/</a></li>
+</ul>
+<h2 id="安装">安装</h2>
+<p>安装编译工具</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">yum install -y gcc gcc+ openssl-devel perl-devel perl-ExtUtils-Embed pcre-devel zlib-devel automake make 
+</code></pre></td></tr></table>
+</div>
+</div><p>编译安装<code>libmaxminddb</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 下载最新的release包</span>
+wget https://github.com/maxmind/libmaxminddb/releases/download/1.4.2/libmaxminddb-1.4.2.tar.gz
+
+<span class="c1"># 解压编译安装</span>
+tar -zxvf libmaxminddb-1.4.2.tar.gz
+<span class="nb">cd</span> libmaxminddb-1.4.2
+./configure <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> make install
+</code></pre></td></tr></table>
+</div>
+</div><p>编译安装<code>OpenResty</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 下载ngx_geoip2_module模块</span>
+wget https://github.com/leev/ngx_http_geoip2_module/archive/3.3.tar.gz
+
+<span class="c1"># 解压出来待用</span>
+tar -zxvf 3.3.tar.gz
+
+<span class="c1"># 下载最新OpenResty release包</span>
+wget https://openresty.org/download/openresty-1.17.8.2.tar.gz
+
+<span class="c1"># 解压编译安装</span>
+<span class="nb">cd</span> openresty-1.17.8.2
+./configure --prefix<span class="o">=</span>/opt/openresty <span class="se">\
+</span><span class="se"></span>            --with-pcre --with-http_realip_module <span class="se">\
+</span><span class="se"></span>            --with-file-aio --with-threads <span class="se">\
+</span><span class="se"></span>            --with-stream --with-stream_realip_module <span class="se">\
+</span><span class="se"></span>            --without-stream_limit_conn_module <span class="se">\
+</span><span class="se"></span>            --with-http_perl_module <span class="se">\
+</span><span class="se"></span>            --add-module<span class="o">=</span>/root/ngx_http_geoip2_module-3.3 <span class="se">\
+</span><span class="se"></span>            <span class="o">&amp;&amp;</span> gmake <span class="o">&amp;&amp;</span> gmake install
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="配置">配置</h2>
+<p><code>nginx.conf</code></p>
+<p><code>GeoLit32-City.mmdb</code>需要从官网下载下来，解压后放入<code>conf</code>根目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">...
+http {
+    ...
+    geoip2 conf/GeoLite2-City.mmdb {
+        $city_name default=London source=$remote_addr city names en;
+    }
+    ...
+}
+... 
+</code></pre></td></tr></table>
+</div>
+</div><p><code>city_name</code>为城市英文代码</p>
+<p>变量<code>city_name</code>是根据<code>remote_addr</code>来解析的，如果前面还有一层代理，
+则需要将该变量设置为正确的外网IP，或者替换变量名。不然可能会解析错
+误。如果解析不出来，则<code>city_name</code>的值会使用默认值<code>London</code>。</p>
+<h2 id="有可能会遇到的坑">有可能会遇到的坑</h2>
+<p><code>nginx -t</code> 报错，提示无法加载库文件</p>
+<p>解决方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 查看使用的动态库文件</span>
+ldd /opt/openresty/nginx/sbin/nginx <span class="p">|</span> grep libmaxminddb
+
+<span class="c1">#如果该库指向为Not Found,则做一个软连接至默认搜索库即可</span>
+<span class="c1"># 搜索文件路径</span>
+find / -type f -name libmaxminddb.so.0
+
+<span class="c1"># 软链接指向/lib64目录</span>
+ln -s FilePath /lib64/
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-10-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/nginx/">NGINX</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/nginx/openresty-upsync-backend/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">OpenResty动态后端热加载</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/nginx/openresty-upstream-check/">
+            <span class="next-text nav-default">OpenResty后端HTTP健康检查</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cs on UnknowName</title>
+    <link>http://www.unknowname.cn/categories/cs/</link>
+    <description>Recent content in cs on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 30 May 2022 10:35:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/cs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>汇编学习-寄存器2</title>
+      <link>http://www.unknowname.cn/post/assembly/day03/</link>
+      <pubDate>Mon, 30 May 2022 10:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/assembly/day03/</guid>
+      <description>物理地址 所有的内存单元构成的存储空间是一个一维的线性空间，每一个存储单元在这个空间中都有唯一的地址，这个唯一的地址我们称为物理地址 在8086</description>
+    </item>
+    
+    <item>
+      <title>汇编学习-寄存器1</title>
+      <link>http://www.unknowname.cn/post/assembly/day02/</link>
+      <pubDate>Sat, 28 May 2022 10:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/assembly/day02/</guid>
+      <description>day1-基础知识 寄存器 一个典型的CPU由运算器、控制器、寄存器等器件组成，这些器件通过内部总线相连。基础知识中的总线，相对于CPU来说，是</description>
+    </item>
+    
+    <item>
+      <title>汇编学习-基础知识</title>
+      <link>http://www.unknowname.cn/post/assembly/day01/</link>
+      <pubDate>Fri, 27 May 2022 13:45:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/assembly/day01/</guid>
+      <description>第一章 基础知识 计算机只认识机器码，它所能执行的只有0和1这两种数据，程序是由01组成，这对于维护和排错非常不友好。于是最初的大神就想到写一个</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Ceph介绍 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="Ceph介绍" /><meta name="keywords" content="Ceph" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/ceph/ceph-intr/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Ceph介绍" />
+<meta property="og:description" content="Ceph介绍" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/ceph/ceph-intr/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-03-03T13:05:11&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-03T13:05:11&#43;08:00" />
+
+<meta itemprop="name" content="Ceph介绍">
+<meta itemprop="description" content="Ceph介绍"><meta itemprop="datePublished" content="2021-03-03T13:05:11&#43;08:00" />
+<meta itemprop="dateModified" content="2021-03-03T13:05:11&#43;08:00" />
+<meta itemprop="wordCount" content="1001">
+<meta itemprop="keywords" content="Ceph," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ceph介绍"/>
+<meta name="twitter:description" content="Ceph介绍"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Ceph介绍</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-03-03 </span>
+        <div class="post-category">
+            <a href="/categories/tools/"> tools </a>
+            </div>
+          <span class="more-meta"> 约 1001 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#概念介绍">概念介绍</a></li>
+        <li><a href="#基本架构">基本架构</a></li>
+        <li><a href="#组件">组件</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="概念介绍">概念介绍</h2>
+<p>Ceph是一个开源的分布式系统，提供多种存储方式。</p>
+<p>一个Ceph集群由两种类型的后台进程（<code>Daemon</code>）组成。<code>OSD Daemon和Ceph Monitor</code></p>
+<ul>
+<li>
+<p><code>Ceph Monitor</code></p>
+<p>它主要负责管理全部集群。当你运行一个Ceph集群时，你就会需要Ceph Monitor每天帮你检查集群的健康情况和状态。管理一个集群需要每天做很多工作比如检测所有OSD的状态和文件系统或数据块状态。</p>
+</li>
+<li>
+<p><code>Object Storage Device(OSD)</code></p>
+<p>是集群中重要组成部分。<code>OSD</code>可以存储文件或者数据的内容。它使用文件系统来存储数据。<code>OSD Daemon</code>主要负责管理集群中的所有磁盘。<code>OSD Daemon</code>还负责在本地文件系统存储数据，并为不同的客户软件或存取媒介通过网络提供数据访问。而且，<code>OSD Daemon</code>还负责添加和删除磁盘，磁盘分区，管理<code>OSD</code>、低层空间 管理，提供安全措施和磁盘数据的可复制性。</p>
+</li>
+</ul>
+<p><code>Ceph</code>可以提供对象存储、块存储和文件系统三种类型的存储</p>
+<ul>
+<li>
+<p><code>Block Storage</code></p>
+<p>相当于一块硬盘，你可以在上面建立新的文件系统，你可以添加多块，随意改变文件系统，格式化。但它并不是真正的一块硬盘。可以看成类似阿里云的云盘</p>
+</li>
+<li>
+<p><code>Object Storage</code></p>
+<p>对象存储，系统是搭建好的。开放了一些API，可以对存放里面的文件进行处理，主要用于文件，附件。可以看成类似如如阿里云的OSS。</p>
+</li>
+<li>
+<p><code>CephFS</code></p>
+<p>可以看成是NFS或者NAS。给多台主机挂载使用。</p>
+</li>
+</ul>
+<h2 id="基本架构">基本架构</h2>
+<p>系统可以大致划分为四部分：</p>
+<ol>
+<li>
+<p>客户端</p>
+<pre><code> 使用Ceph的终端用户
+</code></pre>
+</li>
+<li>
+<p>元数据服务器</p>
+<pre><code> 缓存和同步分布式元数据
+</code></pre>
+</li>
+<li>
+<p>对象存储集群</p>
+<pre><code> 将数据和元数据作为对象存储执行其他关键职能
+</code></pre>
+</li>
+<li>
+<p>集群监视器</p>
+<pre><code> 执行监视功能。
+</code></pre>
+</li>
+</ol>
+<p>元数据服务器管理数据位置，以及在何处存储新数据。值得注意的是，元数据存储在一个存储集群，但实际I/O发生在客户和对象存储集群之间。</p>
+<h2 id="组件">组件</h2>
+<ul>
+<li>
+<p><code>Ceph Client</code></p>
+<p>是<code>Ceph</code>文件系统的用户</p>
+</li>
+<li>
+<p><code>Ceph Metadata Daemon（MDS)</code></p>
+<p>元数据服务器，代表存储元数据的<code>Ceph</code>文件系统（注意<code>Ceph</code>块设备和对象存储不使用MDS）。<code>Ceph</code>的元数据服务器使用<code>POSIX</code>文件系统，用户可以执行基本命令如<code>ls</code>,<code>find</code>等。并且不需要在<code>Ceph</code>集群上造成巨大负载。</p>
+</li>
+<li>
+<p><code>Ceph Object Storage Daemon(OSDs)</code></p>
+<p><code>Ceph</code>的守护进程，存储数据，处理数据复制，恢复，回填，重新调整，并通过检查其他<code>Ceph OSD</code>守护程序作为一个心跳向<code>Ceph</code>监视器报告一些检测信息。<code>Ceph</code>集群至少需要二个<code>OSD</code>守护进程来保持一个<code>Active+Clean</code>状态。（<code>Ceph</code>默认为2个备份)</p>
+</li>
+<li>
+<p><code>Ceph Monitors</code></p>
+<p><code>Ceph</code>监控，保持集群状态映射，包括<code>OSD</code>映射，分组(<code>PG</code>)映射，和<code>CRUSH</code>映射。</p>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-03
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/ceph/">Ceph</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/ceph/k8s-install-ceph/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">K8S集群上部署Ceph</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/linux/bash/">
+            <span class="next-text nav-default">Bash/Shell语法速览与技巧</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

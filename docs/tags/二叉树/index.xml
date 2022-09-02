@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>二叉树 on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
+    <description>Recent content in 二叉树 on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 07 Dec 2021 09:13:00 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>递归方法解leetcode之113-路径总和II</title>
+      <link>http://www.unknowname.cn/post/leetcode/113/</link>
+      <pubDate>Tue, 07 Dec 2021 09:13:00 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/leetcode/113/</guid>
+      <description>原题链接 题目描述: 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。叶子节点 是指没有子节点的节</description>
+    </item>
+    
+    <item>
+      <title>递归方法解leetcode之112-路径总和</title>
+      <link>http://www.unknowname.cn/post/leetcode/112/</link>
+      <pubDate>Mon, 06 Dec 2021 11:33:00 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/leetcode/112/</guid>
+      <description>原题链接 题目描述: 给你二叉树的根节点root和一个表示目标和的整数targetSum。判断该树中是否存在 根节点到叶子节点的路径，这条路径上所</description>
+    </item>
+    
+    <item>
+      <title>队列方法解leetcode之559-N叉树的最大深度</title>
+      <link>http://www.unknowname.cn/post/leetcode/559/</link>
+      <pubDate>Sun, 21 Nov 2021 15:00:00 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/leetcode/559/</guid>
+      <description>原题链接 题目描述: 给定一个 N 叉树，找到其最大深度。最大深度是指从根节点到最远叶子节点的最长路径上的节点总数。N叉树输入按层序遍历序列化表示，</description>
+    </item>
+    
+    <item>
+      <title>栈方法解leetcode之114-二叉树展开为链表</title>
+      <link>http://www.unknowname.cn/post/leetcode/114/</link>
+      <pubDate>Thu, 18 Nov 2021 11:02:00 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/leetcode/114/</guid>
+      <description>原题链接 题目描述: 给你二叉树的根结点root，请你将它展开为一个单链表： 展开后的单链表应该同样使用TreeNode，其中right子指针指向</description>
+    </item>
+    
+    <item>
+      <title>队列方法解leetcode之103-二叉树的锯齿形层序遍历</title>
+      <link>http://www.unknowname.cn/post/leetcode/103/</link>
+      <pubDate>Wed, 10 Nov 2021 18:00:00 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/leetcode/103/</guid>
+      <description>原题链接 题目描述: 给定一个二叉树，返回其节点值的锯齿形层序遍历。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。 例</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>OpenResty基于Lua依据IP简单灰度 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="OpenResty实现简单灰度" /><meta name="keywords" content="OpenResty, Lua, 灰度" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/nginx/openresty-lua-backend/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="OpenResty基于Lua依据IP简单灰度" />
+<meta property="og:description" content="OpenResty实现简单灰度" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/nginx/openresty-lua-backend/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-12-25T19:43:11&#43;08:00" />
+<meta property="article:modified_time" content="2021-07-20T10:05:11&#43;08:00" />
+
+<meta itemprop="name" content="OpenResty基于Lua依据IP简单灰度">
+<meta itemprop="description" content="OpenResty实现简单灰度"><meta itemprop="datePublished" content="2020-12-25T19:43:11&#43;08:00" />
+<meta itemprop="dateModified" content="2021-07-20T10:05:11&#43;08:00" />
+<meta itemprop="wordCount" content="1511">
+<meta itemprop="keywords" content="NGINX," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenResty基于Lua依据IP简单灰度"/>
+<meta name="twitter:description" content="OpenResty实现简单灰度"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">OpenResty基于Lua依据IP简单灰度</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-12-25 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+          <span class="more-meta"> 约 1511 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#方法一">方法一</a>
+      <ul>
+        <li><a href="#openresty配置"><code>OpenResty配置</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#方法二">方法二</a>
+      <ul>
+        <li><a href="#1-定义二个upstream">1. 定义二个<code>upstream</code></a></li>
+        <li><a href="#2-通过set_by_lua_file指令动态提供后端upstream">2. 通过<code>set_by_lua_file</code>指令，动态提供后端<code>upstream</code></a></li>
+        <li><a href="#3-initlua">3. <code>init.lua</code></a></li>
+        <li><a href="#4-set_upstream_by_iplua">4. <code>set_upstream_by_ip.lua</code></a></li>
+        <li><a href="#测试">测试</a></li>
+        <li><a href="#其它说明">其它说明</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>需求: 根据不同IP返回不同后端，实现一个简单版的一个灰度发布功能</p>
+<p>使用到的模块</p>
+<ul>
+<li><a href="https://github.com/openresty/lua-nginx-module#synopsis">https://github.com/openresty/lua-nginx-module#synopsis</a></li>
+</ul>
+<p>该模块已内置于<code>OpenResty</code>可以直接使用</p>
+<h1 id="方法一">方法一</h1>
+<h2 id="openresty配置"><code>OpenResty配置</code></h2>
+<ol>
+<li>
+<p>先定义二个<code>upstream</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 定义一个default,为默认后端
+upstream default {
+    server 127.0.0.1:8080 weight=10;
+    server 127.0.0.1:8081 weight=10;
+}
+
+# 定义一个灰度,匹配的IP由灰度提供服务
+upstream stage {
+    server 127.0.0.1:8090 weight=10;
+    server 127.0.0.1:8091 weight=10;
+}
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>通过<code>rewrite_by_lua_file</code>指令来实现不同后端</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">server {
+    ...
+    location / {
+        ...
+        set $backend &#34;default&#34;;
+        rewrite_by_lua_file conf/lua/set_upstream.lua;
+        proxy_pass http://$backend;
+    }
+    ...
+}
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>set_upstream.lua</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-lua" data-lang="lua"><span class="cp">#!/usr/bin/lua</span>
+
+<span class="kd">local</span> <span class="n">redis_host</span> <span class="o">=</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+<span class="kd">local</span> <span class="n">redis_port</span> <span class="o">=</span> <span class="mi">6379</span>
+<span class="c1">-- key 为Redis的Set类型</span>
+<span class="kd">local</span> <span class="n">key</span> <span class="o">=</span> <span class="s2">&#34;td:stage:shops&#34;</span>
+
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">close_redis</span><span class="p">(</span><span class="n">red</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="ow">not</span> <span class="n">red</span> <span class="kr">then</span>
+        <span class="kr">return</span>
+    <span class="kr">end</span>
+    <span class="kd">local</span> <span class="n">pool_max_idle_time</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="kd">local</span> <span class="n">pool_size</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="kd">local</span> <span class="n">ok</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">red</span><span class="p">:</span><span class="n">set_keepalive</span><span class="p">(</span><span class="n">pool_max_idle_time</span><span class="p">,</span> <span class="n">pool_size</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="ow">not</span> <span class="n">ok</span> <span class="kr">then</span>
+        <span class="n">ngx.log</span><span class="p">(</span><span class="n">ngx.ERR</span><span class="p">,</span> <span class="s2">&#34;set keepalive err &#34;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">get_ip</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">client_ip</span> <span class="o">=</span> <span class="n">ngx.req</span><span class="p">.</span><span class="n">get_headers</span><span class="p">()[</span><span class="s2">&#34;X-Real-IP&#34;</span><span class="p">]</span>
+    <span class="kr">if</span> <span class="n">client_ip</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+        <span class="n">client_ip</span> <span class="o">=</span> <span class="n">ngx.req</span><span class="p">.</span><span class="n">get_headers</span><span class="p">()[</span><span class="s2">&#34;x_forwarded_for&#34;</span><span class="p">]</span>
+    <span class="kr">end</span>
+
+    <span class="kr">if</span> <span class="n">client_ip</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+        <span class="n">client_ip</span> <span class="o">=</span> <span class="n">ngx.var</span><span class="p">.</span><span class="n">remote_addr</span>
+    <span class="kr">end</span>
+
+    <span class="kr">return</span> <span class="n">client_ip</span>
+<span class="kr">end</span>
+
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">is_stage</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="kd">local</span> <span class="n">resty_redis</span> <span class="o">=</span> <span class="n">require</span> <span class="s2">&#34;resty.redis&#34;</span>
+    <span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="n">resty_redis</span><span class="p">:</span><span class="n">new</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">ok</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">redis</span><span class="p">:</span><span class="n">connect</span><span class="p">(</span><span class="n">redis_host</span><span class="p">,</span> <span class="n">redis_port</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">err</span> <span class="kr">then</span>
+        <span class="n">colse_redis</span><span class="p">(</span><span class="n">redis</span><span class="p">)</span>
+        <span class="n">ngx.log</span><span class="p">(</span><span class="n">ngx.ERR</span><span class="p">,</span> <span class="s2">&#34;Connect to redis failed &#34;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="kr">else</span>
+        <span class="c1">-- ngx.log(ngx.ERR, &#34;Connect success&#34;)</span>
+        <span class="kd">local</span> <span class="n">_result</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">redis</span><span class="p">:</span><span class="n">sismember</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
+        <span class="kr">if</span> <span class="n">err</span> <span class="kr">then</span>
+            <span class="n">ngx.log</span><span class="p">(</span><span class="n">ngx.ERR</span><span class="p">,</span> <span class="s2">&#34;Get key failed&#34;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="kr">else</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_result</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
+   
+    <span class="kr">if</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">1</span> <span class="kr">then</span>
+        <span class="kr">return</span> <span class="kc">true</span>
+    <span class="kr">else</span>
+        <span class="kr">return</span> <span class="kc">false</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
+
+
+<span class="kd">local</span> <span class="n">ip</span> <span class="o">=</span> <span class="n">get_ip</span><span class="p">()</span>
+<span class="kr">if</span> <span class="n">is_stage</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span> <span class="kr">then</span>
+    <span class="n">ngx.var</span><span class="p">.</span><span class="n">backend</span> <span class="o">=</span> <span class="s2">&#34;stage&#34;</span>
+<span class="kr">else</span>
+    <span class="n">ngx.var</span><span class="p">.</span><span class="n">backend</span> <span class="o">=</span> <span class="s2">&#34;default&#34;</span>
+<span class="kr">end</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h1 id="方法二">方法二</h1>
+<p>前面的方法虽然是实现了，但总感觉不够优雅。而且做完压力测试后发现，以100的并发来压测，虽然增加的响应时间忽略不计，但对网络IO增长还是蛮多，连接<code>Redis</code>后的<code>TIME_WAIT</code>状态达到<code>9000</code>多，想想也是有点恐怖。</p>
+<p>在此方法中，优化连接<code>Redis</code>的连接，因为<code>IO</code>都集中在频繁连接/断开<code>Redis</code>。通过<code>lua_shared_dict</code>，<code>init_by_lua_file</code>与<code>set_by_lua_file</code>实现</p>
+<h2 id="1-定义二个upstream">1. 定义二个<code>upstream</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">...
+upstream default {
+    server localhost:80 weight=10;
+    server localhost:82 weight=20;
+}
+
+upstream stage {
+    server localhost:90 weight=10;
+    server localhost:92 weight=10;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="2-通过set_by_lua_file指令动态提供后端upstream">2. 通过<code>set_by_lua_file</code>指令，动态提供后端<code>upstream</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">...
+http {
+    ...
+    # 共享内存区域，用于所有的work进程变量共享
+    lua_shared_dict ips 100m;
+    init_by_lua_file conf/lua/init.lua;
+    ...
+    server {
+        ...
+        location / {
+            ...
+            # 设置upstream,后面是参数，第一个是默认的upstream名称，第二个是stage的名称。
+            # 要同定义的upstream相对应起来,这样可以复用Lua文件
+            set_by_lua_file $backend conf/lua/set_upstream_by_ip.lua default stage ips;
+            proxy_pass http://$backend;
+        }
+        ...
+    }
+    ...
+}
+...
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="3-initlua">3. <code>init.lua</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-lua" data-lang="lua"><span class="cp">#!/usr/bin/lua</span>
+
+<span class="kd">local</span> <span class="n">host</span> <span class="o">=</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+<span class="kd">local</span> <span class="n">port</span> <span class="o">=</span> <span class="mi">6380</span>
+<span class="kd">local</span> <span class="n">key</span> <span class="o">=</span> <span class="s2">&#34;td:stage:shops&#34;</span>
+<span class="kd">local</span> <span class="n">ngx_dict</span> <span class="o">=</span> <span class="s2">&#34;ips&#34;</span>
+
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">init_dict</span><span class="p">(</span><span class="n">redis_key</span><span class="p">,</span> <span class="n">ngx_dict</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">cmd</span> <span class="o">=</span> <span class="n">string.format</span><span class="p">(</span><span class="s2">&#34;echo &#39;smembers %s&#39; | redis-cli -h %s -p %d&#34;</span><span class="p">,</span> <span class="n">redis_key</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">f</span> <span class="o">=</span> <span class="n">io.popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">dict</span> <span class="o">=</span> <span class="n">ngx.shared</span><span class="p">[</span><span class="n">ngx_dict</span><span class="p">]</span>
+    <span class="kd">local</span> <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="p">:</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">dict</span><span class="p">:</span><span class="n">flush_all</span><span class="p">()</span>
+    <span class="kr">while</span> <span class="n">line</span> <span class="kr">then</span>
+        <span class="n">dict</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+        <span class="c1">-- ngx.log(ngx.ERR, &#34;line is &#34;, line)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="p">:</span><span class="n">read</span><span class="p">()</span>
+    <span class="kr">end</span>
+    <span class="n">f</span><span class="p">:</span><span class="n">close</span><span class="p">()</span>
+<span class="kr">end</span>
+
+<span class="n">init_dict</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ngx_dict</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="4-set_upstream_by_iplua">4. <code>set_upstream_by_ip.lua</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-lua" data-lang="lua"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">get_ip</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">client_ip</span> <span class="o">=</span> <span class="n">ngx.req</span><span class="p">.</span><span class="n">get_headers</span><span class="p">()[</span><span class="s2">&#34;X-Real-IP&#34;</span><span class="p">]</span>
+    <span class="kr">if</span> <span class="n">client_ip</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+        <span class="n">client_ip</span> <span class="o">=</span> <span class="n">ngx.req</span><span class="p">.</span><span class="n">get_headers</span><span class="p">()[</span><span class="s2">&#34;x_forwarded_for&#34;</span><span class="p">]</span>
+    <span class="kr">end</span>
+
+    <span class="kr">if</span> <span class="n">client_ip</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+        <span class="n">client_ip</span> <span class="o">=</span> <span class="n">ngx.var</span><span class="p">.</span><span class="n">remote_addr</span>
+    <span class="kr">end</span>
+
+    <span class="kr">return</span> <span class="n">client_ip</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="n">default</span><span class="p">,</span> <span class="n">stage</span><span class="p">,</span> <span class="n">ngx_dict_name</span> <span class="o">=</span> <span class="p">...</span>
+<span class="kd">local</span> <span class="n">remote_ip</span> <span class="o">=</span> <span class="n">get_ip</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">ngx_dict</span> <span class="o">=</span> <span class="n">ngx.shared</span><span class="p">[</span><span class="n">ngx_dict_name</span><span class="p">]</span>
+<span class="kd">local</span> <span class="n">result</span> <span class="o">=</span> <span class="n">ngx_dict</span><span class="p">:</span><span class="n">get</span><span class="p">(</span><span class="n">remote_ip</span><span class="p">)</span>
+<span class="kr">if</span> <span class="n">result</span> <span class="kr">then</span>
+    <span class="kr">return</span> <span class="n">stage</span>
+<span class="kr">else</span>
+    <span class="kr">return</span> <span class="n">default</span>
+<span class="kr">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>方法二的缺点就是不能实时更新，因为只有在<code>init</code>阶段写入共享内存，因此当要更新<code>IP</code>时，只能<code>Reload</code>.解决方法就是每分钟重载<code>OpenResty</code>.以下配合脚本，只有当<code>Redis</code>中的<code>Key</code>有变动时才更新</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">*/1 * * * * /root/reload.sh
+</code></pre></td></tr></table>
+</div>
+</div><p><code>reload.sh</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span><span class="nb">export</span>  PATH
+<span class="nb">set</span> -e
+
+<span class="nv">host</span><span class="o">=</span><span class="s2">&#34;localhost&#34;</span>
+<span class="nv">pass</span><span class="o">=</span><span class="s2">&#34;pass&#34;</span>
+<span class="nv">port</span><span class="o">=</span><span class="m">6380</span>
+<span class="nv">id_key</span><span class="o">=</span><span class="s2">&#34;td:stage:shops&#34;</span>
+<span class="nv">ip_key</span><span class="o">=</span><span class="s2">&#34;td:stage:ips&#34;</span>
+
+touch keys.txt
+
+<span class="nv">old_keys</span><span class="o">=</span><span class="k">$(</span>cat keys.txt<span class="k">)</span>
+<span class="nv">id_keys</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;smembers </span><span class="si">${</span><span class="nv">id_key</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> redis-cli -h <span class="si">${</span><span class="nv">host</span><span class="si">}</span> -p <span class="si">${</span><span class="nv">port</span><span class="si">}</span> -a <span class="si">${</span><span class="nv">pass</span><span class="si">}</span> -n 0<span class="k">)</span>
+<span class="nv">ip_keys</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;smembers </span><span class="si">${</span><span class="nv">ip_key</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> redis-cli -h <span class="si">${</span><span class="nv">host</span><span class="si">}</span> -p <span class="si">${</span><span class="nv">port</span><span class="si">}</span> -a <span class="si">${</span><span class="nv">pass</span><span class="si">}</span> -n 0<span class="k">)</span>
+<span class="nv">keys</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">id_keys</span><span class="si">}${</span><span class="nv">ip_keys</span><span class="si">}</span><span class="k">)</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">keys</span><span class="si">}</span><span class="s2">&#34;</span><span class="nv">x</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">old_keys</span><span class="si">}</span><span class="s2">&#34;</span>x <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$(</span>date<span class="k">)</span><span class="s2"> Key no change,Nothing to do&#34;</span> &gt;&gt; reload.log
+<span class="k">else</span>
+  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$(</span>date<span class="k">)</span><span class="s2"> key changed,Reoload&#34;</span> &gt;&gt; reload.log
+  openresty -t <span class="o">&amp;&amp;</span> systemctl reload openresty
+  <span class="nb">echo</span> <span class="si">${</span><span class="nv">keys</span><span class="si">}</span> &gt; keys.txt
+<span class="k">fi</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="测试">测试</h2>
+<p>往<code>Redis</code>中设置<code>Key</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&#34;sadd td:stage:shops 192.168.0.100&#34;</span> <span class="p">|</span> redis-cli -x
+</code></pre></td></tr></table>
+</div>
+</div><p>通过启用<code>log_format</code>中的<code>request_time</code>时间对比,使用了<code>rewrite_by_lua_file</code>与未使用相比,时间上没差距.既使<code>Redis</code>挂了,也不会产生阻塞导致响应时间过长,而是会直接使用默认(<code>&quot;default&quot;</code>)的后端</p>
+<h2 id="其它说明">其它说明</h2>
+<p>测试发现有一个坑，只能用于整个路径全部代理，如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">...
+location / {
+    ...
+    proxy_pass http://$backend;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>下面的加路径代理的就会有问题:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">...
+location /path/ {
+    proxy_pass http://$backend/;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>可能是并不能很好识别最后的&quot;<code>/</code>所致</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-07-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/nginx/">NGINX</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux/linux-rsync/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Rsync 同步文件</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/nginx/openresty-lua-limit/">
+            <span class="next-text nav-default">OpenResty基于Lua实现根据HTTP头限速</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

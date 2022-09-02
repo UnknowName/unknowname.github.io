@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sonar on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/sonar/</link>
+    <description>Recent content in Sonar on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 10 Mar 2022 16:31:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/sonar/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sonar scan code</title>
+      <link>http://www.unknowname.cn/post/ci/sonar-init/</link>
+      <pubDate>Thu, 10 Mar 2022 16:31:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ci/sonar-init/</guid>
+      <description>Requirement Docker版本需要20.10及以上 1 yum install -y docker-ce SonarQube Install docker-compose.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 sonarqube:image:sonarqube:communitycontainer_name:sonarenvironment:SONAR_JDBC_URL:jdbc:postgresql://128.0.100.170:5432/sonarSONAR_JDBC_USERNAME:sonarSONAR_JDBC_PASSWORD:sonarvolumes:- ./sonarqube_data:/opt/sonarqube/data- ./sonarqube_extensions:/opt/sonarqube/extensions- ./sonarqube_logs:/opt/sonarqube/logsports:- &amp;#34;9000:9000&amp;#34;db:image:postgres:12container_name:sonar-dbnet:hostenvironment:POSTGRES_USER:sonarPOSTGRES_PASSWORD:sonarvolumes:- ./sql_config:/var/lib/postgresql- ./sql_data:/var/lib/postgresql/data 访问9000端口即为Son</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Graylog安装及介绍 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="Graylog安装及介绍" /><meta name="keywords" content="Graylog, Log" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/graylog/graylog/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Graylog安装及介绍" />
+<meta property="og:description" content="Graylog安装及介绍" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/graylog/graylog/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-02-28T10:05:11&#43;08:00" />
+<meta property="article:modified_time" content="2022-02-11T11:05:11&#43;08:00" />
+
+<meta itemprop="name" content="Graylog安装及介绍">
+<meta itemprop="description" content="Graylog安装及介绍"><meta itemprop="datePublished" content="2021-02-28T10:05:11&#43;08:00" />
+<meta itemprop="dateModified" content="2022-02-11T11:05:11&#43;08:00" />
+<meta itemprop="wordCount" content="1747">
+<meta itemprop="keywords" content="graylog," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Graylog安装及介绍"/>
+<meta name="twitter:description" content="Graylog安装及介绍"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Graylog安装及介绍</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-02-28 </span>
+        <div class="post-category">
+            <a href="/categories/tools/"> tools </a>
+            </div>
+          <span class="more-meta"> 约 1747 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#graylog日志收集服务">Graylog日志收集服务</a>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+        <li><a href="#安装">安装</a>
+          <ul>
+            <li><a href="#准备工具">准备工具</a></li>
+            <li><a href="#allinone方式">Allinone方式</a></li>
+            <li><a href="#nginx代理内部graylog"><code>Nginx</code>代理内部<code>Graylog</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#官方优化建议">官方优化建议</a></li>
+        <li><a href="#管理端初始化">管理端初始化</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="graylog日志收集服务">Graylog日志收集服务</h1>
+<h2 id="介绍">介绍</h2>
+<p><code>Graylog</code>是一个集中日志收集与检索系统。可以将它看成是一个<code>EFK</code>组合。它的底层搜索提供也是<code>Elasticsearch</code>。相比<code>EFK</code>组合它有以下优势:</p>
+<ol>
+<li>
+<p>日志展示没有5000条的限制。我们知道默认Kibana在搜索页，针对同一条件，最多只能展示5000条。如果要展示更多，只能更改搜索条件或者时间轴</p>
+</li>
+<li>
+<p>更多输入类型，支持<code>GELF,Rsyslog,AMQP,Kafka</code>等，官方推荐为<code>GELF</code>格式日志</p>
+</li>
+<li>
+<p>用户认证功能，可以集成<code>LDAP</code>轻目录认证</p>
+</li>
+<li>
+<p><code>Elasicsearch</code>索引自动管理。<code>Graylog</code>引入索引集（<code>Index Set</code>）概念。默认当某一个索引的文档超过200000时，自动进行切割，创建新的索引。从而可以加快检索速度。另外，自动管理索引集里面的索引个数，默认保留最多保留20个索引，然后轮替删除老的索引。这些参数都是可以调整的。</p>
+</li>
+<li>
+<p>引入流(<code>Stream</code>)概念，可以根据收集到的日志的条件过滤引入不同流，使用不同索引。并在基于该技术基础之上，实现日志告警功能。比如匹配输出日志的内容，匹配<code>ERROR</code>进行告警。</p>
+</li>
+<li>
+<p>支持基于匹配日志告警功能，目前支持邮件与回调方式告警。</p>
+</li>
+<li>
+<p><code>Pipeline</code>功能，该功能属于高级功能，用于对输入的日志内容再进行加工。</p>
+</li>
+<li>
+<p>其他高级功能，请查阅<a href="http://docs.graylog.org/en/stable/">官方文档</a></p>
+</li>
+</ol>
+<h2 id="安装">安装</h2>
+<h3 id="准备工具">准备工具</h3>
+<p>因为<code>Elasticsearch</code>对内核参数与<code>limits</code>有要求，而系统默认不满足，帮需要调整</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 1.修改limits.conf</span>
+vi /etc/security/limits.conf
+root - nofile <span class="m">165536</span>
+*    - nofile <span class="m">165536</span>
+
+<span class="c1"># 2.增加内核参数</span>
+<span class="nb">echo</span> <span class="s2">&#34;vm.max_map_count = 262144&#34;</span> &gt; /etc/sysctl.d/es.conf
+sysctl -p /etc/sysctl.d/es.conf
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="allinone方式">Allinone方式</h3>
+<p>编辑<code>docker-compose.yml</code>文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">  </span><span class="c"># MongoDB: https://hub.docker.com/_/mongo/</span><span class="w">
+</span><span class="w">  </span><span class="nt">mongodb</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">mongo:3</span><span class="w">
+</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">    </span><span class="nt">net</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">graylog-db</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">./mongo_data:/data/db</span><span class="w">
+</span><span class="w">    </span><span class="nt">mem_limit</span><span class="p">:</span><span class="w"> </span><span class="l">1g</span><span class="w">
+</span><span class="w">  </span><span class="c"># Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html</span><span class="w">
+</span><span class="w">  </span><span class="nt">elasticsearch</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker.elastic.co/elasticsearch/elasticsearch-oss:6.6.1</span><span class="w">
+</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">graylog-es</span><span class="w">
+</span><span class="w">    </span><span class="nt">net</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">./elas_data:/usr/share/elasticsearch/data</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">TZ=Asia/Shanghai</span><span class="w">
+</span><span class="w">      </span>- <span class="l">cluster.name=graylog</span><span class="w">
+</span><span class="w">      </span><span class="c"># 方便标识，建议设置为主机IP的后两位</span><span class="w">
+</span><span class="w">      </span>- <span class="l">node.name=255.10</span><span class="w">
+</span><span class="w">      </span><span class="c"># 新版本ES加上该参数</span><span class="w">
+</span><span class="w">      </span>- <span class="l">node.master=true</span><span class="w">
+</span><span class="w">      </span>- <span class="l">http.host=0.0.0.0</span><span class="w">
+</span><span class="w">      </span><span class="c"># 索引缓存数据占用内存百分比，超过自动清除，防止内存使用过大</span><span class="w">
+</span><span class="w">      </span>- <span class="l">indices.fielddata.cache.size=20%</span><span class="w">
+</span><span class="w">      </span><span class="c"># 设置为本机IP，组成集群时，用于通告自身的连接地址</span><span class="w">
+</span><span class="w">      </span>- <span class="l">network.host=128.0.255.10</span><span class="w">
+</span><span class="w">      </span><span class="c"># - network.host=128.0.255.10</span><span class="w">
+</span><span class="w">      </span>- <span class="l">discovery.zen.minimum_master_nodes=1</span><span class="w">
+</span><span class="w">      </span><span class="c"># 取消默认磁盘少于85%后不再分配索引</span><span class="w">
+</span><span class="w">      </span>- <span class="l">cluster.routing.allocation.disk.threshold_enabled=false</span><span class="w">
+</span><span class="w">      </span><span class="c"># 后续如果增加Elasticsearch节点，增加相应节点IP</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;discovery.zen.ping.unicast.hosts=128.0.255.10&#34;</span><span class="w">
+</span><span class="w">      </span><span class="c"># -Xms与-Xmx值要一样</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;ES_JAVA_OPTS=-Xms6512m -Xmx6512m&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># 内存限制相应调整</span><span class="w">
+</span><span class="w">    </span><span class="nt">mem_limit</span><span class="p">:</span><span class="w"> </span><span class="l">8g</span><span class="w">
+</span><span class="w">  </span><span class="c"># Graylog: https://hub.docker.com/r/graylog/graylog/</span><span class="w">
+</span><span class="w">  </span><span class="nt">graylog</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">graylog/graylog:3.0</span><span class="w">
+</span><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">graylog-server</span><span class="w">
+</span><span class="w">    </span><span class="nt">net</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="c"># echo -n &#34;admin&#34; | sha256sum</span><span class="w">
+</span><span class="w">      </span>- <span class="l">TZ=Asia/Shanghai</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_ELASTICSEARCH_HOSTS=http://128.0.255.10:9200</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_MONGODB_URI=mongodb://128.0.255.10:27017/graylog</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918</span><span class="w">
+</span><span class="w">      </span><span class="c"># IP设置成宿主机IP</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_HTTP_EXTERNAL_URI=http://128.0.255.10:9000/</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_ENABLED=true</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_HOSTNAME=smtp.qq.com</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_PORT=25</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_USE_AUTH=true</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_USE_TLS=false</span><span class="w">
+</span><span class="w">      </span><span class="c"># 用以邮件告警，填写真实相关信息</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_AUTH_USERNAME=username</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_AUTH_PASSWORD=password</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_FROM_EMAIL=burtte@sina.com</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_SUBJECT_PREFIX=GraylogAlert</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_WEB_INTERFACE_URL=http://128.0.255.10:9000/</span><span class="w">
+</span><span class="w">      </span>- <span class="l">GRAYLOG_ROOT_TIMEZONE=Asia/Shanghai</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;JAVA_OPTS=-Xms3512m -Xmx3512m&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">mem_limit</span><span class="p">:</span><span class="w"> </span><span class="l">4g</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>因为docker-compose的原因，新生成的卷权限为root，还需要做点特殊处理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 内核参数调整，不然ES启动不起来</span>
+sysctl -w vm.max_map_count <span class="o">=</span> <span class="m">262144</span>
+<span class="c1"># 先启动服务</span>
+docker-compose up -d
+<span class="c1"># 启动服务，会在当前目录会创建卷目录,给Elasticsearch卷给予权限</span>
+chmod <span class="m">777</span> -R elas_data
+<span class="c1"># 再重新启动服务就会正常了</span>
+docker-compose restart
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="nginx代理内部graylog"><code>Nginx</code>代理内部<code>Graylog</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">server {
+    listen       8022;
+    server_name  log-prod.unknowname.win;
+
+    #charset koi8-r;
+    access_log  /var/log/nginx/log.access.log  main;
+
+    location / {
+      allow 172.18.0.0/16;
+      deny all;
+      proxy_http_version 1.1;
+      proxy_set_header Host 172.18.171.110;
+      proxy_set_header X-Graylog-Server-URL http://log-prod.unknowname.win:8022/;
+      proxy_pass_request_headers on;
+      proxy_pass http://172.18.171.110:9000;
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="官方优化建议">官方优化建议</h2>
+<ol>
+<li>
+<p>graylog-server节点，焦点是CPU，因为它是CPU密集型。所以CPU尽量要够强</p>
+</li>
+<li>
+<p><code>Elasticsearch</code>节点，尽量给予可用的RAM，因为整个<code>Graylog</code>的响应速度取决于它的I/O</p>
+</li>
+<li>
+<p><code>MongoDB</code>，只是用来存储配置信息以及过期的信息,性能一般即可。</p>
+</li>
+<li>
+<p><code>graylog Web</code>组件主要用于响应与应用HTTP请求，一般对待即可。</p>
+</li>
+<li>
+<p>在运行<code>elasticsearch</code>的节点上，修改进程打打开的文件描述符，至少为64000。</p>
+</li>
+<li>
+<p>修改<code>elasticsearch/bin/elasticsearch</code>中的<code>ES_HEAP_SIZE</code>，尽量给予更多的可用内存</p>
+</li>
+<li>
+<p>在SSD或者SAN存储上运行<code>Elasticsearch</code>时。修改<code>elasticsearch.yml</code>
+<code>indices.store.throttle.max_bytes_per_sec: 150mb</code></p>
+</li>
+</ol>
+<h2 id="管理端初始化">管理端初始化</h2>
+<p>服务起来以后，就需要创建<code>Input</code>,<code>Input</code>是输入源的类型定义。一般常用的有以下:</p>
+<p>登入系统，进入&quot;System/Inputs&quot;,创建<code>Input</code>类型:
+<img src="/images/graylog-input.jpg" alt="创建Input"></p>
+<ul>
+<li><code>GELF</code> 这是官方推荐的一种日志格式，这种输入类型一般我们应用在应用程序里面，应用程序在打印日志的时候，将日志格式设置为GELF格式，并通过UDP发送过来。</li>
+<li><code>Rsyslog UDP</code> 一般用于配合<code>Linux</code>的<code>Rsyslog</code>，将操作系统的日志收集过来</li>
+<li><code>Raw/Plaintext UDP</code> 纯<code>UDP</code>数据包，可以用于此类型。</li>
+</ul>
+<p>要创建的<code>Input</code>根据要收集的日志类型不同而创建。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-02-11
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/graylog/">graylog</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/graylog/graylog-add-node/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Graylog增加节点</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/linux/linix-repo/">
+            <span class="next-text nav-default">本地Repo仓库搭建</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

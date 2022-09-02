@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>leetcode · UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="UnknowName的技术农耕地" /><meta name="keywords" content="unknowname, devops, 有关部门" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/categories/leetcode/" />
+  <link href="http://www.unknowname.cn/categories/leetcode/index.xml" rel="alternate" type="application/rss+xml" title="UnknowName" />
+  <link href="http://www.unknowname.cn/categories/leetcode/index.xml" rel="feed" type="application/rss+xml" title="UnknowName" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="leetcode" />
+<meta property="og:description" content="UnknowName的技术农耕地" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.unknowname.cn/categories/leetcode/" />
+
+<meta itemprop="name" content="leetcode">
+<meta itemprop="description" content="UnknowName的技术农耕地"><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="leetcode"/>
+<meta name="twitter:description" content="UnknowName的技术农耕地"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <section id="archive" class="archive">
+  <div class="archive-title category">
+        <h2 class="archive-name">leetcode</h2>
+      </div>
+
+  <div class="archive-post">
+      <span class="archive-post-time">
+        2022-02-09
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/215/" class="archive-post-link">
+          堆方法解leetcode之215-数组中的第K个最大元素
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2022-01-10
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/907/" class="archive-post-link">
+          双指针方法解leetcode之907-按奇偶排序数组
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-12-31
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/438/" class="archive-post-link">
+          滑动窗口方法解leetcode之438-找到字符串中所有字母异位词
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-12-25
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/424/" class="archive-post-link">
+          滑动窗口方法解leetcode之424-替换后的最长重复字符
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-12-21
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/1154/" class="archive-post-link">
+          数组方法解leetcode之1154-一年中的第几天
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-12-07
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/113/" class="archive-post-link">
+          递归方法解leetcode之113-路径总和II
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-12-06
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/112/" class="archive-post-link">
+          递归方法解leetcode之112-路径总和
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-12-03
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/23/" class="archive-post-link">
+          队列方法解leetcode之23-合并K个升序链表
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-12-01
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/4/" class="archive-post-link">
+          队列方法解leetcode之4-寻找两个正序数组的中位数
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-12-01
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/1446/" class="archive-post-link">
+          滑动窗口解leetcode之1446-连续字符
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-29
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/811/" class="archive-post-link">
+          字典解leetcode之811-子域名访问计数
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-28
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/73/" class="archive-post-link">
+          字典解leetcode之73-矩阵置0
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-21
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/559/" class="archive-post-link">
+          队列方法解leetcode之559-N叉树的最大深度
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-18
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/114/" class="archive-post-link">
+          栈方法解leetcode之114-二叉树展开为链表
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-17
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/7/" class="archive-post-link">
+          队列方法解leetcode之7-整数反转
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-15
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/404/" class="archive-post-link">
+          队列方法解leetcode之404-二叉树的左叶子之和
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-10
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/111/" class="archive-post-link">
+          队列方法解leetcode之111-二叉树的最小深度
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-10
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/103/" class="archive-post-link">
+          队列方法解leetcode之103-二叉树的锯齿形层序遍历
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-10
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/104/" class="archive-post-link">
+          队列方法解leetcode之104-二叉树的最大深度
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-09
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/226/" class="archive-post-link">
+          队列方法解leetcode之226-翻转二叉树
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-09
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/101/" class="archive-post-link">
+          队列方法解leetcode之101-对称的二叉树
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-08
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/100/" class="archive-post-link">
+          栈方法解leetcode之100-相同的树
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-08
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/94/" class="archive-post-link">
+          栈方法解leetcode之94-迭代树的中序遍历
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-07
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/144/" class="archive-post-link">
+          栈方法解leetcode之144-迭代树的前序遍历
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-07
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/145/" class="archive-post-link">
+          栈方法解leetcode之145-迭代树的后序遍历
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-04
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/66/" class="archive-post-link">
+          栈方法解leetcode之66-加1
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-04
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/977/" class="archive-post-link">
+          双指针方法解leetcode之977-有序数组的平方
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-04
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/239/" class="archive-post-link">
+          双端队列解leetcode之239-滑动窗口最大值
+        </a>
+      </span>
+    </div><div class="archive-post">
+      <span class="archive-post-time">
+        2021-11-01
+      </span>
+      <span class="archive-post-title">
+        <a href="/post/leetcode/209/" class="archive-post-link">
+          滑动窗口解leetcode之209-长度最小的数组
+        </a>
+      </span>
+    </div>
+</section>
+
+<nav class="pagination">
+  
+  
+</nav>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

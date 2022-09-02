@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>English on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/english/</link>
+    <description>Recent content in English on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 06 Aug 2022 18:40:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/english/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nick的英语入门笔记-特殊疑问句</title>
+      <link>http://www.unknowname.cn/post/english/quest/</link>
+      <pubDate>Sat, 06 Aug 2022 18:40:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/english/quest/</guid>
+      <description>构成方式 特殊疑问词 + 一般疑问句 常用疑问词 where 在特殊疑问句中，可以做地点状语，表语 where做地点状语 在做地点状语时，一般出现在主谓宾结构的句子</description>
+    </item>
+    
+    <item>
+      <title>Nick的英语入门笔记-副词(adv)</title>
+      <link>http://www.unknowname.cn/post/english/adv/</link>
+      <pubDate>Fri, 10 Jun 2022 15:40:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/english/adv/</guid>
+      <description>总览 时间、地点、方式副词主要做状语 程度副词用来修饰形容词和方式副词 频度副词也作状语，但位置不同 地点副词 一般就here,there出现较多，其</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>汇编学习-寄存器2 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="汇编学习笔记-寄存器" /><meta name="keywords" content="assembly" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/assembly/day03/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="汇编学习-寄存器2" />
+<meta property="og:description" content="汇编学习笔记-寄存器" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/assembly/day03/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-05-30T10:35:11&#43;08:00" />
+<meta property="article:modified_time" content="2022-05-30T10:35:11&#43;08:00" />
+
+<meta itemprop="name" content="汇编学习-寄存器2">
+<meta itemprop="description" content="汇编学习笔记-寄存器"><meta itemprop="datePublished" content="2022-05-30T10:35:11&#43;08:00" />
+<meta itemprop="dateModified" content="2022-05-30T10:35:11&#43;08:00" />
+<meta itemprop="wordCount" content="903">
+<meta itemprop="keywords" content="cs," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="汇编学习-寄存器2"/>
+<meta name="twitter:description" content="汇编学习笔记-寄存器"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">汇编学习-寄存器2</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-05-30 </span>
+        <div class="post-category">
+            <a href="/categories/cs/"> cs </a>
+            </div>
+          <span class="more-meta"> 约 903 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#物理地址">物理地址</a></li>
+        <li><a href="#段的概念">段的概念</a></li>
+        <li><a href="#段寄存器">段寄存器</a></li>
+        <li><a href="#debug模拟器指令"><code>Debug</code>模拟器指令</a>
+          <ul>
+            <li><a href="#r-修改查看寄存器的值"><code>r</code> 修改/查看寄存器的值</a></li>
+            <li><a href="#d-查看内存中的内容十六进制值"><code>d</code> 查看内存中的内容（十六进制值）</a></li>
+            <li><a href="#e修改内存中的内容"><code>e</code>修改内存中的内容</a></li>
+            <li><a href="#u查看内存中的机器码的含义"><code>u</code>查看内存中的机器码的含义</a></li>
+            <li><a href="#t执行指令"><code>t</code>执行指令</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="物理地址">物理地址</h2>
+<p>所有的内存单元构成的存储空间是一个一维的线性空间，每一个存储单元在这个空间中都有唯一的地址，这个唯一的地址我们称为<code>物理地址</code></p>
+<p>在<code>8086</code>系统<code>CPU</code>中，内存地址是通过<code>16位段地址*16+16位偏移量</code>来确定物理地址</p>
+<p>示例:</p>
+<p>最后的<code>H</code>为<code>十六进制</code>简称</p>
+<p>段地址为<code>1000H</code>，那寻址范围为<code>1000H*16</code> + <code>FFFFH</code> = <code>10000H</code>至<code>1FFFFH</code></p>
+<p><code>十六进制*16</code>，简单看成<code>16进制</code>左移一位；因为偏移量为<code>16</code>位，因此<code>16</code>进制的最大表示为<code>FFFFH</code>.</p>
+<p>逆运算时，段地址和偏移量要除以<code>16</code></p>
+<h2 id="段的概念">段的概念</h2>
+<p>内存地址并没有分成段，段的概念来自于<code>CPU</code>.可以将若干连续的内存地址看成是一个段，用<code>段地址*16</code>定位段的起始地址，用偏移地址定位定位段中的内存单元。</p>
+<ul>
+<li><code>段地址*16</code> 段地址必须是16的倍数</li>
+<li>偏移地址为16位，一个段的最大址为<code>64KB</code>(2的16次方)</li>
+</ul>
+<h2 id="段寄存器">段寄存器</h2>
+<p><code>8086</code>系列<code>CPU</code>中，<code>CS</code>为代码段寄存器，<code>IP</code>为指令指针寄存器。<code>CPU</code>任意时刻，会将<code>CS</code>的值*16 + <code>IP</code>的值作为指令执行</p>
+<p>所以，通过改变<code>CS</code>与<code>IP</code>寄存器的值，可以达到控制<code>CPU</code>执行指令的目的</p>
+<p><code>8086CPU</code>中的段寄存器变化与工作过程简述:</p>
+<ol>
+<li>从<code>CS:IP</code>指向的内存单元读取指令，读取的指令存入指令缓冲器</li>
+<li><code>IP</code>=<code>IP</code> + <code>读取到的指令长度</code>，更新<code>IP</code>寄存器，从而指向下一条指令</li>
+<li>执行读取到的指令，继续从1开始新的循环</li>
+</ol>
+<p><code>CS</code>与<code>IP</code>寄存器的值不能修改，但可以通过<code>jmp</code>指令来修改后续要执行的内存地址</p>
+<p><code>JMP CS:IP</code></p>
+<p><code>CS</code>段地址，<code>IP</code>偏移量。转换成实际物理地址为<code>CS*16</code> + <code>偏移量</code></p>
+<ul>
+<li>
+<p>从指定位置读取指令</p>
+<p><code>jmp 2AE3:3</code>  CS=2AE3 IP=3  执行后的物理地址: 2AE3 * 16 + 3 = 2AE33</p>
+</li>
+<li>
+<p>将寄存器的<code>IP</code>值修改</p>
+<p><code>jmp ax</code>  将<code>ax</code>中存放的值放入<code>IP</code>寄存器，类似<code>IP=AX</code></p>
+</li>
+</ul>
+<h2 id="debug模拟器指令"><code>Debug</code>模拟器指令</h2>
+<h3 id="r-修改查看寄存器的值"><code>r</code> 修改/查看寄存器的值</h3>
+<ul>
+<li>
+<p><code>r</code>: 查看寄存器中的值</p>
+</li>
+<li>
+<p><code>r</code> 寄存器名称，如<code>r ax</code> 回车，输入待修改的值</p>
+</li>
+</ul>
+<h3 id="d-查看内存中的内容十六进制值"><code>d</code> 查看内存中的内容（十六进制值）</h3>
+<ul>
+<li>
+<p><code>d</code> 查看当前内存的内容</p>
+</li>
+<li>
+<p><code>d CS:IP</code> 查看指定内存的内容，会显示其后的<code>128</code>字节的内容</p>
+</li>
+<li>
+<p><code>d CS:IP  Length</code> 查看指定长度的内容，如<code>d 1000:0 F</code></p>
+</li>
+</ul>
+<h3 id="e修改内存中的内容"><code>e</code>修改内存中的内容</h3>
+<ul>
+<li><code>e CS:IP</code> 修改指向为为<code>CS:IP</code>内存的值，按<code>空格</code>分隔，<code>回车</code>表示输入完毕</li>
+</ul>
+<h3 id="u查看内存中的机器码的含义"><code>u</code>查看内存中的机器码的含义</h3>
+<ul>
+<li>
+<p><code>u</code> 会将内存中的机器码转换成汇编码,即<code>CS:IP</code>指向的值</p>
+</li>
+<li>
+<p><code>u CS:IP</code>指定内存区间的值</p>
+</li>
+</ul>
+<h3 id="t执行指令"><code>t</code>执行指令</h3>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-05-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/cs/">cs</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/react/react-simple/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">React入门摘要</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/assembly/day02/">
+            <span class="next-text nav-default">汇编学习-寄存器1</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

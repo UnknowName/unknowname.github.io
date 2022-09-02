@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rabbitmq on UnknowName</title>
+    <link>http://www.unknowname.cn/categories/rabbitmq/</link>
+    <description>Recent content in rabbitmq on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 18 May 2021 09:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RabbitMQ生产优化</title>
+      <link>http://www.unknowname.cn/post/queue/rabbitmq-prod/</link>
+      <pubDate>Tue, 18 May 2021 09:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/queue/rabbitmq-prod/</guid>
+      <description>主要分为操作系统优化与RabbitMQ自身的优化二项 操作系统配置项 最大文件打开描述符 官方要求最少50K，并同时不建议超过500K允许打开的文</description>
+    </item>
+    
+  </channel>
+</rss>

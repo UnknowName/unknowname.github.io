@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nginx on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/nginx/</link>
+    <description>Recent content in nginx on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 28 Feb 2021 15:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Graylog收集Nginx访问日志</title>
+      <link>http://www.unknowname.cn/post/graylog/nginx-log-to-graylog/</link>
+      <pubDate>Sun, 28 Feb 2021 15:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/nginx-log-to-graylog/</guid>
+      <description>Nginx端配置 因为NGINX的access_log语法是支持发送至远端的syslog的，我们就是利用这一特性来实现。既然可以收集至Gray</description>
+    </item>
+    
+    <item>
+      <title>NGINX配置文件详解</title>
+      <link>http://www.unknowname.cn/post/nginx/nginx-conf/</link>
+      <pubDate>Fri, 26 Feb 2021 09:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/nginx-conf/</guid>
+      <description>此文罗列下主要配置文件的参数含义 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54</description>
+    </item>
+    
+    <item>
+      <title>OpenResty基于Lua依据IP简单灰度</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-lua-backend/</link>
+      <pubDate>Fri, 25 Dec 2020 19:43:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-lua-backend/</guid>
+      <description>需求: 根据不同IP返回不同后端，实现一个简单版的一个灰度发布功能 使用到的模块 https://github.com/openresty/lua-nginx-module#synopsis 该模块已内置于OpenResty可以直接使用 方法一 OpenRe</description>
+    </item>
+    
+    <item>
+      <title>OpenResty基于Lua实现根据HTTP头限速</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-lua-limit/</link>
+      <pubDate>Mon, 21 Dec 2020 09:37:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-lua-limit/</guid>
+      <description>OpenResty简要介绍 引用官方一段介绍: OpenResty® 是一个基于 Nginx 与 Lua 的高性能 Web 平台，其内部集成了大量精良的 Lua 库、第三方模块以及大</description>
+    </item>
+    
+    <item>
+      <title>OpenResty动态后端热加载</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-upsync-backend/</link>
+      <pubDate>Mon, 23 Nov 2020 12:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-upsync-backend/</guid>
+      <description>使用到的模块: https://github.com/weibocom/nginx-upsync-module 通过第三方注册中心(Etcd/Consul)，NGINX/OpenResty从第三方拿后端信息，实现同步。该模块在修改后端注</description>
+    </item>
+    
+    <item>
+      <title>OpenResty配合GeoIP2识别客户端所在城市</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-geoip2/</link>
+      <pubDate>Tue, 27 Oct 2020 09:31:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-geoip2/</guid>
+      <description>GeoIP数据太老，不能识别城市了，新项目升级为GeoIP2。要下载免费数据库文件，需要在官网进行注册。 用到的开源项目 https://github.com/maxmind/libmaxminddb https://github.com/leev/ngx_http_geoip2_module 免费的城市与国家数</description>
+    </item>
+    
+    <item>
+      <title>OpenResty后端HTTP健康检查</title>
+      <link>http://www.unknowname.cn/post/nginx/openresty-upstream-check/</link>
+      <pubDate>Fri, 23 Oct 2020 12:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/openresty-upstream-check/</guid>
+      <description>使用到的模块: https://github.com/openresty/lua-resty-upstream-healthcheck NGINX默认自带的健康检查仅仅是检查后端服务器的端口（TCP层）是不是通的，应用层（HTTP）的异常并不能被检测到。 1 2 3</description>
+    </item>
+    
+  </channel>
+</rss>

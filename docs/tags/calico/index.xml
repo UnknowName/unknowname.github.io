@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Calico on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/calico/</link>
+    <description>Recent content in Calico on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 22 Jun 2021 16:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/calico/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Calico for Kubernetes</title>
+      <link>http://www.unknowname.cn/post/k8s/calico/</link>
+      <pubDate>Tue, 22 Jun 2021 16:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/calico/</guid>
+      <description>本文出自官方文档，原文连接 前期准备 Calico支持使用ETCD与Kubernetes API作为数据的存储。官方文档建议在自建的Kuberne</description>
+    </item>
+    
+  </channel>
+</rss>

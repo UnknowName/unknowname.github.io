@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Ingress NGINX annotations - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="Ingress NGINX annotations" /><meta name="keywords" content="Ingress NGINX, ingress nginx annotations" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/k8s/ingress-nginx-annotations/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Ingress NGINX annotations" />
+<meta property="og:description" content="Ingress NGINX annotations" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/k8s/ingress-nginx-annotations/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-19T11:15:11&#43;08:00" />
+<meta property="article:modified_time" content="2022-01-19T11:15:11&#43;08:00" />
+
+<meta itemprop="name" content="Ingress NGINX annotations">
+<meta itemprop="description" content="Ingress NGINX annotations"><meta itemprop="datePublished" content="2022-01-19T11:15:11&#43;08:00" />
+<meta itemprop="dateModified" content="2022-01-19T11:15:11&#43;08:00" />
+<meta itemprop="wordCount" content="626">
+<meta itemprop="keywords" content="Kubernetes," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ingress NGINX annotations"/>
+<meta name="twitter:description" content="Ingress NGINX annotations"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Ingress NGINX annotations</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-19 </span>
+        <div class="post-category">
+            <a href="/categories/kubernetes/"> Kubernetes </a>
+            </div>
+          <span class="more-meta"> 约 626 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#nginxingresskubernetesioservice-upstream"><code>nginx.ingress.kubernetes.io/service-upstream</code></a></li>
+        <li><a href="#nginxingresskubernetesiocanary"><code>nginx.ingress.kubernetes.io/canary</code></a>
+          <ul>
+            <li><a href="#指导步骤">指导步骤:</a></li>
+          </ul>
+        </li>
+        <li><a href="#限速相关">限速相关</a>
+          <ul>
+            <li><a href="#nginxingresskubernetesiolimit-rps"><code>nginx.ingress.kubernetes.io/limit-rps</code></a></li>
+            <li><a href="#nginxingresskubernetesiolimit-rpm"><code>nginx.ingress.kubernetes.io/limit-rpm</code></a></li>
+            <li><a href="#nginxingresskubernetesiolimit-connections"><code>nginx.ingress.kubernetes.io/limit-connections</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#nginxingresskubernetesioconfiguration-snippet"><code>nginx.ingress.kubernetes.io/configuration-snippet</code></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>今天看到文章说<code>IngressNGINX</code>实现灰度，仔细看原来是通过<code>annotations</code>来实现，于是简单的查了下官网，发现有几个有意思的<code>annotations</code>还是蛮有用的，记录下。</p>
+<h2 id="nginxingresskubernetesioservice-upstream"><code>nginx.ingress.kubernetes.io/service-upstream</code></h2>
+<p>当设置为<code>true</code>时生效，默认为<code>false</code>。该参数也可以通过全局的<code>configMap</code>属性<code>service-upstream</code>来开启</p>
+<blockquote>
+<p>By default the NGINX ingress controller uses a list of all endpoints (Pod IP/port) in the NGINX upstream configuration.</p>
+<p>The<code>nginx.ingress.kubernetes.io/service-upstream</code> annotation disables that behavior and instead uses a single upstream in NGINX, the service&rsquo;s Cluster IP and port.</p>
+</blockquote>
+<p>这个注解的好处是:</p>
+<blockquote>
+<p>This can be desirable for things like zero-downtime deployments</p>
+</blockquote>
+<p>使用后引入的新的问题:</p>
+<blockquote>
+<ul>
+<li>Sticky Sessions will not work as only round-robin load balancing is supported.</li>
+<li>The <code>proxy_next_upstream</code> directive will not have any effect meaning on error the request will not be dispatched to another upstream</li>
+</ul>
+</blockquote>
+<p>不过以上的问题我认为并不重要，没有几个应用是通过网关做会话保持的了;另一个更不值得一提</p>
+<h2 id="nginxingresskubernetesiocanary"><code>nginx.ingress.kubernetes.io/canary</code></h2>
+<p>配合以下可以实现灰度:</p>
+<ul>
+<li><code>nginx.ingress.kubernetes.io/canary-by-header</code></li>
+<li><code>nginx.ingress.kubernetes.io/canary-by-header-value</code></li>
+<li><code>nginx.ingress.kubernetes.io/canary-by-header-pattern</code></li>
+<li><code>nginx.ingress.kubernetes.io/canary-by-cookie</code></li>
+<li><code>nginx.ingress.kubernetes.io/canary-weight</code></li>
+<li><code>nginx.ingress.kubernetes.io/canary-weight-total</code></li>
+</ul>
+<h3 id="指导步骤">指导步骤:</h3>
+<ol>
+<li>创建两个不同的<code>Deployment</code>与<code>Service</code></li>
+<li>创建正常的<code>ingress</code>，该规则不需要加注解</li>
+<li>创建灰度的<code>ingress</code>，该<code>ingress</code>的<code>path</code>与<code>hostname</code>一致，不一致的是<code>service</code>名称，以及增加注解</li>
+</ol>
+<h2 id="限速相关">限速相关</h2>
+<p>以下当初限速时，默认返回的是<code>503</code>，建议通过修改<code>configMap</code>的<code>limit-req-status-code</code>与<code>limit-conn-status-code</code>将状态码修改成一个自定义的如<code>533</code>，然后返回一个友好提示页面</p>
+<h3 id="nginxingresskubernetesiolimit-rps"><code>nginx.ingress.kubernetes.io/limit-rps</code></h3>
+<pre><code>限制单个IP的每秒的请求数
+</code></pre>
+<h3 id="nginxingresskubernetesiolimit-rpm"><code>nginx.ingress.kubernetes.io/limit-rpm</code></h3>
+<pre><code>限制单个IP的每分钟的请求数
+</code></pre>
+<h3 id="nginxingresskubernetesiolimit-connections"><code>nginx.ingress.kubernetes.io/limit-connections</code></h3>
+<pre><code>限制单个IP的并发连接数
+</code></pre>
+<h2 id="nginxingresskubernetesioconfiguration-snippet"><code>nginx.ingress.kubernetes.io/configuration-snippet</code></h2>
+<p>用以增加额外的<code>NGINX</code>配置，定制化时很有帮助，比如我们针对某个<code>Ingress</code>不记录日志</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">nginx.ingress.kubernetes.io/configuration-snippet</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">    </span><span class="w">    </span><span class="l">access_log off;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-01-19
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/kubernetes/">Kubernetes</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/leetcode/215/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">堆方法解leetcode之215-数组中的第K个最大元素</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/leetcode/907/">
+            <span class="next-text nav-default">双指针方法解leetcode之907-按奇偶排序数组</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

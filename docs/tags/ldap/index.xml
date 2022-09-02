@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LDAP on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/ldap/</link>
+    <description>Recent content in LDAP on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 01 Mar 2020 09:11:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/ldap/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LDAP Replication同步</title>
+      <link>http://www.unknowname.cn/post/ldap/ldap-repl/</link>
+      <pubDate>Sun, 01 Mar 2020 09:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ldap/ldap-repl/</guid>
+      <description>原文: http://www.openldap.org/doc/admin24/replication.html 基础 OpenLDAP复制基于syncrepl进程。它有两个角色。一个是provider,另一个是consumer。以下是配置Prov</description>
+    </item>
+    
+    <item>
+      <title>LDAP SUDO 基本的schema模板解释</title>
+      <link>http://www.unknowname.cn/post/ldap/ldap-schema/</link>
+      <pubDate>Thu, 27 Feb 2020 22:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ldap/ldap-schema/</guid>
+      <description>Sudo LDAP条目Schema解析 1 2 3 4 5 6 dn: cn=defaults,ou=SUDOers,dc=xueshandai,dc=com objectClass: top objectClass: sudoRole cn: defaults description: Default sudoOption&amp;#39;s go here sudoOption: env_keep+=SSH_AUTH_SOCKSUDO 一个sudoRole就是一个LDAP中的sudo用户。默认的sudo</description>
+    </item>
+    
+    <item>
+      <title>Linux使用LDAP认证</title>
+      <link>http://www.unknowname.cn/post/ldap/ldap-centos/</link>
+      <pubDate>Thu, 27 Feb 2020 21:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ldap/ldap-centos/</guid>
+      <description>Ubuntu 有一个坑，因为Ubuntu默认是不让ROOT登陆的。所发，新用户登陆进系统只有一般权限。又因为Ubuntu默认预安装的sudo程序是没有加</description>
+    </item>
+    
+    <item>
+      <title>LDAP简介</title>
+      <link>http://www.unknowname.cn/post/ldap/ldap-init/</link>
+      <pubDate>Thu, 27 Feb 2020 20:11:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/ldap/ldap-init/</guid>
+      <description>LDAP可以看成是一个目录服务 完整条目解读: dn：cn=cc,ou=imcuser-test-ld,dc=zhjdtest,dc=com LD</description>
+    </item>
+    
+  </channel>
+</rss>

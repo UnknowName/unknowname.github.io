@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>滑动窗口解leetcode之209-长度最小的数组 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="leetcode长度最小的数组" /><meta name="keywords" content="滑动窗口, leetcode 长度最小的数组" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/leetcode/209/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="滑动窗口解leetcode之209-长度最小的数组" />
+<meta property="og:description" content="leetcode长度最小的数组" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/leetcode/209/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-11-01T19:11:11&#43;08:00" />
+<meta property="article:modified_time" content="2022-01-12T11:35:11&#43;08:00" />
+
+<meta itemprop="name" content="滑动窗口解leetcode之209-长度最小的数组">
+<meta itemprop="description" content="leetcode长度最小的数组"><meta itemprop="datePublished" content="2021-11-01T19:11:11&#43;08:00" />
+<meta itemprop="dateModified" content="2022-01-12T11:35:11&#43;08:00" />
+<meta itemprop="wordCount" content="792">
+<meta itemprop="keywords" content="leetcode," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="滑动窗口解leetcode之209-长度最小的数组"/>
+<meta name="twitter:description" content="leetcode长度最小的数组"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">滑动窗口解leetcode之209-长度最小的数组</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-11-01 </span>
+        <div class="post-category">
+            <a href="/categories/leetcode/"> leetcode </a>
+            </div>
+          <span class="more-meta"> 约 792 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><code>leetcode</code>上的题目描述:</p>
+<blockquote>
+<p>给定一个含有<code>n</code>个正整数的数组和一个正整数<code>target</code>。找出该数组中满足其和<code>&gt;=target</code>的长度最小的 连续子数组<code>[numsl, numsl+1, ..., numsr-1, numsr]</code> ，并返回其长度。如果不存在符合条件的子数组，返回0.</p>
+</blockquote>
+<p>示例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">输入：target <span class="o">=</span> 7, <span class="nv">nums</span> <span class="o">=</span> <span class="o">[</span>2,3,1,2,4,3<span class="o">]</span>
+输出：2
+解释：子数组 <span class="o">[</span>4,3<span class="o">]</span> 是该条件下的长度最小的子数组
+</code></pre></td></tr></table>
+</div>
+</div><p>通过这题学习了<code>滑动窗口</code>算法，前面还难理解，找了些相关资料，理解吸引了下，特记录下，防止下次遗忘能重新拾起来。</p>
+<p>滑动窗口，其实解释起来很简单:</p>
+<pre><code>1. 先定义两个指针,左/右指针。初始值都为0
+2. 最开始移动右指针，一直移动到满足某个条件
+3. 当条件满足时，停止移动右指针，转而开始移动左指针。尝试找到最优解
+4. 当移动左指针不满足条件时，继续移动右指针，直到满足。
+5. 重复2-4步，直到右指针移动到数组的最后一个元素
+</code></pre>
+<p>感谢<a href="https://leetcode-cn.com/problems/max-consecutive-ones-iii/solution/fen-xiang-hua-dong-chuang-kou-mo-ban-mia-f76z/">负雪明烛</a>的分享</p>
+<p><strong>算法重点</strong>:</p>
+<ol>
+<li><strong>以右指针作为驱动，拖着左指针向前走</strong>。</li>
+<li><strong>右指针每次只移动一步，而左指针在内部<code>while</code>循环中每次可能移动多步</strong></li>
+<li><strong>右指针是主动前移，探索未知的新区域；左指针是被迫移动，负责寻找满足题意的区间</strong></li>
+</ol>
+<p><code>go</code>语言解法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">minSubArrayLen</span><span class="p">(</span><span class="nx">target</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 滑动窗口算法
+</span><span class="c1"></span>    <span class="c1">// left,right指针， result存储临时最优解, total存储当前窗口内的最大值
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">total</span> <span class="kt">int</span>
+    <span class="c1">// 假设最长为数组长度+1，即真实情况不可能有这么长，特殊标记下
+</span><span class="c1"></span>    <span class="nx">result</span> <span class="p">=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="nx">right</span> <span class="p">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">right</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span> <span class="nx">right</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">total</span> <span class="o">+=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span>
+        <span class="c1">// 当条件满足时，移动左指针，一直移动到满足条件
+</span><span class="c1"></span>        <span class="k">for</span> <span class="nx">total</span> <span class="o">&gt;=</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="c1">// 记录临时最优解,后续还有可能有最优解，临时存储起来，后续再判断
+</span><span class="c1"></span>            <span class="nx">curr</span> <span class="o">:=</span> <span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span>
+            <span class="k">if</span> <span class="nx">curr</span> <span class="p">&lt;</span> <span class="nx">result</span> <span class="p">{</span>
+                <span class="nx">result</span> <span class="p">=</span> <span class="nx">curr</span>
+            <span class="p">}</span>
+             <span class="c1">// 移动左指针时，total的值则要减去最左边的值，窗口已经不包含它了
+</span><span class="c1"></span>            <span class="nx">total</span> <span class="o">-=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">]</span>
+            <span class="nx">left</span> <span class="o">+=</span> <span class="mi">1</span>  
+        <span class="p">}</span>
+        <span class="c1">// 条件不满足时，移动右指针，即进入下个循环，right++
+</span><span class="c1"></span>        <span class="k">continue</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 最后对结果做一个判断
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">result</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">{</span>
+         <span class="k">return</span> <span class="mi">0</span>
+    <span class="p">}</span>
+    <span class="c1">// 因为索引是从0开始，最后加1
+</span><span class="c1"></span>    <span class="k">return</span> <span class="nx">result</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-01-12
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/leetcode/">leetcode</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/leetcode/239/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">双端队列解leetcode之239-滑动窗口最大值</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/windows/clean-file-null/">
+            <span class="next-text nav-default">Windows清理大文件内容</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

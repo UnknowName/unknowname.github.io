@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <style>
+    .main-left {
+      position: absolute;
+      min-width: 300px;
+      min-height: 300px;
+      background-color: darkolivegreen;
+      margin-left: 20px;
+      float: left;
+      display: block;
+    }
+
+    #ads1 {
+      margin-top: 120px;
+      display: none;
+    }
+
+    #ads2 {
+      margin-top: 430px;
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Graylog增加节点 - UnknowName</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="UnknowName" /><meta name="description" content="Graylog增加节点" /><meta name="keywords" content="Graylog, 增加节点" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.81.0 with theme even" />
+
+
+<link rel="canonical" href="http://www.unknowname.cn/post/graylog/graylog-add-node/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b5a744db6de49a86cadafb3b70f555ab443f83c307a483402259e94726b045ff.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Graylog增加节点" />
+<meta property="og:description" content="Graylog增加节点" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.unknowname.cn/post/graylog/graylog-add-node/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-02-28T12:05:11&#43;08:00" />
+<meta property="article:modified_time" content="2021-02-28T12:05:11&#43;08:00" />
+
+<meta itemprop="name" content="Graylog增加节点">
+<meta itemprop="description" content="Graylog增加节点"><meta itemprop="datePublished" content="2021-02-28T12:05:11&#43;08:00" />
+<meta itemprop="dateModified" content="2021-02-28T12:05:11&#43;08:00" />
+<meta itemprop="wordCount" content="1069">
+<meta itemprop="keywords" content="graylog," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Graylog增加节点"/>
+<meta name="twitter:description" content="Graylog增加节点"/>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9ca8759574bcbd00e6fbad10024ebc0a";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  
+  <div class="main-left" id="ads1">与container同级别</div>
+  <div class="main-left" id="ads2">与container同级别2</div>
+  
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">UnknowName</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/post/about-me/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">UnknowName</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/about-me/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Graylog增加节点</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-02-28 </span>
+        <div class="post-category">
+            <a href="/categories/tools/"> tools </a>
+            </div>
+          <span class="more-meta"> 约 1069 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#mongodb"><code>MongoDB</code></a></li>
+        <li><a href="#elasticsearch"><code>Elasticsearch</code></a></li>
+        <li><a href="#graylog-server"><code>Graylog Server</code></a></li>
+        <li><a href="#前期准备">前期准备</a></li>
+        <li><a href="#可用yaml">可用<code>YAML</code></a></li>
+        <li><a href="#老节点elassticearch参数修改">老节点<code>Elassticearch</code>参数修改</a></li>
+        <li><a href="#检查">检查</a></li>
+        <li><a href="#客户端配置">客户端配置</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>如果要完全实现高可用，那么<code>Graylog</code>三个组件都需要做到。官方并没有给出具体实施细节，但是官方给出了指导方案</p>
+<h2 id="mongodb"><code>MongoDB</code></h2>
+<pre><code>需要做成复制集，并且使用Graylog连接MongoDB的URI修改成复制集的连接方式
+</code></pre>
+<h2 id="elasticsearch"><code>Elasticsearch</code></h2>
+<pre><code>Elasticsearch原生就是分布式的，没什么难度。增加discovery.zen.ping.unicast.hosts属性，指定节点组成集群
+</code></pre>
+<h2 id="graylog-server"><code>Graylog Server</code></h2>
+<pre><code>多个Graylog时，只能有一个Master。
+</code></pre>
+<h2 id="前期准备">前期准备</h2>
+<ul>
+<li>
+<p>新节点修改内核参数，以满足<code>Elasticsearch</code>要求</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 1.修改limits.conf</span>
+vi /etc/security/limits.conf
+root - nofile <span class="m">165536</span>
+*    - nofile <span class="m">165536</span>
+
+<span class="c1"># 2.增加内核参数</span>
+<span class="nb">echo</span> <span class="s2">&#34;vm.max_map_count = 262144&#34;</span> &gt; /etc/sysctl.d/es.conf
+sysctl -p /etc/sysctl.d/es.conf
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>新老节点安装<code>NTP</code>服务。公有云不需要，一般默认会时间同步</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">yum install ntp -y
+systemctl <span class="nb">enable</span> ntpd
+systemctl start ntpd
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>【可选】关闭<code>Elasticsearch</code>全局负载均衡.可使用原来的索引还在原来节点上，这样新添加的<code>ES</code>节点可以下线，不影响老数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -XPUT -H <span class="s2">&#34;Content-type: application/json&#34;</span> http://es:9200/_cluster/settings -d <span class="s1">&#39;{
+</span><span class="s1">  &#34;transient&#34; : {
+</span><span class="s1">      &#34;cluster.routing.rebalance.enable&#34; : &#34;none&#34;
+</span><span class="s1">  }
+</span><span class="s1">}&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="可用yaml">可用<code>YAML</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># 这里不做Mongo复制集，所以不需要运行MongoDB</span><span class="w">
+</span><span class="w"></span><span class="c"># version: &#34;3.3&#34;</span><span class="w">
+</span><span class="w"></span><span class="c"># MongoDB: https://hub.docker.com/_/mongo/</span><span class="w">
+</span><span class="w"></span><span class="c">#mongodb:</span><span class="w">
+</span><span class="w"></span><span class="c">#  image: mongo:3</span><span class="w">
+</span><span class="w"></span><span class="c">#  restart: always</span><span class="w">
+</span><span class="w"></span><span class="c">#  container_name: graylog-db</span><span class="w">
+</span><span class="w"></span><span class="c">#  net: host</span><span class="w">
+</span><span class="w"></span><span class="c">#  volumes:</span><span class="w">
+</span><span class="w"></span><span class="c">#    - ./mongo_data:/data/db</span><span class="w">
+</span><span class="w"></span><span class="c">#  # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/6.6/docker.html</span><span class="w">
+</span><span class="w"></span><span class="nt">elasticsearch</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker.elastic.co/elasticsearch/elasticsearch-oss:6.6.1</span><span class="w">
+</span><span class="w">  </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">  </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">graylog-es</span><span class="w">
+</span><span class="w">  </span><span class="nt">net</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">./elas_data:/usr/share/elasticsearch/data</span><span class="w">
+</span><span class="w">    </span>- <span class="l">./plugins:/usr/share/elasticsearch/plugins</span><span class="w">
+</span><span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">TZ=Asia/Shanghai</span><span class="w">
+</span><span class="w">    </span>- <span class="l">cluster.name=graylog</span><span class="w">
+</span><span class="w">    </span>- <span class="l">node.name=255.80</span><span class="w">
+</span><span class="w">    </span>- <span class="l">indices.fielddata.cache.size=20%</span><span class="w">
+</span><span class="w">    </span><span class="c"># 指定本机IP</span><span class="w">
+</span><span class="w">    </span>- <span class="l">network.host=128.0.255.80</span><span class="w">
+</span><span class="w">    </span><span class="c"># 增加ENV，指定前一个ES,这样ES组成集群</span><span class="w">
+</span><span class="w">    </span>- <span class="s2">&#34;discovery.zen.ping.unicast.hosts=128.0.255.10,128.0.255.80&#34;</span><span class="w">
+</span><span class="w">    </span><span class="c"># JAVA_OPTS一定要放在ENV的最后</span><span class="w">
+</span><span class="w">    </span>- <span class="s2">&#34;ES_JAVA_OPTS=-Xms3000m -Xmx3000m&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">ulimits</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">memlock</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">soft</span><span class="p">:</span><span class="w"> </span>-<span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="nt">hard</span><span class="p">:</span><span class="w"> </span>-<span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="nt">mem_limit</span><span class="p">:</span><span class="w"> </span><span class="l">6g</span><span class="w">
+</span><span class="w"></span><span class="c"># Graylog: https://hub.docker.com/r/graylog/graylog/</span><span class="w">
+</span><span class="w"></span><span class="nt">graylog</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">graylog/graylog:3.0</span><span class="w">
+</span><span class="w">  </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w">  </span><span class="nt">net</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span><span class="w">  </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">graylog-server</span><span class="w">
+</span><span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">TZ=Asia/Shanghai</span><span class="w">
+</span><span class="w">    </span><span class="c"># 同Elasticsearch的net.host值一样，指定本机IP</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_ELASTICSEARCH_HOSTS=http://128.0.255.80:9200</span><span class="w">
+</span><span class="w">    </span><span class="c"># 注意，这里的Mongo使用第一个的。因为要配置共享</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_MONGODB_URI=mongodb://128.0.255.10:27017/graylog</span><span class="w">
+</span><span class="w">    </span><span class="c"># 不指定为Master</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_IS_MASTER=false</span><span class="w">
+</span><span class="w">    </span><span class="c"># echo -n &#34;admin&#34; | sha256sum</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918</span><span class="w">
+</span><span class="w">    </span><span class="c"># IP设置成主Graylog的API地址</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_HTTP_EXTERNAL_URI=http://128.0.255.10:9000/</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_ENABLED=true</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_HOSTNAME=smtp.sina.com</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_PORT=25</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_USE_AUTH=true</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_USE_TLS=false</span><span class="w">
+</span><span class="w">    </span><span class="c"># 用以邮件告警，填写真实相关信息</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_AUTH_USERNAME=user@domain</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_AUTH_PASSWORD=user@pass</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_SUBJECT_PREFIX=GraylogAlert</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_FROM_EMAIL=user@domain</span><span class="w">
+</span><span class="w">    </span><span class="c"># IP设置成主Graylog的API地址</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_TRANSPORT_EMAIL_WEB_INTERFACE_URL=http://128.0.255.10:9000/</span><span class="w">
+</span><span class="w">    </span>- <span class="l">GRAYLOG_ROOT_TIMEZONE=Asia/Shanghai</span><span class="w">
+</span><span class="w">    </span>- <span class="s2">&#34;JAVA_OPTS=-Xms512m -Xmx512m&#34;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>然后执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker-compose up -d
+chmod -R <span class="m">777</span> elas_data
+docker-compose restart
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="老节点elassticearch参数修改">老节点<code>Elassticearch</code>参数修改</h2>
+<p>因为增加了新节点，当老节点启动时，它不主动连接老节点时，会导致脑残，它自己成为主节点。</p>
+<p>在<code>docker-compose.yml</code>中的<code>elasticsearch</code>项中，增加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nn">...</span><span class="l">.</span><span class="w">
+</span><span class="w"></span><span class="nt">elasticsearch</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker.elastic.co/elasticsearch/elasticsearch-oss:6.6.1</span><span class="w">
+</span><span class="w"></span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
+</span><span class="w"></span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">graylog-es</span><span class="w">
+</span><span class="w"></span><span class="nt">net</span><span class="p">:</span><span class="w"> </span><span class="l">host</span><span class="w">
+</span><span class="w"></span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">./elas_data:/usr/share/elasticsearch/data</span><span class="w">
+</span><span class="w">  </span>- <span class="l">./plugins:/usr/share/elasticsearch/plugins</span><span class="w">
+</span><span class="w"></span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="l">...</span><span class="w">
+</span><span class="w">  </span><span class="c"># 增加配置，指定新增加的节点</span><span class="w">
+</span><span class="w">  </span>- <span class="s2">&#34;discovery.zen.ping.unicast.hosts=128.0.255.10,128.0.255.80&#34;</span><span class="w">
+</span><span class="w">  </span><span class="l">... </span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="检查">检查</h2>
+<ol>
+<li>
+<p>调用ES的<code>http://es:9200/_cluster/state?pretty</code>HTTP API，确认新加入的节点已经位于集群中</p>
+</li>
+<li>
+<p>进入Graylog的WEB，进入<code>System</code>&ndash;&gt;<code>nodes</code>,正常应该会显示二个节点</p>
+</li>
+<li>
+<p>往新节点输入日志，应该可以在主节点的WEB上展示出来</p>
+</li>
+</ol>
+<h2 id="客户端配置">客户端配置</h2>
+<p>两台主机都可以接受日志了，并且可以统一展现出来。这样增加吞吐量</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">UnknowName</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-02-28
+        
+    </span>
+  </p>
+  
+  
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/images/reward/alipay.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/graylog/">graylog</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/graylog/nginx-log-to-graylog/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Graylog收集Nginx访问日志</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/graylog/graylog/">
+            <span class="next-text nav-default">Graylog安装及介绍</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:burtte@sina.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/UnknowName" class="iconfont icon-github" title="github"></a>
+  <a href="http://www.unknowname.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
