@@ -70,7 +70,7 @@
 <meta itemprop="name" content="Kubernetes安装Nginx Ingress以及优化">
 <meta itemprop="description" content="Kubernetes安装Nginx Ingress以及优化"><meta itemprop="datePublished" content="2021-03-02T13:25:11&#43;08:00" />
 <meta itemprop="dateModified" content="2022-01-19T11:09:11&#43;08:00" />
-<meta itemprop="wordCount" content="1312">
+<meta itemprop="wordCount" content="1313">
 <meta itemprop="keywords" content="Kubernetes," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kubernetes安装Nginx Ingress以及优化"/>
 <meta name="twitter:description" content="Kubernetes安装Nginx Ingress以及优化"/>
@@ -161,7 +161,7 @@
         <div class="post-category">
             <a href="/categories/kubernetes/"> Kubernetes </a>
             </div>
-          <span class="more-meta"> 约 1312 字 </span>
+          <span class="more-meta"> 约 1313 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         
       </div>
@@ -269,6 +269,7 @@ https://github.com/kubernetes/ingress-nginx/blob/master/deploy/static/provider/b
 </span><span class="lnt">30
 </span><span class="lnt">31
 </span><span class="lnt">32
+</span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">data</span><span class="p">:</span><span class="w">
@@ -285,6 +286,7 @@ https://github.com/kubernetes/ingress-nginx/blob/master/deploy/static/provider/b
 </span><span class="w">  </span><span class="nt">proxy-body-size</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;500m&#34;</span><span class="w">
 </span><span class="w">  </span><span class="nt">worker-cpu-affinity</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;auto&#34;</span><span class="w">
 </span><span class="w">  </span><span class="c"># RealIP</span><span class="w">
+</span><span class="w">  </span><span class="nt">enable-real-ip</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
 </span><span class="w">  </span><span class="nt">compute-full-forwarded-for</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
 </span><span class="w">  </span><span class="nt">forwarded-for-header</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;X-Forwarded-For&#34;</span><span class="w">
 </span><span class="w">  </span><span class="nt">use-forwarded-headers</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
