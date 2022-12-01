@@ -898,14 +898,5 @@
       <description>Hook是一个特殊函数，它可以勾入React的特性，如state 概览 Hook大致分为两大类，一类为state类，一类为effect类 stat</description>
     </item>
     
-    <item>
-      <title>About me</title>
-      <link>http://www.unknowname.cn/post/about-me/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://www.unknowname.cn/post/about-me/</guid>
-      <description>基本信息 姓名: 程先生 出生年月: 1988.02.20 籍贯: 江西-上饶 联系方式: 15618519793/2244180879@qq.com 毕业院校: 新余钢铁有限公司职工大学 专业: 机械制造与自动化 GitHub：https</description>
-    </item>
-    
   </channel>
 </rss>

@@ -1022,12 +1022,6 @@
   </url>
   
   <url>
-    <loc>http://www.unknowname.cn/post/about-me/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>http://www.unknowname.cn/tags/ci/cd/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
