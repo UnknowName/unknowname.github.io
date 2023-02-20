@@ -65,12 +65,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://www.unknowname.cn/post/graylog/graylog-faq/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-08-30T10:05:11&#43;08:00" />
-<meta property="article:modified_time" content="2021-10-08T10:05:11&#43;08:00" />
+<meta property="article:modified_time" content="2023-02-03T10:05:11&#43;08:00" />
 
 <meta itemprop="name" content="Graylog常见一些问题处理">
 <meta itemprop="description" content="Graylog常见一些问题处理"><meta itemprop="datePublished" content="2021-08-30T10:05:11&#43;08:00" />
-<meta itemprop="dateModified" content="2021-10-08T10:05:11&#43;08:00" />
-<meta itemprop="wordCount" content="154">
+<meta itemprop="dateModified" content="2023-02-03T10:05:11&#43;08:00" />
+<meta itemprop="wordCount" content="260">
 <meta itemprop="keywords" content="graylog," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Graylog常见一些问题处理"/>
 <meta name="twitter:description" content="Graylog常见一些问题处理"/>
@@ -161,7 +161,7 @@
         <div class="post-category">
             <a href="/categories/tools/"> tools </a>
             </div>
-          <span class="more-meta"> 约 154 字 </span>
+          <span class="more-meta"> 约 260 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         
       </div>
@@ -181,6 +181,7 @@
           </ul>
         </li>
         <li><a href="#正则查询">正则查询</a></li>
+        <li><a href="#linux基于rsyslog系统日志收集"><code>Linux</code>基于<code>Rsyslog</code>系统日志收集</a></li>
       </ul>
     </li>
   </ul>
@@ -216,7 +217,25 @@ db.index_ranges.drop<span class="o">()</span>
 <p>好了，久违的数据又回来了</p>
 <h2 id="正则查询">正则查询</h2>
 <p>正则需要用<code>//</code>将正则表达式包起来.如: <code>url: /\/api.*/</code>。不用加空格，官方文档里面的示例是加了空格</p>
-
+<h2 id="linux基于rsyslog系统日志收集"><code>Linux</code>基于<code>Rsyslog</code>系统日志收集</h2>
+<p><code>/etc/rsyslog.conf</code>增加以下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 过滤由run-parts/systemd/rsyslogd产生的日志，这些日志直接丢弃</span>
+:programname, isequal, <span class="s2">&#34;run-parts&#34;</span> stop
+:programname, isequal, <span class="s2">&#34;systemd&#34;</span> stop
+:programname, isequal, <span class="s2">&#34;rsyslogd&#34;</span> stop
+*.*    @ServerIp:514<span class="p">;</span>RSYSLOG_SyslogProtocol23Format
+</code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
@@ -227,7 +246,7 @@ db.index_ranges.drop<span class="o">()</span>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-10-08
+        2023-02-03
         
     </span>
   </p>
