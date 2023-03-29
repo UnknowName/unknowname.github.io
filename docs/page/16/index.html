@@ -151,115 +151,115 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/graylog/graylog/">Graylog安装及介绍</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/linux/bash/">Bash/Shell语法速览与技巧</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2021-02-28 </span>
+      <span class="post-time"> 2021-03-02 </span>
       <div class="post-category">
-          <a href="/categories/tools/"> tools </a>
+          <a href="/categories/linux/"> linux </a>
           </div>
-        <span class="more-meta"> 约 1747 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Graylog日志收集服务 介绍 Graylog是一个集中日志收集与检索系统。可以将它看成是一个EFK组合。它的底层搜索提供也是Elastics
-    </div>
-    <div class="read-more">
-      <a href="/post/graylog/graylog/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/linux/linix-repo/">本地Repo仓库搭建</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2021-02-26 </span>
-      <div class="post-category">
-          <a href="/categories/linux/"> Linux </a>
-          </div>
-        <span class="more-meta"> 约 159 字 </span>
+        <span class="more-meta"> 约 460 字 </span>
         <span class="more-meta"> 预计阅读 1 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      将本地系统的/etc/yum.repos.d/目录中的yum源同步至本地，这样本地局域网就可以使用内网的yum源，加快速度 安装工具 1 yum install nginx yum-utils
+      Shell基础语法 循环 while循环 while死循环 1 2 3 4 5 while true do echo &#34;whle loop&#34; sleep 10 done for循环 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 # 范围循环 for
     </div>
     <div class="read-more">
-      <a href="/post/linux/linix-repo/" class="read-more-link">阅读更多</a>
+      <a href="/post/linux/bash/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/nginx/nginx-conf/">NGINX配置文件详解</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/k8s/k8s-nginx-ingress/">Kubernetes安装Nginx Ingress以及优化</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2021-02-26 </span>
+      <span class="post-time"> 2021-03-02 </span>
       <div class="post-category">
-          <a href="/categories/linux/"> Linux </a>
+          <a href="/categories/kubernetes/"> Kubernetes </a>
           </div>
-        <span class="more-meta"> 约 2494 字 </span>
-        <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span class="more-meta"> 约 1313 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      此文罗列下主要配置文件的参数含义 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+      NGINX Ingress官方的YAML文件是以Deployment方式运行的，这样就会有坑，Pod会到处跑，即使加上nodeSecetor，也是会有
     </div>
     <div class="read-more">
-      <a href="/post/nginx/nginx-conf/" class="read-more-link">阅读更多</a>
+      <a href="/post/k8s/k8s-nginx-ingress/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/linux/linux-rsync/">Rsync 同步文件</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/es/es-api/">Elasticsearch常用API</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2021-02-26 </span>
+      <span class="post-time"> 2021-03-01 </span>
       <div class="post-category">
-          <a href="/categories/linux/"> Linux </a>
+          <a href="/categories/tools/"> tools </a>
           </div>
-        <span class="more-meta"> 约 539 字 </span>
+        <span class="more-meta"> 约 334 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      索引API 查看所有索引 curl -XGET http://es:9200/_cat/indices?pretty 删除指定索引 curl -XDELETE http://es:9200/IndexName 索引配置信息 curl -XGET http://es:9200/IndexName/_settings?pretty 取消所有索引只读模式 curl -XPUT -H &quot;Content-type: application/json&quot; http://es:9200/_settings -d '{ &quot;index.blocks.read_only_allow_delete&quot;:&quot;false&quot; }' 索引重命名 curl -XPOST -H &quot;Content-type: application/json&quot; http://es:9200/_reindex -d '{ &quot;source&quot;: { &quot;index&quot;: &quot;OldName&quot; },
+    </div>
+    <div class="read-more">
+      <a href="/post/es/es-api/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/es/es-stop/">Elasticsearch正确重启维护</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2021-03-01 </span>
+      <div class="post-category">
+          <a href="/categories/tools/"> tools </a>
+          </div>
+        <span class="more-meta"> 约 426 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      加大延迟索引复制时间 1 2 3 4 5 curl -XPUT -H &#34;Content-type: application/json&#34; http://es:9200/_all/_settings -d &#39;{ &#34;settings&#34;: { &#34;index.unassigned.node_left.delayed_timeout&#34;: &#34;5m&#34; } }&#39; 通过API，临时禁用索引分片 1 2 3 4 5 curl -XPUT -H &#34;Content-type: application/json&#34; http://es:9200/_cluster/settings -d &#39;{ &#34;transient&#34; : { &#34;cluster.routing.allocation.enable&#34; : &#34;none&#34; } }&#39; 停止Elas
+    </div>
+    <div class="read-more">
+      <a href="/post/es/es-stop/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/es/es-conf/">Elasticsearch 重要的配置项</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2021-03-01 </span>
+      <div class="post-category">
+          <a href="/categories/tools/"> tools </a>
+          </div>
+        <span class="more-meta"> 约 772 字 </span>
         <span class="more-meta"> 预计阅读 2 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      rsync 同步不同主机的文件时，一个作为服务端，另一个作为客户端。在服务端，一般称为rsyncd 服务端 安装 1 yum install rsync -y 准备配置文件/etc/rsync
+      示例elasticsearch.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 # 默认数据副本数index.number_of_replicas:1
     </div>
     <div class="read-more">
-      <a href="/post/linux/linux-rsync/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/nginx/openresty-lua-backend/">OpenResty基于Lua依据IP简单灰度</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-12-25 </span>
-      <div class="post-category">
-          <a href="/categories/linux/"> Linux </a>
-          </div>
-        <span class="more-meta"> 约 1511 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      需求: 根据不同IP返回不同后端，实现一个简单版的一个灰度发布功能 使用到的模块 https://github.com/openresty/lua-nginx-module#synopsis 该模块已内置于OpenResty可以直接使用 方法一 OpenRe
-    </div>
-    <div class="read-more">
-      <a href="/post/nginx/openresty-lua-backend/" class="read-more-link">阅读更多</a>
+      <a href="/post/es/es-conf/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

@@ -151,88 +151,115 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/ldap/ldap-centos/">Linux使用LDAP认证</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/database/mongo/mongo_repl/">MongoDB复制集实战</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2020-02-27 </span>
+      <span class="post-time"> 2020-10-13 </span>
       <div class="post-category">
-          <a href="/categories/linux/"> Linux </a>
+          <a href="/categories/database/"> Database </a>
           </div>
-        <span class="more-meta"> 约 329 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Ubuntu 有一个坑，因为Ubuntu默认是不让ROOT登陆的。所发，新用户登陆进系统只有一般权限。又因为Ubuntu默认预安装的sudo程序是没有加
-    </div>
-    <div class="read-more">
-      <a href="/post/ldap/ldap-centos/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/ldap/ldap-init/">LDAP简介</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-02-27 </span>
-      <div class="post-category">
-          <a href="/categories/linux/"> linux </a>
-          </div>
-        <span class="more-meta"> 约 467 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      LDAP可以看成是一个目录服务 完整条目解读: dn：cn=cc,ou=imcuser-test-ld,dc=zhjdtest,dc=com LD
-    </div>
-    <div class="read-more">
-      <a href="/post/ldap/ldap-init/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/assembly/day04/"></a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 0001-01-01 </span>
-      
-        <span class="more-meta"> 约 289 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      寄存器的内存访问 CPU中，用16位寄存器来存储一个字（2Byte）,高8位存放高位字节，低8位存放低位字节.所以一个字需要2个内存存储单元（
-    </div>
-    <div class="read-more">
-      <a href="/post/assembly/day04/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/react/react-hook/"></a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 0001-01-01 </span>
-      
-        <span class="more-meta"> 约 784 字 </span>
+        <span class="more-meta"> 约 760 字 </span>
         <span class="more-meta"> 预计阅读 2 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      Hook是一个特殊函数，它可以勾入React的特性，如state 概览 Hook大致分为两大类，一类为state类，一类为effect类 stat
+      配置 不同机器的MongoDB服务进程使用相同启动参数运行: 1 mongod --replSet rs0 -f /etc/mongod.conf 三台机器运行起来后，再在三台当中任何一台中执行: 1 2 3 4 5 6 7 8 9 10 11
     </div>
     <div class="read-more">
-      <a href="/post/react/react-hook/" class="read-more-link">阅读更多</a>
+      <a href="/post/database/mongo/mongo_repl/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/database/mongo/mongo_shard/">MongoDB分片</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-10-12 </span>
+      <div class="post-category">
+          <a href="/categories/database/"> Database </a>
+          </div>
+        <span class="more-meta"> 约 1278 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      速览 官方建议至少三台以上,分片的前提需要副本集. 分片解决的问题 增加可用RAM 增加可用磁盘空间 减轻单台服务器压力 处理单个mongod无法承受的
+    </div>
+    <div class="read-more">
+      <a href="/post/database/mongo/mongo_shard/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/database/mongo/mongo/">MongoDB基础</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-10-11 </span>
+      <div class="post-category">
+          <a href="/categories/database/"> Database </a>
+          </div>
+        <span class="more-meta"> 约 2299 字 </span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      特点 索引 支持通用二级索引、唯一索引、复合索引、地理空间索引、全文索引 聚合 支持聚合管道(aggreation pipeline) 特殊集合类型 基于时间失效的集合，
+    </div>
+    <div class="read-more">
+      <a href="/post/database/mongo/mongo/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/k8s/k8s-rbac-ns/">Kubernetes给予指定NameSpace的控制权限</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-10-11 </span>
+      <div class="post-category">
+          <a href="/categories/kubernetes/"> Kubernetes </a>
+          </div>
+        <span class="more-meta"> 约 686 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      因网上都是基于命令行，网上给的方案不适用于通过Dashboard访问的方案。要微调下就可以。 创建ServiceAccount 1 2 3 4 5 6 7 8
+    </div>
+    <div class="read-more">
+      <a href="/post/k8s/k8s-rbac-ns/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/database/mysql/mysql-cluster-mang/">MySQL Cluster增加数据节点</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-09-12 </span>
+      <div class="post-category">
+          <a href="/categories/database/"> Database </a>
+          </div>
+        <span class="more-meta"> 约 887 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      添加新数据节点 添加新数据节点之前已经存在的表 的重新分配不是自动的，但是可以使用MySQL或另一个MySQL客户端应用程序中的简单SQL语句来
+    </div>
+    <div class="read-more">
+      <a href="/post/database/mysql/mysql-cluster-mang/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
@@ -244,7 +271,10 @@
         <i class="iconfont icon-left"></i>
         <span class="prev-text">上一页</span>
       </a>
-    
+    <a class="next" href="/page/21/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
   </nav>
         </div>
         

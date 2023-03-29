@@ -151,115 +151,116 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/queue/rabbitmq-prod/">RabbitMQ生产优化</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/k8s/custom-metrics-hpa/">基于Prometheus-adapter的自定义指标的HPA</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2021-05-18 </span>
+      <span class="post-time"> 2021-09-15 </span>
       <div class="post-category">
-          <a href="/categories/rabbitmq/"> rabbitmq </a>
+          <a href="/categories/kubernetes/"> Kubernetes </a>
           </div>
-        <span class="more-meta"> 约 569 字 </span>
+        <span class="more-meta"> 约 503 字 </span>
         <span class="more-meta"> 预计阅读 2 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      主要分为操作系统优化与RabbitMQ自身的优化二项 操作系统配置项 最大文件打开描述符 官方要求最少50K，并同时不建议超过500K允许打开的文
+      此为关于Prometheus-adapter的第二篇，其一基础以及安装请见其一. 虽然有Kube-Prometheus与Prometheus-
     </div>
     <div class="read-more">
-      <a href="/post/queue/rabbitmq-prod/" class="read-more-link">阅读更多</a>
+      <a href="/post/k8s/custom-metrics-hpa/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/database/mysql/mysql-conf/">MySQL推荐配置</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/database/mysql/xtrabackup-install-by-arm/">Xtrabackup源码编译安装</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2021-05-13 </span>
+      <span class="post-time"> 2021-09-14 </span>
       <div class="post-category">
           <a href="/categories/database/"> Database </a>
+          <a href="/categories/tools/"> tools </a>
           </div>
-        <span class="more-meta"> 约 660 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span class="more-meta"> 约 1147 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      mysqld.cnf 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 character_set_server = utf8mb4 # InnoDB
+      xtrabackup好用，但奈何国外对ARM架构支持不是很好，官网并没有现成的ARM包，只能源码编译了。本镜像适用于MySQL5.7系列。 Dockerfile
     </div>
     <div class="read-more">
-      <a href="/post/database/mysql/mysql-conf/" class="read-more-link">阅读更多</a>
+      <a href="/post/database/mysql/xtrabackup-install-by-arm/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/database/mysql/mysql-tablespce/">MySQL TableSpace表空间</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/graylog/graylog-faq/">Graylog常见一些问题处理</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2021-04-21 </span>
+      <span class="post-time"> 2021-08-30 </span>
       <div class="post-category">
-          <a href="/categories/database/"> Database </a>
+          <a href="/categories/tools/"> tools </a>
           </div>
-        <span class="more-meta"> 约 729 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span class="more-meta"> 约 260 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      What TableSpace 表空间是一个存储位置，可以保存实际的底层数据库对象的数据。在MySQL里面，它主要存储InnoDB存储引擎的底层数据。它在物理数据和逻辑
+      查询提示Try recalculating your index ranges. MongoDB端操作 1 2 3 4 mongo use graylog; db.index_ranges.drop() exit Graylog端 进入Graylog管理页，进入system-&gt;indice
     </div>
     <div class="read-more">
-      <a href="/post/database/mysql/mysql-tablespce/" class="read-more-link">阅读更多</a>
+      <a href="/post/graylog/graylog-faq/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/flink/flink-init/">Flink 入门简要笔记</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/k8s/nginx-ingress-add-prefix/">NGINX Ingress路由增加前缀</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2021-04-09 </span>
+      <span class="post-time"> 2021-08-27 </span>
       <div class="post-category">
-          <a href="/categories/dev/"> dev </a>
+          <a href="/categories/kubernetes/"> Kubernetes </a>
           </div>
-        <span class="more-meta"> 约 873 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span class="more-meta"> 约 362 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      核心概念 流(Streams) 流分为无限与有限，无限为DataStream,有限为DataSet 状态(State) 状态是计算过程中的数据信息，
+      需求场景 通过URL可以快速区分与判断是那个服务 集团性的公司，将不同业务通过统一域名对外，提升SEO权重 样例文件 ing.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14
     </div>
     <div class="read-more">
-      <a href="/post/flink/flink-init/" class="read-more-link">阅读更多</a>
+      <a href="/post/k8s/nginx-ingress-add-prefix/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/database/mysql/mysql-partion/">MySQL分区总结</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/k8s/prometheos-adpater/">Prometheus-adapter与kube-prometheus安装联动</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2021-03-30 </span>
+      <span class="post-time"> 2021-07-31 </span>
       <div class="post-category">
-          <a href="/categories/database/"> Database </a>
+          <a href="/categories/kubernetes/"> Kubernetes </a>
           </div>
-        <span class="more-meta"> 约 1980 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span class="more-meta"> 约 1038 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      前提 检查是否打开分区功能 1 show variables like &#34;%partition%&#34;\G 为1或YES表示打开 分区表的限制 一个表最多只能有1024个分区 如果分区字段中有主键或者唯一索引的列，那么所
+      组件介绍 Kube-Prometheus 项目用来方便在Kubernetes中安装Prometheus Prometheus-adapter用来将Prometheus采集到的
     </div>
     <div class="read-more">
-      <a href="/post/database/mysql/mysql-partion/" class="read-more-link">阅读更多</a>
+      <a href="/post/k8s/prometheos-adpater/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
