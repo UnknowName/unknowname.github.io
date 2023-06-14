@@ -13,7 +13,7 @@
       <pubDate>Mon, 01 Mar 2021 19:05:11 +0800</pubDate>
       
       <guid>http://www.unknowname.cn/post/es/es-api/</guid>
-      <description>索引API 查看所有索引 curl -XGET http://es:9200/_cat/indices?pretty 删除指定索引 curl -XDELETE http://es:9200/IndexName 索引配置信息 curl -XGET http://es:9200/IndexName/_settings?pretty 取消所有索引只读模式 curl -XPUT -H &amp;quot;Content-type: application/json&amp;quot; http://es:9200/_settings -d &#39;{ &amp;quot;index.blocks.read_only_allow_delete&amp;quot;:&amp;quot;false&amp;quot; }&#39; 索引重命名 curl -XPOST -H &amp;quot;Content-type: application/json&amp;quot; http://es:9200/_reindex -d &#39;{ &amp;quot;source&amp;quot;: { &amp;quot;index&amp;quot;: &amp;quot;OldName&amp;quot; },</description>
+      <description>索引API 查看索引分布情况 curl http://es:9200/_cat/shards?pretty 查看所有索引 curl -XGET http://es:9200/_cat/indices?pretty 删除指定索引 curl -XDELETE http://es:9200/IndexName 索引配置信息 curl -XGET http://es:9200/IndexName/_settings?pretty 取消所有索引只读模式 curl -XPUT -H &amp;quot;Content-type: application/json&amp;quot; http://es:9200/_settings -d &#39;{ &amp;quot;index.blocks.read_only_allow_delete&amp;quot;:&amp;quot;false&amp;quot; }&#39; 索引重命名 curl -XPOST -H</description>
     </item>
     
     <item>
