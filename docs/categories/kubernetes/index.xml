@@ -6,7 +6,16 @@
     <description>Recent content in Kubernetes on UnknowName</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 19 Jan 2022 11:15:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Jul 2023 15:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KEDA HPA一分钟实践</title>
+      <link>http://www.unknowname.cn/post/k8s/cncf-keda/</link>
+      <pubDate>Wed, 26 Jul 2023 15:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/cncf-keda/</guid>
+      <description>KEDA的核心其实是它的Scalers。它的目的是实现Kubernetes中的资源的自动伸缩，它使用的仍然是原生的HPA组件，但是它扩展了原</description>
+    </item>
+    
     <item>
       <title>Ingress NGINX annotations</title>
       <link>http://www.unknowname.cn/post/k8s/ingress-nginx-annotations/</link>

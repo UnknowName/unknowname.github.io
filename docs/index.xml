@@ -6,7 +6,16 @@
     <description>Recent content on UnknowName</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 13 Nov 2022 17:20:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Jul 2023 15:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KEDA HPA一分钟实践</title>
+      <link>http://www.unknowname.cn/post/k8s/cncf-keda/</link>
+      <pubDate>Wed, 26 Jul 2023 15:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/cncf-keda/</guid>
+      <description>KEDA的核心其实是它的Scalers。它的目的是实现Kubernetes中的资源的自动伸缩，它使用的仍然是原生的HPA组件，但是它扩展了原</description>
+    </item>
+    
     <item>
       <title>Nick的英语入门笔记-介词</title>
       <link>http://www.unknowname.cn/post/english/76/</link>
@@ -185,6 +194,15 @@
       
       <guid>http://www.unknowname.cn/post/ci/gitalb-kaniko/</guid>
       <description>安装Docker类型的GitLabRunner 一定要是Docker类型的GitLabRunner，之前测试时，没注意到这一点，一直测试没通过</description>
+    </item>
+    
+    <item>
+      <title>NGINX一些拾遗</title>
+      <link>http://www.unknowname.cn/post/nginx/nginx-skill/</link>
+      <pubDate>Thu, 10 Feb 2022 09:37:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/nginx/nginx-skill/</guid>
+      <description>只记录指定状态的日志 以下代码片段状态码为2XX与3XX的日志不记录 1 2 3 4 5 6 map $status $loggable { ~^[23] 0; default 1; } access_log /var/log/nginx/access.log json if=$loggable; ##</description>
     </item>
     
     <item>

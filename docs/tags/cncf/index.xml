@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CNCF on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/cncf/</link>
+    <description>Recent content in CNCF on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 26 Jul 2023 15:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/cncf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KEDA HPA一分钟实践</title>
+      <link>http://www.unknowname.cn/post/k8s/cncf-keda/</link>
+      <pubDate>Wed, 26 Jul 2023 15:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/cncf-keda/</guid>
+      <description>KEDA的核心其实是它的Scalers。它的目的是实现Kubernetes中的资源的自动伸缩，它使用的仍然是原生的HPA组件，但是它扩展了原</description>
+    </item>
+    
+  </channel>
+</rss>
