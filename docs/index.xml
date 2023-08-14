@@ -1024,5 +1024,23 @@
       <description>Hook是一个特殊函数，它可以勾入React的特性，如state 概览 Hook大致分为两大类，一类为state类，一类为effect类 stat</description>
     </item>
     
+    <item>
+      <title>About me</title>
+      <link>http://www.unknowname.cn/post/about-me-en/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/about-me-en/</guid>
+      <description>Profile  Name: Jianneng Cheng Birthday: 1988.02.20 Country: China Tel: 15618519793 Email: burtte@sina.com GitHub: https://github.com/UnknowName Blog: https://www.unknowname.cn  Summery I have been a operation and maintenance engineer for 6 years. able to work independently. Lifelong learners should keep up with the current technological trend and update the existing knowledge system in time. With development ability, proficient in Python and Golang languages, able to develop related tools based on actual needs to improve operation and maintenance efficiency.</description>
+    </item>
+    
+    <item>
+      <title>About me</title>
+      <link>http://www.unknowname.cn/post/about-me/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/about-me/</guid>
+      <description>基本信息 姓名: 程先生 出生年月: 1988.02.20 籍贯: 江西-上饶 联系方式: 15618519793/2244180879@qq.com 毕业院校: 湖南师范大学 专业: 计算机科学与技术 GitHub：https://git</description>
+    </item>
+    
   </channel>
 </rss>
