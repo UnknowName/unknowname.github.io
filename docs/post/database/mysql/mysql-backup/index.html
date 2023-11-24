@@ -65,12 +65,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://www.unknowname.cn/post/database/mysql/mysql-backup/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-03-29T19:35:11&#43;08:00" />
-<meta property="article:modified_time" content="2021-06-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2023-11-24T00:00:00&#43;00:00" />
 
 <meta itemprop="name" content="MySQL xtrabackup工具使用">
 <meta itemprop="description" content="MySQL xtrabackup工具使用"><meta itemprop="datePublished" content="2021-03-29T19:35:11&#43;08:00" />
-<meta itemprop="dateModified" content="2021-06-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="864">
+<meta itemprop="dateModified" content="2023-11-24T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="875">
 <meta itemprop="keywords" content="MySQL," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MySQL xtrabackup工具使用"/>
 <meta name="twitter:description" content="MySQL xtrabackup工具使用"/>
@@ -161,7 +161,7 @@
         <div class="post-category">
             <a href="/categories/database/"> Database </a>
             </div>
-          <span class="more-meta"> 约 864 字 </span>
+          <span class="more-meta"> 约 875 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         
       </div>
@@ -318,6 +318,9 @@ innobackupex --apply-log --export /home/backup/2019-00-10_13-17-57/
 </span><span class="lnt">26
 </span><span class="lnt">27
 </span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash">  xtrabackup --host<span class="o">=</span>127.0.0.1 --port<span class="o">=</span><span class="m">3306</span> --user<span class="o">=</span>USERNAME  --password<span class="o">=</span>PASSWORD <span class="se">\
@@ -334,8 +337,11 @@ innobackupex --apply-log --export /home/backup/2019-00-10_13-17-57/
   <span class="c1"># 停止MySQL服务器</span>
   systemctl stop mysqld
 
+  <span class="c1"># 应用日志</span>
+  xtrbackup --prepare --target-dir<span class="o">=</span>/data/backup/tables
+
   <span class="c1"># 复制备份出来的ibd文件至MySQL数据目录下, .frm文件不复制</span>
-  cp /home/backup/2019-00-10_13-17-57/cumcm/cumcm_sys_country.ibd /var/lib/mysql/cumcm
+  cp /data/backup/2019-00-10_13-17-57/cumcm/cumcm_sys_country.ibd /var/lib/mysql/cumcm
 
   <span class="c1"># 更改文件所有者为MySQL</span>
   chown -R mysql:mysql /var/lib/mysql/
@@ -382,7 +388,7 @@ innodb_stats_persistent=OFF
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-06-28
+        2023-11-24
         
     </span>
   </p>
