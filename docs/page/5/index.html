@@ -151,6 +151,52 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/ci/sonar-init/">Sonar scan code</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2022-03-10 </span>
+      <div class="post-category">
+          <a href="/categories/tools/"> tools </a>
+          </div>
+        <span class="more-meta"> 约 367 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Requirement Docker版本需要20.10及以上 1 yum install -y docker-ce SonarQube Install docker-compose.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 sonarqube:image:sonarqube:communitycontainer_name:sonarenvironment:SONAR_JDBC_URL:jdbc:postgresql://128.0.100.170:5432/sonarSONAR_JDBC_USERNAME:sonarSONAR_JDBC_PASSWORD:sonarvolumes:- ./sonarqube_data:/opt/sonarqube/data- ./sonarqube_extensions:/opt/sonarqube/extensions- ./sonarqube_logs:/opt/sonarqube/logsports:- &#34;9000:9000&#34;db:image:postgres:12container_name:sonar-dbnet:hostenvironment:POSTGRES_USER:sonarPOSTGRES_PASSWORD:sonarvolumes:- ./sql_config:/var/lib/postgresql- ./sql_data:/var/lib/postgresql/data 访问9000端口即为Son
+    </div>
+    <div class="read-more">
+      <a href="/post/ci/sonar-init/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/database/mysql/mysql-repl/">MySQL5.7 Replication</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2022-02-18 </span>
+      <div class="post-category">
+          <a href="/categories/database/"> Database </a>
+          </div>
+        <span class="more-meta"> 约 544 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      之前一直有一个疑问，就是从master中备份数据后，在还原到slave主机的这段时间，如果master一直在写，当使用master_auto
+    </div>
+    <div class="read-more">
+      <a href="/post/database/mysql/mysql-repl/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/ci/gitalb-kaniko/">GitLab使用Kaniko构建镜像</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2022-02-15 </span>
@@ -218,52 +264,6 @@
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/k8s/ingress-nginx-annotations/">Ingress NGINX annotations</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-01-19 </span>
-      <div class="post-category">
-          <a href="/categories/kubernetes/"> Kubernetes </a>
-          </div>
-        <span class="more-meta"> 约 626 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      今天看到文章说IngressNGINX实现灰度，仔细看原来是通过annotations来实现，于是简单的查了下官网，发现有几个有意思的ann
-    </div>
-    <div class="read-more">
-      <a href="/post/k8s/ingress-nginx-annotations/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/leetcode/907/">双指针方法解leetcode之907-按奇偶排序数组</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-01-10 </span>
-      <div class="post-category">
-          <a href="/categories/leetcode/"> leetcode </a>
-          </div>
-        <span class="more-meta"> 约 392 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      题目描述: 给定一个非负整数数组 A，返回一个数组，在该数组中， A 的所有偶数元素之后跟着所有奇数元素。 你可以返回满足此条件的任何数组作为答案。 示
-    </div>
-    <div class="read-more">
-      <a href="/post/leetcode/907/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -297,7 +297,7 @@
   <span class="copyright-year">
     &copy; 
     2020 - 
-    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
   </span>
   
 </div>

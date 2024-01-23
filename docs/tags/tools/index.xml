@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tools on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/tools/</link>
+    <description>Recent content in tools on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 10 Jan 2024 11:00:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BuildPack</title>
+      <link>http://www.unknowname.cn/post/cncf/buildpack/</link>
+      <pubDate>Wed, 10 Jan 2024 11:00:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/cncf/buildpack/</guid>
+      <description>基本使用 1 2 3 4 5 6 7 8 export DOCKER_AGRS=&amp;#34;--rm -v /var/run/docker.sock:/var/run/docker.sock \ -v $(pwd):/workspace -w /workspace&amp;#34; # 查看有哪些可用的builder docker run ${DOCKER_ARGS} buildpacksio/pack build suggest # 选择一个builder来构建项目镜像，在项目根目录内</description>
+    </item>
+    
+  </channel>
+</rss>

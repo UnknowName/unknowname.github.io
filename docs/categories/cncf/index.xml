@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cncf on UnknowName</title>
+    <link>http://www.unknowname.cn/categories/cncf/</link>
+    <description>Recent content in cncf on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 23 Jan 2024 16:26:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/cncf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>fluent-bit收集运行时为Contained的容器日志</title>
+      <link>http://www.unknowname.cn/post/cncf/flentd/</link>
+      <pubDate>Tue, 23 Jan 2024 16:26:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/cncf/flentd/</guid>
+      <description>四大组件 INPUT 数据从何而来 FILTER 在数据到达OUTPUT之前，可以修改原始数据，一般如增加属性 PARSER 数据要如何加工处理 OUTPUT 加工完后的数据要存入何处 配置示例 1</description>
+    </item>
+    
+  </channel>
+</rss>

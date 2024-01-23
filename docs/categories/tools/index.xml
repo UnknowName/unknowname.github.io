@@ -6,7 +6,25 @@
     <description>Recent content in tools on UnknowName</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 10 Mar 2022 16:31:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/tools/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 Jan 2024 16:26:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>fluent-bit收集运行时为Contained的容器日志</title>
+      <link>http://www.unknowname.cn/post/cncf/flentd/</link>
+      <pubDate>Tue, 23 Jan 2024 16:26:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/cncf/flentd/</guid>
+      <description>四大组件 INPUT 数据从何而来 FILTER 在数据到达OUTPUT之前，可以修改原始数据，一般如增加属性 PARSER 数据要如何加工处理 OUTPUT 加工完后的数据要存入何处 配置示例 1</description>
+    </item>
+    
+    <item>
+      <title>BuildPack</title>
+      <link>http://www.unknowname.cn/post/cncf/buildpack/</link>
+      <pubDate>Wed, 10 Jan 2024 11:00:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/cncf/buildpack/</guid>
+      <description>基本使用 1 2 3 4 5 6 7 8 export DOCKER_AGRS=&amp;#34;--rm -v /var/run/docker.sock:/var/run/docker.sock \ -v $(pwd):/workspace -w /workspace&amp;#34; # 查看有哪些可用的builder docker run ${DOCKER_ARGS} buildpacksio/pack build suggest # 选择一个builder来构建项目镜像，在项目根目录内</description>
+    </item>
+    
     <item>
       <title>Sonar scan code</title>
       <link>http://www.unknowname.cn/post/ci/sonar-init/</link>

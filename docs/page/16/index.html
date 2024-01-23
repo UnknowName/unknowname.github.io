@@ -151,6 +151,52 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/k8s/k8s-nfs-pv/">Kubernetes使用NFS作为StorageClass</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2021-03-19 </span>
+      <div class="post-category">
+          <a href="/categories/kubernetes/"> Kubernetes </a>
+          </div>
+        <span class="more-meta"> 约 491 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      官方文档: https://github.com/kubernetes-incubator/external-storage NFS端配置 安装服务 1 2 3 4 5 6 7 8 9 # 安装NFS服务 yum -y install nfs-utils rpcbind # 设置共享目录参数 echo &#34;/data/nfs 128.0.255.0/16(rw, no_root_squash)&#34; &gt; /etc/exports # 启动服务 systemctl enable rpcbind &amp;&amp; systemctl start rpcbind systemctl enable nfs &amp;&amp; systemctl
+    </div>
+    <div class="read-more">
+      <a href="/post/k8s/k8s-nfs-pv/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/linux/named/">基于bind的DNS主备服务搭建指南</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2021-03-19 </span>
+      <div class="post-category">
+          <a href="/categories/linux/"> Linux </a>
+          </div>
+        <span class="more-meta"> 约 980 字 </span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      基础概念 正解 将主机名解析为IP地址。如将www.qq.com解析至1.1.1.1。这是一般应用场景 反解 将IP解析为主机名。如上面将1.1.1
+    </div>
+    <div class="read-more">
+      <a href="/post/linux/named/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/ceph/k8s-install-ceph/">K8S集群上部署Ceph</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2021-03-03 </span>
@@ -218,52 +264,6 @@
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/k8s/k8s-nginx-ingress/">Kubernetes安装Nginx Ingress以及优化</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2021-03-02 </span>
-      <div class="post-category">
-          <a href="/categories/kubernetes/"> Kubernetes </a>
-          </div>
-        <span class="more-meta"> 约 1313 字 </span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      NGINX Ingress官方的YAML文件是以Deployment方式运行的，这样就会有坑，Pod会到处跑，即使加上nodeSecetor，也是会有
-    </div>
-    <div class="read-more">
-      <a href="/post/k8s/k8s-nginx-ingress/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/es/es-api/">Elasticsearch常用API</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2021-03-01 </span>
-      <div class="post-category">
-          <a href="/categories/tools/"> tools </a>
-          </div>
-        <span class="more-meta"> 约 514 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      索引API 查看索引分布情况 curl http://es:9200/_cat/shards?pretty 查看所有索引 curl -XGET http://es:9200/_cat/indices?pretty 删除指定索引 curl -XDELETE http://es:9200/IndexName 索引配置信息 curl -XGET http://es:9200/IndexName/_settings?pretty 取消所有索引只读模式 curl -XPUT -H &quot;Content-type: application/json&quot; http://es:9200/_settings -d '{ &quot;index.blocks.read_only_allow_delete&quot;:&quot;false&quot; }' 索引重命名 curl -XPOST -H
-    </div>
-    <div class="read-more">
-      <a href="/post/es/es-api/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -297,7 +297,7 @@
   <span class="copyright-year">
     &copy; 
     2020 - 
-    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
   </span>
   
 </div>
