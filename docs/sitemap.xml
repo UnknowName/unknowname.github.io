@@ -1153,6 +1153,12 @@
   </url>
   
   <url>
+    <loc>http://www.unknowname.cn/post/english/times/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://www.unknowname.cn/post/react/react-hook/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
