@@ -151,6 +151,29 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/k8s/coredns/">CoreDNS 配置示例</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2021-03-01 </span>
+      <div class="post-category">
+          <a href="/categories/kubernetes/"> Kubernetes </a>
+          </div>
+        <span class="more-meta"> 约 282 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      corefile 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 .:53 { hosts { 172.18.171.110 host1 172.18.203.237 host2 172.18.203.240 test.testdomain.cn cache 60 reload 1m # 一定要加下面语句 fallthrough } errors health kubernetes cluster.local in-addr.arpa ip6.arpa { pods insecure upstream fallthrough in-addr.arpa ip6.arpa
+    </div>
+    <div class="read-more">
+      <a href="/post/k8s/coredns/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/k8s/istio/">Istio快速实践一览</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2021-03-01 </span>
@@ -237,29 +260,6 @@
     </div>
     <div class="read-more">
       <a href="/post/graylog/graylog-add-node/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/graylog/graylog/">Graylog安装及介绍</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2021-02-28 </span>
-      <div class="post-category">
-          <a href="/categories/tools/"> tools </a>
-          </div>
-        <span class="more-meta"> 约 1747 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Graylog日志收集服务 介绍 Graylog是一个集中日志收集与检索系统。可以将它看成是一个EFK组合。它的底层搜索提供也是Elastics
-    </div>
-    <div class="read-more">
-      <a href="/post/graylog/graylog/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

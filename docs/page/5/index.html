@@ -151,6 +151,29 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/database/mysql/mysql-binlog-backup/">MySQL binlog远程备份</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2022-05-26 </span>
+      <div class="post-category">
+          <a href="/categories/database/"> Database </a>
+          </div>
+        <span class="more-meta"> 约 172 字 </span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      MySQL版本5.6及以上支持远程备份binlog. 简单记录下，有需要的时候可以用得上 docker-compose.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 binlog-backup:image:mysqlcontainer_name:mysql-binlog-backupnet:hostrestart:alwaysvolumes:- ./data:/dataenvironments:- TZ=Asia/Shanghai- MYSQL_ROOT_PASSWORD=passwordcommand:mysqlbinlog --read-from-remote-server \--raw
+    </div>
+    <div class="read-more">
+      <a href="/post/database/mysql/mysql-binlog-backup/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/ci/sonar-init/">Sonar scan code</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2022-03-10 </span>
@@ -237,29 +260,6 @@
     </div>
     <div class="read-more">
       <a href="/post/nginx/nginx-skill/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/leetcode/215/">堆方法解leetcode之215-数组中的第K个最大元素</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-02-09 </span>
-      <div class="post-category">
-          <a href="/categories/leetcode/"> leetcode </a>
-          </div>
-        <span class="more-meta"> 约 421 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      原题链接 leetcode上的题目描述: 给定整数数组nums和整数k，请返回数组中第k个最大的元素。请注意，你需要找的是数组排序后的第k个最大
-    </div>
-    <div class="read-more">
-      <a href="/post/leetcode/215/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
