@@ -3,7 +3,7 @@
   
   <url>
     <loc>http://www.unknowname.cn/categories/</loc>
-    <lastmod>2024-08-06T18:40:11+08:00</lastmod>
+    <lastmod>2024-08-10T11:20:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -24,21 +24,21 @@
   
   <url>
     <loc>http://www.unknowname.cn/post/</loc>
-    <lastmod>2024-08-06T18:40:11+08:00</lastmod>
+    <lastmod>2024-08-10T11:20:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://www.unknowname.cn/tags/</loc>
-    <lastmod>2024-08-06T18:40:11+08:00</lastmod>
+    <lastmod>2024-08-10T11:20:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://www.unknowname.cn/</loc>
-    <lastmod>2024-08-06T18:40:11+08:00</lastmod>
+    <lastmod>2024-08-10T11:20:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -101,7 +101,7 @@
   
   <url>
     <loc>http://www.unknowname.cn/categories/kubernetes/</loc>
-    <lastmod>2023-07-26T15:05:11+08:00</lastmod>
+    <lastmod>2024-08-10T11:20:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -360,7 +360,7 @@
   
   <url>
     <loc>http://www.unknowname.cn/tags/kubernetes/</loc>
-    <lastmod>2023-05-30T11:20:11+08:00</lastmod>
+    <lastmod>2024-08-10T11:20:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -458,7 +458,7 @@
   
   <url>
     <loc>http://www.unknowname.cn/post/k8s/ingress-nginx-k8s-version/</loc>
-    <lastmod>2023-05-30T11:20:11+08:00</lastmod>
+    <lastmod>2024-08-10T11:20:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

@@ -3,6 +3,10 @@ source /etc/profile
 export PATH
 
 
+function log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') $1"
+}
+
 function get_release() {
    if [ -f /etc/redhat-release ];then
      echo "centos"
@@ -18,7 +22,7 @@ function get_release() {
 }
 
 
-function init_sysctl() {
+function set_sysctl() {
     cat > 999-init.conf << EOF
     # 出现SYN等待队列溢出时启用cookie处理，防范少量的SYN攻击。
     net.ipv4.tcp_syncookies = 1
@@ -33,8 +37,8 @@ function init_sysctl() {
     # 每个端口连接最大数，包括连接，已连接，新建立的连接
     net.ipv4.tcp_max_syn_backlog = 4096
     # 来自阿里云
-    net.ipv4.conf.all.rp_filter=0
-    net.ipv4.conf.default.rp_filter=0
+    net.ipv4.conf.all.rp_filter= 0
+    net.ipv4.conf.default.rp_filter= 0
     net.ipv4.conf.default.arp_announce = 2
     net.ipv4.conf.lo.arp_announce=2
     net.ipv4.conf.all.arp_announce=2
@@ -51,6 +55,10 @@ function init_sysctl() {
     net.ipv4.tcp_fin_timeout = 30
     net.ipv4.tcp_max_tw_buckets = 262144
 EOF
+    if ! [ -f /etc/sysctl.d/999-init.conf ]; then
+        mv 999-init.conf /etc/sysctl.d/
+        sysctl -p /etc/sysctl.d/999-init.conf
+    fi
 }
 
 function set_limit() {
@@ -65,13 +73,9 @@ function set_limit() {
     fi
 }
 
-function log() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') $1"
-}
 
-function main() {
-    cd /tmp
-    cat > daemon.json << EOF
+function set_docker() {
+      cat > daemon.json << EOF
 {
     "exec-opts": ["native.cgroupdriver=systemd"],
     "registry-mirrors": ["https://registry.docker-cn.com", "https://docker.mirrors.ustc.edu.cn"], 
@@ -84,23 +88,26 @@ function main() {
     "insecure-registries" : ["hub.siss.io:5000", "docker.sixun.hw:5000"]
 }
 EOF
-    log "Get system disturibute version"
     name=$(get_release)
-    log "set docker"
     if [ ${name} = "ubuntu" ]; then
         sed -i '/native.cgroupdriver=systemd/d' daemon.json
     fi
+    log "set docker daemon.json"
     if ! [ -f /etc/docker/daemon.json ]; then
         mv daemon.json /etc/docker
     fi
+    systemctl restart docker
+}
+
+
+function main() {
+    cd /tmp
     log "set kernel sysctl.conf"
-    init_sysctl
-    if ! [ -f /etc/sysctl.d/999-init.conf ]; then
-        mv 999-init.conf /etc/sysctl.d/
-        sysctl -p /etc/sysctl.d/999-init.conf
-    fi
+    set_sysctl
     log "set limit"
     set_limit
+    log "set docker"
+    set_docker
 }
 
 
