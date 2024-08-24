@@ -70,7 +70,7 @@
 <meta itemprop="name" content="Linux使用LDAP认证">
 <meta itemprop="description" content="Linux使用LDAP认证"><meta itemprop="datePublished" content="2020-02-27T21:11:11&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-27T21:11:11&#43;08:00" />
-<meta itemprop="wordCount" content="329">
+<meta itemprop="wordCount" content="507">
 <meta itemprop="keywords" content="LDAP," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Linux使用LDAP认证"/>
 <meta name="twitter:description" content="Linux使用LDAP认证"/>
@@ -161,8 +161,8 @@
         <div class="post-category">
             <a href="/categories/linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 329 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 507 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
         
       </div>
     </header>
@@ -174,6 +174,9 @@
   <ul>
     <li>
       <ul>
+        <li><a href="#前提条件主机加入相关域">前提条件，主机加入相关域</a></li>
+        <li><a href="#修改etcnsswitchconf">修改<code>/etc/nsswitch.conf</code></a></li>
+        <li><a href="#避坑">避坑</a></li>
         <li><a href="#ubuntu"><code>Ubuntu</code></a></li>
         <li><a href="#centos7rhel7"><code>CentOS7/RHEL7</code></a></li>
       </ul>
@@ -183,7 +186,58 @@
   </div>
 </div>
     <div class="post-content">
-      <h2 id="ubuntu"><code>Ubuntu</code></h2>
+      <h2 id="前提条件主机加入相关域">前提条件，主机加入相关域</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Ubuntu</span>
+sudo apt install realmd sssd sssd-tools libnss-sss libpam-sss adcli krb5-user
+
+<span class="c1"># CentOS</span>
+yum install realmd sssd sssd-tools oddjob oddjob-mkhomedir adcli samba-common-tools
+
+<span class="c1">## 加入域</span>
+realm join -v xueshandai.com -U administrator 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="修改etcnsswitchconf">修改<code>/etc/nsswitch.conf</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">passwd:         compat sss systemd
+group:          compat sss ssystemd
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="避坑">避坑</h2>
+<p>此时需要重启<code>sssd</code>服务时，会提示启动不起来。那时因为加入域之后，它原来的文件有问题。所以需要手动删除。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /etc/sssd/conf.d/
+mkdir bak &amp;&amp; mv * bak
+# 再重启就可以了
+systemctl restart sssd  
+</code></pre></td></tr></table>
+</div>
+</div><p>以下是另一个种方法，优先使用前面一种</p>
+<h2 id="ubuntu"><code>Ubuntu</code></h2>
 <p>有一个坑，因为<code>Ubuntu</code>默认是不让<code>ROOT</code>登陆的。所发，新用户登陆进系统只有一般权限。又因为<code>Ubuntu</code>默认预安装的sudo程序是没有加<code>--with-ldap</code>编译选项的。所发，原生的并不支持LDAP SUDO 这个选项。</p>
 <h2 id="centos7rhel7"><code>CentOS7/RHEL7</code></h2>
 <div class="highlight"><div class="chroma">
@@ -201,7 +255,7 @@
 authconfig --enableldap <span class="se">\
 </span><span class="se"></span>--enableldapauth <span class="se">\
 </span><span class="se"></span>--ldapserver<span class="o">=</span>192.168.0.62 <span class="se">\
-</span><span class="se"></span>--ldapbasedn<span class="o">=</span><span class="s2">&#34;dc=xueshandai,dc=com&#34;</span> <span class="se">\
+</span><span class="se"></span>--ldapbasedn<span class="o">=</span><span class="s2">&#34;cn=Users,dc=xueshandai,dc=com&#34;</span> <span class="se">\
 </span><span class="se"></span>--enablemkhomedir <span class="se">\
 </span><span class="se"></span>--update
 </code></pre></td></tr></table>

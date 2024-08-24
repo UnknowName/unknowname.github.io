@@ -643,7 +643,7 @@
       <pubDate>Tue, 18 May 2021 09:05:11 +0800</pubDate>
       
       <guid>http://www.unknowname.cn/post/queue/rabbitmq-prod/</guid>
-      <description>主要分为操作系统优化与RabbitMQ自身的优化二项 操作系统配置项 最大文件打开描述符 官方要求最少50K，并同时不建议超过500K允许打开的文</description>
+      <description>原文出处: https://www.rabbitmq.com/docs/networking 主要分为操作系统优化与RabbitMQ自身的优化二项 操作系统配置项 最大文件打开描述符 默认为65536, 官方要求最少50K，并同时</description>
     </item>
     
     <item>
@@ -1003,7 +1003,7 @@
       <pubDate>Thu, 27 Feb 2020 21:11:11 +0800</pubDate>
       
       <guid>http://www.unknowname.cn/post/ldap/ldap-centos/</guid>
-      <description>Ubuntu 有一个坑，因为Ubuntu默认是不让ROOT登陆的。所发，新用户登陆进系统只有一般权限。又因为Ubuntu默认预安装的sudo程序是没有加</description>
+      <description>前提条件，主机加入相关域 1 2 3 4 5 6 7 8 # Ubuntu sudo apt install realmd sssd sssd-tools libnss-sss libpam-sss adcli krb5-user # CentOS yum install realmd sssd sssd-tools oddjob oddjob-mkhomedir adcli samba-common-tools ## 加入域 realm join -v xueshandai.com -U administrator 修改/etc/nsswitch.c</description>
     </item>
     
     <item>

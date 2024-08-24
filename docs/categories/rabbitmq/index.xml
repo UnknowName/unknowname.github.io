@@ -13,7 +13,7 @@
       <pubDate>Tue, 18 May 2021 09:05:11 +0800</pubDate>
       
       <guid>http://www.unknowname.cn/post/queue/rabbitmq-prod/</guid>
-      <description>主要分为操作系统优化与RabbitMQ自身的优化二项 操作系统配置项 最大文件打开描述符 官方要求最少50K，并同时不建议超过500K允许打开的文</description>
+      <description>原文出处: https://www.rabbitmq.com/docs/networking 主要分为操作系统优化与RabbitMQ自身的优化二项 操作系统配置项 最大文件打开描述符 默认为65536, 官方要求最少50K，并同时</description>
     </item>
     
   </channel>
