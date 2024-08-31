@@ -1003,7 +1003,7 @@
       <pubDate>Thu, 27 Feb 2020 21:11:11 +0800</pubDate>
       
       <guid>http://www.unknowname.cn/post/ldap/ldap-centos/</guid>
-      <description>主机加入相关域(如果是WindowsAD就需要这一步) 1 2 3 4 5 6 7 8 # Ubuntu sudo apt install realmd sssd sssd-tools libnss-sss libpam-sss adcli krb5-user # CentOS yum install realmd sssd sssd-tools oddjob oddjob-mkhomedir adcli samba-common-tools ## 加入域 realm join -v xueshandai.com -U administrator 修改</description>
+      <description>安装基础必要包 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # Ubuntu sudo apt install realmd sssd-ldap ldap-utils libpam-mkhomedir # CentOS yum install realmd sssd nss-pam-ldapd openldap-clients -y authconfig --enableldap \ --enableldapauth \ --ldapserver=192.168.0.62 \ --ldapbasedn=&amp;#34;dc=xueshandai,dc=com&amp;#34; \ --enablemkhomedir \ --update # 加入域 如果是Windows AD再需要</description>
     </item>
     
     <item>

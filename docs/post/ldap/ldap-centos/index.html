@@ -65,12 +65,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://www.unknowname.cn/post/ldap/ldap-centos/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-02-27T21:11:11&#43;08:00" />
-<meta property="article:modified_time" content="2024-08-24T19:11:11&#43;08:00" />
+<meta property="article:modified_time" content="2024-08-31T10:11:11&#43;08:00" />
 
 <meta itemprop="name" content="Linux使用LDAP认证">
 <meta itemprop="description" content="Linux使用LDAP认证"><meta itemprop="datePublished" content="2020-02-27T21:11:11&#43;08:00" />
-<meta itemprop="dateModified" content="2024-08-24T19:11:11&#43;08:00" />
-<meta itemprop="wordCount" content="664">
+<meta itemprop="dateModified" content="2024-08-31T10:11:11&#43;08:00" />
+<meta itemprop="wordCount" content="672">
 <meta itemprop="keywords" content="LDAP," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Linux使用LDAP认证"/>
 <meta name="twitter:description" content="Linux使用LDAP认证"/>
@@ -161,7 +161,7 @@
         <div class="post-category">
             <a href="/categories/linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 664 字 </span>
+          <span class="more-meta"> 约 672 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         
       </div>
@@ -174,12 +174,15 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#主机加入相关域如果是windowsad就需要这一步">主机加入相关域(如果是WindowsAD就需要这一步)</a></li>
-        <li><a href="#修改etcnsswitchconf">修改<code>/etc/nsswitch.conf</code></a></li>
+        <li><a href="#安装基础必要包">安装基础必要包</a></li>
+        <li><a href="#修改etcnsswitchconf确保有sss">修改<code>/etc/nsswitch.conf</code>确保有<code>sss</code></a></li>
         <li><a href="#避坑">避坑</a></li>
+      </ul>
+    </li>
+    <li><a href="#改文件权限并重启sssd">改文件权限并重启<code>sssd</code></a>
+      <ul>
+        <li><a href="#登陆后自动创建用户目录">登陆后自动创建用户目录</a></li>
         <li><a href="#验证">验证</a></li>
-        <li><a href="#ubuntu"><code>Ubuntu</code></a></li>
-        <li><a href="#centos7rhel7"><code>CentOS7/RHEL7</code></a></li>
       </ul>
     </li>
   </ul>
@@ -187,30 +190,43 @@
   </div>
 </div>
     <div class="post-content">
-      <h2 id="主机加入相关域如果是windowsad就需要这一步">主机加入相关域(如果是WindowsAD就需要这一步)</h2>
+      <h2 id="安装基础必要包">安装基础必要包</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Ubuntu</span>
-sudo apt install realmd sssd sssd-tools libnss-sss libpam-sss adcli krb5-user
+sudo apt install realmd sssd-ldap ldap-utils libpam-mkhomedir
 
 <span class="c1"># CentOS</span>
-yum install realmd sssd sssd-tools oddjob oddjob-mkhomedir adcli samba-common-tools
+yum install realmd sssd nss-pam-ldapd openldap-clients -y 
+authconfig --enableldap <span class="se">\
+</span><span class="se"></span>--enableldapauth <span class="se">\
+</span><span class="se"></span>--ldapserver<span class="o">=</span>192.168.0.62 <span class="se">\
+</span><span class="se"></span>--ldapbasedn<span class="o">=</span><span class="s2">&#34;dc=xueshandai,dc=com&#34;</span> <span class="se">\
+</span><span class="se"></span>--enablemkhomedir <span class="se">\
+</span><span class="se"></span>--update
 
-<span class="c1">## 加入域</span>
+<span class="c1"># 加入域 如果是Windows AD再需要这一步，OpenLDAP不需要</span>
 realm join -v xueshandai.com -U administrator 
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="修改etcnsswitchconf">修改<code>/etc/nsswitch.conf</code></h2>
+</div><h2 id="修改etcnsswitchconf确保有sss">修改<code>/etc/nsswitch.conf</code>确保有<code>sss</code></h2>
+<p>在<code>ubuntu</code>发行版较早的版本中，可能会出现安装上面的失败，但实际上是包安装好了，只是没入写入默认的配置</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -227,17 +243,13 @@ group:          compat sss ssystemd
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">cd /etc/sssd/conf.d/
 mkdir bak &amp;&amp; mv * bak
-# 再重启就可以了
-systemctl restart sssd  
 </code></pre></td></tr></table>
 </div>
-</div><p>如果发现没有<code>/etc/sssd/sssd.conf</code>同时<code>/etc/sssd/conf.d</code>文件夹为空，则创建一个<code>sssd.conf</code></p>
+</div><p>如果发现没有<code>/etc/sssd/sssd.conf</code>，则创建一个<code>sssd.conf</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -263,13 +275,13 @@ systemctl restart sssd
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
-</span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-fallback" data-lang="fallback">[sssd]
 domains = example.com
 services = nss, pam
 config_file_version = 2
+certificate_verification = no_ocsp
 
 [nss]
 filter_groups = root
@@ -279,71 +291,60 @@ filter_users = root
 
 [domain/example.com]
 id_provider = ldap
-ldap_uri = ldap://ldap.example.com
+auth_provider = ldap
+ldap_uri = ldap://ldap.example.com:389
 ldap_search_base = dc=example,dc=com
-
-auth_provider = krb5
-krb5_server = kerberos.example.com
-krb5_realm = EXAMPLE.COM
 cache_credentials = true
-
-min_id = 10000
+ldap_tls_reqcert = never
+# 限制LDAP中的uidNumber数值范围，注意与LDAP中的条目的范围一致。
+min_id = 1000
 max_id = 20000
 enumerate = False
+</code></pre></td></tr></table>
+</div>
+</div><p>有一个天坑，很多文章都没有提到，也许是<code>sssd</code>版本问题。默认当使用<code>LDAP</code>中的用户登陆时，<code>sssd</code>是会强制使用<code>TLS</code>的。这样<code>LDAP</code>中没有配置<code>TLS</code>，则当登陆<code>LDAP</code>中的用户登陆时，<code>sssd</code>会报错，没有办法登陆。以上配置已填这个天坑。</p>
+<h1 id="改文件权限并重启sssd">改文件权限并重启<code>sssd</code></h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">chmod <span class="m">600</span> /etc/sssd/sssd.conf <span class="o">&amp;&amp;</span> systemctl restart sssd
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="登陆后自动创建用户目录">登陆后自动创建用户目录</h2>
+<p>只需要<code>Ubuntu</code>执行，<code>CentOS</code>已使用<code>authconfig</code>执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Ubuntu</span>
+pam-auth-update --enable mkhomedir
+</code></pre></td></tr></table>
+</div>
+</div><p>如果失败，在<code>/etc/pam.d/sshd</code>最上面增加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">session required pam_mkhomedir.so skel=/etc/skel umask=0077
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="验证">验证</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">id username@xueshandai.com
-</code></pre></td></tr></table>
-</div>
-</div><p>以下是另一个种方法，优先使用前面一种</p>
-<h2 id="ubuntu"><code>Ubuntu</code></h2>
-<p>有一个坑，因为<code>Ubuntu</code>默认是不让<code>ROOT</code>登陆的。所发，新用户登陆进系统只有一般权限。又因为<code>Ubuntu</code>默认预安装的sudo程序是没有加<code>--with-ldap</code>编译选项的。所发，原生的并不支持LDAP SUDO 这个选项。</p>
-<h2 id="centos7rhel7"><code>CentOS7/RHEL7</code></h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">yum install nss-pam-ldapd openldap-clients -y 
-authconfig --enableldap <span class="se">\
-</span><span class="se"></span>--enableldapauth <span class="se">\
-</span><span class="se"></span>--ldapserver<span class="o">=</span>192.168.0.62 <span class="se">\
-</span><span class="se"></span>--ldapbasedn<span class="o">=</span><span class="s2">&#34;cn=Users,dc=xueshandai,dc=com&#34;</span> <span class="se">\
-</span><span class="se"></span>--enablemkhomedir <span class="se">\
-</span><span class="se"></span>--update
+<pre class="chroma"><code class="language-bash" data-lang="bash">id username
+ssh username@127.0.0.1
 </code></pre></td></tr></table>
 </div>
-</div><p>它也有一个坑。默认的<code>PAM</code>模块认证是不允许<code>UID</code>小于1000的。而如果在生成用户名与密码的机器上，新增加的用户<code>ID</code>小于1000。坑就出来。下面是防坑指南：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">vi /etc/pam.d/system-auth
-auth        requisite     pam_succeed_if.so uid &lt;<span class="o">=</span> <span class="m">1000</span> quiet_success <span class="c1">#把大于修改成小于。</span>
-
-<span class="c1">#vi /etc/pam.d/password-auth</span>
-auth        requisite     pam_succeed_if.so uid &lt;<span class="o">=</span> <span class="m">1000</span> quiet_success <span class="c1">#把大于修改成小于</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>好了。这样可以通过<code>LDAP</code>的用户名进行登陆了。<code>root</code>也可以</p>
-<p>另外，<code>LDAP Admin</code>这款软件不错。<code>Windows</code>下可以修改条目，导出/导入方便。你值得拥有！</p>
+</div><p>另外，<code>LDAP Admin</code>这款软件不错。<code>Windows</code>下可以修改条目，导出/导入方便。你值得拥有！</p>
 
     </div>
 
@@ -355,7 +356,7 @@ auth        requisite     pam_succeed_if.so uid &lt;<span class="o">=</span> <sp
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2024-08-24
+        2024-08-31
         
     </span>
   </p>
