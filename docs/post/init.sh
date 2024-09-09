@@ -100,7 +100,7 @@ EOF
 }
 
 
-function main() {
+function set_all() {
     cd /tmp
     log "set kernel sysctl.conf"
     set_sysctl
@@ -111,4 +111,25 @@ function main() {
 }
 
 
-main
+arg=$1
+if [ "$arg" = "--help" ]; then
+    echo "limit  set system limit"
+    echo "docker set docker daemon.json"
+    echo "sysctl set sysctl.conf"
+    echo "init   set limit, docker ,sysctl.conf, Only used for first time"
+    exit 0
+elif [ "$arg" = "limit" ]; then
+    echo "set limit"
+    set_limit
+elif [ "$arg" = "docker" ]; then
+    echo "set docker daemon.json"
+    set_docker
+elif [ "$arg" = "sysctl" ]; then
+    echo "set sysctl.conf"
+    set_sysctl
+elif [ "$arg" = "init" ]; then
+    echo "set limit, docker ,sysctl.conf"
+    set_all
+else
+    echo "use --help to see help"
+fi
