@@ -1,6 +1,7 @@
 #!/bin/bash
 source /etc/profile
 export PATH
+set -e
 
 
 function log() {
@@ -29,7 +30,7 @@ function set_sysctl() {
     # 本地发起连接的端口范围
     net.ipv4.ip_local_port_range = 1025 65000
     # Elasticsearch 最低要求
-    vm.max_map_count = 262144
+    vm.max_map_count = 362144
     # 内核禁用SWAP
     vm.swappiness = 1
     # 端口的监听队列长度，当一个请求(request)尚未被处理或者建立时
@@ -55,7 +56,12 @@ function set_sysctl() {
     net.ipv4.tcp_fin_timeout = 30
     net.ipv4.tcp_max_tw_buckets = 262144
 EOF
-    if ! [ -f /etc/sysctl.d/999-init.conf ]; then
+    if [ -f /etc/sysctl.d/999-init.conf ]; then
+        log "file exist. add to /etc/sysctl.d/1000-init.conf"
+        mv 999-init.conf /etc/sysctl.d/1000-init.conf
+        sysctl -p /etc/sysctl.d/1000-init.conf
+    else
+        log "add to /etc/sysctl.d/999-init.conf"
         mv 999-init.conf /etc/sysctl.d/
         sysctl -p /etc/sysctl.d/999-init.conf
     fi
@@ -93,18 +99,19 @@ EOF
         sed -i '/native.cgroupdriver=systemd/d' daemon.json
     fi
     log "set docker daemon.json"
-    if ! [ -f /etc/docker/daemon.json ]; then
-        mv daemon.json /etc/docker
+    if [ -f /etc/docker/daemon.json ]; then
+        log "mv /etc/docker/daemon.json to /etc/docker/daemon.json.bak"
+        mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
     fi
+    mv daemon.json /etc/docker 
     systemctl restart docker
 }
 
 
 function set_all() {
-    cd /tmp
     log "set kernel sysctl.conf"
     set_sysctl
-    log "set limit"
+    log "set limits.conf"
     set_limit
     log "set docker"
     set_docker
@@ -112,23 +119,24 @@ function set_all() {
 
 
 arg=$1
+ cd /tmp
 if [ "$arg" = "--help" ]; then
-    echo "limit  set system limit"
-    echo "docker set docker daemon.json"
+    echo "limit  set system limits.conf"
+    echo "docker set docker's daemon.json"
     echo "sysctl set sysctl.conf"
-    echo "init   set limit, docker ,sysctl.conf, Only used for first time"
+    echo "init   set limit, docker's daemon.conf ,sysctl.conf, Only used for first time"
     exit 0
 elif [ "$arg" = "limit" ]; then
-    echo "set limit"
+    echo "set limits.conf"
     set_limit
 elif [ "$arg" = "docker" ]; then
-    echo "set docker daemon.json"
+    echo "set docker's daemon.json"
     set_docker
 elif [ "$arg" = "sysctl" ]; then
     echo "set sysctl.conf"
     set_sysctl
 elif [ "$arg" = "init" ]; then
-    echo "set limit, docker ,sysctl.conf"
+    echo "set limits.conf, install and set docker,set sysctl.conf"
     set_all
 else
     echo "use --help to see help"
