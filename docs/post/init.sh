@@ -68,15 +68,16 @@ EOF
 }
 
 function set_limit() {
+    which bc > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        log "Can't find bc, install bc"
+        yum install -y bc || apt install bc -y
+    fi
     filemax=$(cat /proc/sys/fs/file-max)
     limit_max=$(echo "scale=0; ${filemax} * 8 / 10" | bc)
-    grep "nofile" /etc/security/limits.conf | grep -v "#"
-    if [ $? -ne 0 ]; then
-        log "set soft nofile limits ${limit_max}"
-        echo "* soft nofile ${limit_max}" >> /etc/security/limits.conf
-    else
-        log "exist soft limits, skip"
-    fi
+    log "set soft and hard nofile limits ${limit_max}"
+    echo "* soft nofile ${limit_max}" >> /etc/security/limits.conf
+    echo "* hard nofile ${limit_max}" >> /etc/security/limits.conf
 }
 
 
@@ -119,7 +120,7 @@ function set_all() {
 
 
 arg=$1
- cd /tmp
+cd /tmp
 if [ "$arg" = "--help" ]; then
     echo "limit  set system limits.conf"
     echo "docker set docker's daemon.json"
