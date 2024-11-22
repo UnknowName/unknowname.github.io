@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kong on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/kong/</link>
+    <description>Recent content in kong on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 22 Nov 2024 10:35:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/kong/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kong快速指南</title>
+      <link>http://www.unknowname.cn/post/linux/kong/</link>
+      <pubDate>Fri, 22 Nov 2024 10:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/kong/</guid>
+      <description>What Kong是什么 一个网关，可以把它简单地看成是一个带管理界面的OpenResty版 Why为什么选择它 配置共享。所有的Kong实例可以使用同一</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,16 @@
     <description>Recent content on UnknowName</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 06 Aug 2024 18:40:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 22 Nov 2024 10:35:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kong快速指南</title>
+      <link>http://www.unknowname.cn/post/linux/kong/</link>
+      <pubDate>Fri, 22 Nov 2024 10:35:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/linux/kong/</guid>
+      <description>What Kong是什么 一个网关，可以把它简单地看成是一个带管理界面的OpenResty版 Why为什么选择它 配置共享。所有的Kong实例可以使用同一</description>
+    </item>
+    
     <item>
       <title>英语时态漫谈</title>
       <link>http://www.unknowname.cn/post/english/times/</link>
