@@ -73,7 +73,9 @@ function set_limit() {
         log "Can't find bc, install bc"
         yum install -y bc || apt install bc -y
     fi
-    filemax=$(cat /proc/sys/fs/file-max)
+    # /proc/sys/fs/file-max: the total limit of the system 
+    # /proc/sys/fs/nr_open: the total limit of the process
+    filemax=$(cat /proc/sys/fs/nr_open) 
     limit_max=$(echo "scale=0; ${filemax} * 8 / 10" | bc)
     log "set soft and hard nofile limits ${limit_max}"
     echo "* soft nofile ${limit_max}" >> /etc/security/limits.conf
@@ -85,7 +87,7 @@ function set_docker() {
       cat > daemon.json << EOF
 {
     "exec-opts": ["native.cgroupdriver=systemd"],
-    "registry-mirrors": ["https://registry.docker-cn.com", "https://docker.mirrors.ustc.edu.cn"], 
+    "registry-mirrors": ["https://docker.1ms.run", "https://docker.mirrors.ustc.edu.cn"], 
     "max-concurrent-downloads": 10,
     "live-restore": true,
     "log-opts": {
@@ -137,7 +139,7 @@ elif [ "$arg" = "sysctl" ]; then
     echo "set sysctl.conf"
     set_sysctl
 elif [ "$arg" = "init" ]; then
-    echo "set limits.conf, install and set docker,set sysctl.conf"
+    echo "set limits.conf, set docker daemon.json,set sysctl.conf"
     set_all
 else
     echo "use --help to see help"
