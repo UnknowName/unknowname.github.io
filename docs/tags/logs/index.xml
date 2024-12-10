@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>logs on UnknowName</title>
+    <link>http://www.unknowname.cn/tags/logs/</link>
+    <description>Recent content in logs on UnknowName</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 09 Dec 2024 15:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/tags/logs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenObserve初探</title>
+      <link>http://www.unknowname.cn/post/graylog/openobserve/</link>
+      <pubDate>Mon, 09 Dec 2024 15:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/graylog/openobserve/</guid>
+      <description>Origin 缘起 目前日志方案使用的是Graylog，方便是真方便。但是因为底层用的是Elasticsearch以及Java开发的原因。在对资源要求上的</description>
+    </item>
+    
+  </channel>
+</rss>
