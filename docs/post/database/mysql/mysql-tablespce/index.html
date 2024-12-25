@@ -65,12 +65,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://www.unknowname.cn/post/database/mysql/mysql-tablespce/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-04-21T10:32:11&#43;08:00" />
-<meta property="article:modified_time" content="2021-04-21T10:32:11&#43;08:00" />
+<meta property="article:modified_time" content="2024-12-25T17:15:11&#43;08:00" />
 
 <meta itemprop="name" content="MySQL TableSpace表空间">
 <meta itemprop="description" content="MySQL TableSpace表空间"><meta itemprop="datePublished" content="2021-04-21T10:32:11&#43;08:00" />
-<meta itemprop="dateModified" content="2021-04-21T10:32:11&#43;08:00" />
-<meta itemprop="wordCount" content="729">
+<meta itemprop="dateModified" content="2024-12-25T17:15:11&#43;08:00" />
+<meta itemprop="wordCount" content="844">
 <meta itemprop="keywords" content="MySQL," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MySQL TableSpace表空间"/>
 <meta name="twitter:description" content="MySQL TableSpace表空间"/>
@@ -161,7 +161,7 @@
         <div class="post-category">
             <a href="/categories/database/"> Database </a>
             </div>
-          <span class="more-meta"> 约 729 字 </span>
+          <span class="more-meta"> 约 844 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         
       </div>
@@ -176,7 +176,13 @@
       <ul>
         <li><a href="#what-tablespace">What <code>TableSpace</code></a></li>
         <li><a href="#why-tablespace">Why <code>TableSpace</code></a></li>
-        <li><a href="#how-tablespace">How <code>TableSpace</code></a></li>
+        <li><a href="#how-tablespace">How <code>TableSpace</code></a>
+          <ul>
+            <li><a href="#1增加配置项">1.增加配置项</a></li>
+            <li><a href="#2-建表的差异">2. 建表的差异</a></li>
+            <li><a href="#maintains-维护">Maintains 维护</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -207,10 +213,75 @@
 <p>通过使用表空间，管理员还可以控制安装的磁盘布局。表空间的一个常见用途是优化性能。</p>
 <p>例如，可以将大量使用的索引放置在快速SSD上。另一方面，包含很少被访问的归档数据的数据库表可以存储在一个便宜但速度较慢的磁性硬盘驱动器上</p>
 <h2 id="how-tablespace">How <code>TableSpace</code></h2>
-<p><code>MySQL5.6</code>及以上，使用<code>InnoDB</code>引擎后，默认开启每个单独的表都会单独使用表空间。</p>
-<ol>
+<p><code>MySQL8.0</code>及以上，使用<code>InnoDB</code>引擎后，默认开启每个单独的表都会单独使用表空间。</p>
+<h3 id="1增加配置项">1.增加配置项</h3>
+<p>在新增前，需要确认新增的目录是否在<code>MySQL</code>目录内</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[mysqld]
+innodb_file_per_table = 1 # default is enable
+innodb_directories = &#34;/var/lib/mysql;/data&#34;
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-建表的差异">2. 建表的差异</h3>
+<ul>
 <li>
-<p>查询当前表空间</p>
+<ol>
+<li>在指定目录创建表空间</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="k">CREATE</span> <span class="n">TABLESPACE</span> <span class="n">test_ts</span> <span class="k">ADD</span> <span class="n">DATAFILE</span> <span class="s1">&#39;/data/testts.ibd&#39;</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">INNODB</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<ol start="2">
+<li>在建表时指定表空间</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">test01</span><span class="p">(</span><span class="n">id</span> <span class="nb">INT</span><span class="p">)</span> <span class="n">TABLESPACE</span><span class="o">=</span><span class="n">test_ts</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>注意:</strong> 在创建表时指定表空间，删除表时，指定的表空间并不会被删除。但表空间的数据会清空。</p>
+<ul>
+<li>
+<ol start="3">
+<li>给现有空间添加数据文件</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="cm">/* Only NDB Engine supported*/</span>
+<span class="k">ALTER</span> <span class="n">TABLESPACE</span> <span class="n">name</span> <span class="k">ADD</span> <span class="n">DATAFILE</span> <span class="s1">&#39;/data/file2.ibd&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>注意:</strong> <code>MySQL8</code>的<code>Innodb</code>引擎不支持，只支持一个<code>TableSpace</code>一个数据文件，如果要支持多个<code>Datafile</code>对应一个<code>Tablespace</code>只能使用<code>NDB</code>引擎</p>
+<h3 id="maintains-维护">Maintains 维护</h3>
+<ul>
+<li>查询系统表空间信息</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -219,36 +290,19 @@
 <pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="k">SELECT</span> <span class="n">FILE_NAME</span><span class="p">,</span> <span class="n">FILE_TYPE</span><span class="p">,</span> <span class="n">TABLESPACE_NAME</span>  <span class="k">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">FILES</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div></li>
-<li>
-<p>新增表空间</p>
-<p>在新增前，需要确认新增的目录是否在<code>MySQL</code>目录内</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[mysqld]
-innodb_directories = &#34;/var/lib/mysql;/data&#34;
-</code></pre></td></tr></table>
-</div>
-</div><p>确认以上配置存在后，就可以在其他目录增加表空间</p>
+</div><ul>
+<li>删除表空间</li>
+</ul>
+<p>如果表空间被表使用，不能被删除</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="k">ALTER</span> <span class="n">TABLESPACE</span> <span class="n">test_ts</span> <span class="k">ADD</span> <span class="n">DATAFILE</span> <span class="s1">&#39;/data/testts.ibd&#39;</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">INNODB</span><span class="p">;</span>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">TABLESPACE</span> <span class="n">test_ts</span><span class="p">;</span>
 </code></pre></td></tr></table>
 </div>
-</div></li>
-<li>
-<p>给现有空间添加数据文件</p>
-<p><code>MySQL8</code>不支持，只支持一个<code>TableSpace</code>一个数据文件，如果要支持多个<code>Datafile</code>对应一个<code>Tablespace</code>只能使用<code>NDB</code>引擎</p>
-</li>
-</ol>
-<p>在实践中，可以将数据库服务器挂载不同磁盘，建表时，指定<code>TABLESPACE</code>，并将<code>TABLESAPCE</code>的数据文件建立在不同的目录下，这样分摊<code>I/O</code></p>
+</div><p>在实践中，可以将数据库服务器挂载不同磁盘，建表时，指定<code>TABLESPACE</code>，并将<code>TABLESAPCE</code>的数据文件建立在不同的目录下，这样分摊<code>I/O</code></p>
 
     </div>
 
@@ -260,7 +314,7 @@ innodb_directories = &#34;/var/lib/mysql;/data&#34;
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-04-21
+        2024-12-25
         
     </span>
   </p>
