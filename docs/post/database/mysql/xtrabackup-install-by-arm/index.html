@@ -65,12 +65,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://www.unknowname.cn/post/database/mysql/xtrabackup-install-by-arm/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-09-14T09:08:11&#43;08:00" />
-<meta property="article:modified_time" content="2021-10-08T15:35:11&#43;08:00" />
+<meta property="article:modified_time" content="2025-01-04T09:25:11&#43;08:00" />
 
 <meta itemprop="name" content="Xtrabackup源码编译安装">
 <meta itemprop="description" content="xtrabackup源码编译安装"><meta itemprop="datePublished" content="2021-09-14T09:08:11&#43;08:00" />
-<meta itemprop="dateModified" content="2021-10-08T15:35:11&#43;08:00" />
-<meta itemprop="wordCount" content="1147">
+<meta itemprop="dateModified" content="2025-01-04T09:25:11&#43;08:00" />
+<meta itemprop="wordCount" content="1468">
 <meta itemprop="keywords" content="MySQL," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Xtrabackup源码编译安装"/>
 <meta name="twitter:description" content="xtrabackup源码编译安装"/>
@@ -162,7 +162,7 @@
             <a href="/categories/database/"> Database </a>
             <a href="/categories/tools/"> tools </a>
             </div>
-          <span class="more-meta"> 约 1147 字 </span>
+          <span class="more-meta"> 约 1468 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         
       </div>
@@ -175,10 +175,15 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#还原">还原</a>
+        <li><a href="#备份所有库">备份所有库</a>
           <ul>
-            <li><a href="#1-应用备份集">1. 应用备份集</a></li>
-            <li><a href="#2-启动">2. 启动</a></li>
+            <li><a href="#备份">备份</a></li>
+            <li><a href="#还原">还原</a></li>
+          </ul>
+        </li>
+        <li><a href="#还原单库">还原单库</a>
+          <ul>
+            <li><a href="#1-总体步骤">1. 总体步骤</a></li>
           </ul>
         </li>
       </ul>
@@ -693,7 +698,9 @@ ENDIF()
 ADD_SUBDIRECTORY(xtrabackup)
 </code></pre></td></tr></table>
 </div>
-</div><p><code>backup.sh</code></p>
+</div><h2 id="备份所有库">备份所有库</h2>
+<h3 id="备份">备份</h3>
+<p><code>backup.sh</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -727,6 +734,9 @@ ADD_SUBDIRECTORY(xtrabackup)
 </span><span class="lnt">29
 </span><span class="lnt">30
 </span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
@@ -737,12 +747,13 @@ ADD_SUBDIRECTORY(xtrabackup)
 <span class="nv">delete_date</span><span class="o">=</span><span class="k">$(</span>date --date <span class="s2">&#34;3 days ago&#34;</span> +%Y%m%d<span class="k">)</span>
 <span class="nv">backup_dir</span><span class="o">=</span><span class="s2">&#34;/backup&#34;</span>
 <span class="nv">container_name</span><span class="o">=</span><span class="s2">&#34;mysql-prod&#34;</span>
+<span class="nv">db</span><span class="o">=</span><span class="s2">&#34;test&#34;</span>
 <span class="nv">user</span><span class="o">=</span><span class="s2">&#34;root&#34;</span>
 <span class="nv">pass</span><span class="o">=</span><span class="s2">&#34;pass&#34;</span>
 <span class="nv">host</span><span class="o">=</span><span class="s2">&#34;10.0.2.174&#34;</span>
 <span class="nv">port</span><span class="o">=</span><span class="m">3306</span>
 
-<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">backup_date</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">backup_date</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
   mkdir -p <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">backup_date</span><span class="si">}</span>
 <span class="k">fi</span>
 
@@ -754,32 +765,46 @@ docker run --rm -i <span class="se">\
 </span><span class="se"></span>       xtrabackup --host<span class="o">=</span><span class="si">${</span><span class="nv">host</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>                  --port<span class="o">=</span><span class="si">${</span><span class="nv">port</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>                  --user<span class="o">=</span><span class="si">${</span><span class="nv">user</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>                  --password<span class="o">=</span><span class="si">${</span><span class="nv">pass</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>                  <span class="c1"># --datadir=/var/lib/mysql \  #非容器备份时需要指定datadir,默认会从/var/lib/mysql里面复制数据</span>
+                  --password<span class="o">=</span><span class="si">${</span><span class="nv">pass</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>                  --target-dir<span class="o">=</span>/backup <span class="se">\
-</span><span class="se"></span>                  --backup &gt; out.log
-<span class="k">if</span> <span class="o">[</span> <span class="k">$(</span><span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span><span class="se"></span>                  <span class="c1"># --databases=${db} \ #备份单库</span>
+                  --backup &gt; out.log
+<span class="k">if</span> <span class="o">[</span> <span class="k">$(</span><span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
   rm -rf <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">delete_date</span><span class="si">}</span>
 <span class="k">fi</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="还原">还原</h2>
-<h3 id="1-应用备份集">1. 应用备份集</h3>
+</div><h3 id="还原">还原</h3>
+<ul>
+<li>应用备份集</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">docker run --rm -v /data/backup/20211007:/backup unknowname/xtrabackup:2.4.22 <span class="se">\
-</span><span class="se"></span>xtrabackup prepare --target-dir<span class="o">=</span>/backup
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">backup_dir</span><span class="o">=</span>/data/backup/20250102
+docker run --rm  <span class="se">\
+</span><span class="se"></span>      -v <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>:/backup unknowname/xtrabackup:2.4.22 <span class="se">\
+</span><span class="se"></span>      xtrabackup prepare  --target-dir<span class="o">=</span>/backup
 <span class="c1"># 复制一份出来，防止异常污染到了原备份集</span>
-cp -r /data/backup/20211007  tmp
+cp -r <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>  tmp
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="2-启动">2. 启动</h3>
+</div><ul>
+<li>
+<p>启动</p>
+</li>
+<li>
 <p><code>docker-compose.yml</code></p>
+</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -812,7 +837,9 @@ cp -r /data/backup/20211007  tmp
 </span><span class="w">    </span>- <span class="l">./tmp:/var/lib/mysql</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>启动容器</p>
+</div><ul>
+<li>启动容器</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -821,7 +848,28 @@ cp -r /data/backup/20211007  tmp
 <pre class="chroma"><code class="language-bash" data-lang="bash">docker-compose up -d
 </code></pre></td></tr></table>
 </div>
+</div><h2 id="还原单库">还原单库</h2>
+<p>单库要麻烦许多，它不能像所有库一样，直接将整个目录当成<code>MySQL</code>的<code>DATADIR</code></p>
+<h3 id="1-总体步骤">1. 总体步骤</h3>
+<p>除了在前面的备份参数增加<code>--databases</code>指定库外，还有备份原库的所有表结构。用于后续创建相同表结构再导入表空间。可以参考前面的<code>backup.sh</code>,只需要在脚本中再增加一条导出表结构即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">mysqldump -u<span class="si">${</span><span class="nv">user</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">password</span><span class="si">}</span> --no-data --databases <span class="si">${</span><span class="nv">db</span><span class="si">}</span> &gt; all_<span class="si">${</span><span class="nv">db</span><span class="si">}</span>_schema.sql
+</code></pre></td></tr></table>
 </div>
+</div><ol>
+<li>导出指定库的备份文件</li>
+<li>导出指定库的所有表结构</li>
+<li>在临时库中创建相同的表结构，同时将表的<code>TABLESPACE</code>丢弃掉(<code>DISCARD</code>)</li>
+<li>应用备份出来的文件</li>
+<li>复制原备份的表空间至临时库中</li>
+<li>导入指定表的表空间</li>
+</ol>
+<p>详细步骤略</p>
+
     </div>
 
     <div class="post-copyright">
@@ -832,7 +880,7 @@ cp -r /data/backup/20211007  tmp
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-10-08
+        2025-01-04
         
     </span>
   </p>
@@ -896,7 +944,7 @@ cp -r /data/backup/20211007  tmp
   <span class="copyright-year">
     &copy; 
     2020 - 
-    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
   </span>
   
 </div>

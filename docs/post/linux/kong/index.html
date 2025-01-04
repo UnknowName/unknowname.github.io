@@ -70,7 +70,7 @@
 <meta itemprop="name" content="Kong快速指南">
 <meta itemprop="description" content="Kong快速指南，避官方文档的坑"><meta itemprop="datePublished" content="2024-11-22T10:35:11&#43;08:00" />
 <meta itemprop="dateModified" content="2024-11-22T10:35:11&#43;08:00" />
-<meta itemprop="wordCount" content="914">
+<meta itemprop="wordCount" content="934">
 <meta itemprop="keywords" content="tools,kong," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kong快速指南"/>
 <meta name="twitter:description" content="Kong快速指南，避官方文档的坑"/>
@@ -161,7 +161,7 @@
         <div class="post-category">
             <a href="/categories/tools/"> tools </a>
             </div>
-          <span class="more-meta"> 约 914 字 </span>
+          <span class="more-meta"> 约 934 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         
       </div>
@@ -324,6 +324,7 @@
 </span><span class="lnt">82
 </span><span class="lnt">83
 </span><span class="lnt">84
+</span><span class="lnt">85
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3&#39;</span><span class="w">
@@ -384,6 +385,7 @@
 </span><span class="w">      </span><span class="nt">KONG_PG_HOST</span><span class="p">:</span><span class="w"> </span><span class="l">kong-db</span><span class="w">
 </span><span class="w">      </span><span class="nt">KONG_PG_USER</span><span class="p">:</span><span class="w"> </span><span class="l">kong</span><span class="w">
 </span><span class="w">      </span><span class="nt">KONG_PG_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l">kongpass</span><span class="w">
+</span><span class="w">      </span><span class="c"># 自定义日志格式，同样适用于Kong Ingress Controller</span><span class="w">
 </span><span class="w">      </span><span class="nt">KONG_NGINX_HTTP_LOG_FORMAT</span><span class="p">:</span><span class="w"> </span><span class="l">main &#39;{&#34;time&#34;:&#34;$$time_iso8601&#34;, &#34;request&#34;:&#34;$$request&#34;, &#34;status&#34;:$$status}&#39;</span><span class="w">
 </span><span class="w">      </span><span class="nt">KONG_PROXY_ACCESS_LOG</span><span class="p">:</span><span class="w"> </span><span class="l">syslog:server=128.0.255.10:514 main</span><span class="w">
 </span><span class="w">      </span><span class="nt">KONG_ADMIN_ACCESS_LOG</span><span class="p">:</span><span class="w"> </span><span class="l">/dev/null</span><span class="w">
@@ -517,7 +519,7 @@
   <span class="copyright-year">
     &copy; 
     2020 - 
-    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span>UnknowName</span>
   </span>
   
 </div>
