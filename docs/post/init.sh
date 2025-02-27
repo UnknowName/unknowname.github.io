@@ -77,7 +77,9 @@ function set_limit() {
     # /proc/sys/fs/nr_open: the total limit of the process
     filemax=$(cat /proc/sys/fs/nr_open) 
     limit_max=$(echo "scale=0; ${filemax} * 8 / 10" | bc)
-    log "set soft and hard nofile limits ${limit_max}"
+    log "The limit of the process max is ${filemax}, set soft and hard nofile limits ${limit_max}"
+    echo "root soft nofile ${limit_max}" >> /etc/security/limits.conf
+    echo "root hard nofile ${limit_max}" >> /etc/security/limits.conf
     echo "* soft nofile ${limit_max}" >> /etc/security/limits.conf
     echo "* hard nofile ${limit_max}" >> /etc/security/limits.conf
 }

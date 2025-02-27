@@ -70,7 +70,7 @@
 <meta itemprop="name" content="Xtrabackup源码编译安装">
 <meta itemprop="description" content="xtrabackup源码编译安装"><meta itemprop="datePublished" content="2021-09-14T09:08:11&#43;08:00" />
 <meta itemprop="dateModified" content="2025-01-04T09:25:11&#43;08:00" />
-<meta itemprop="wordCount" content="1468">
+<meta itemprop="wordCount" content="1467">
 <meta itemprop="keywords" content="MySQL," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Xtrabackup源码编译安装"/>
 <meta name="twitter:description" content="xtrabackup源码编译安装"/>
@@ -162,7 +162,7 @@
             <a href="/categories/database/"> Database </a>
             <a href="/categories/tools/"> tools </a>
             </div>
-          <span class="more-meta"> 约 1468 字 </span>
+          <span class="more-meta"> 约 1467 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         
       </div>
@@ -737,6 +737,7 @@ ADD_SUBDIRECTORY(xtrabackup)
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
+</span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
@@ -765,11 +766,12 @@ docker run --rm -i <span class="se">\
 </span><span class="se"></span>       xtrabackup --host<span class="o">=</span><span class="si">${</span><span class="nv">host</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>                  --port<span class="o">=</span><span class="si">${</span><span class="nv">port</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>                  --user<span class="o">=</span><span class="si">${</span><span class="nv">user</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>                  <span class="c1"># --datadir=/var/lib/mysql \  #非容器备份时需要指定datadir,默认会从/var/lib/mysql里面复制数据</span>
-                  --password<span class="o">=</span><span class="si">${</span><span class="nv">pass</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>                  --password<span class="o">=</span><span class="si">${</span><span class="nv">pass</span><span class="si">}</span> <span class="se">\
 </span><span class="se"></span>                  --target-dir<span class="o">=</span>/backup <span class="se">\
-</span><span class="se"></span>                  <span class="c1"># --databases=${db} \ #备份单库</span>
-                  --backup &gt; out.log
+</span><span class="se"></span>                  --backup &gt; out.log
+
+<span class="c1">#   --datadir=/var/lib/mysql   #非容器备份时需要指定datadir,默认会从/var/lib/mysql里面复制数据</span>
+<span class="c1">#   --databases=${db} #备份单库              </span>
 <span class="k">if</span> <span class="o">[</span> <span class="k">$(</span><span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
   rm -rf <span class="si">${</span><span class="nv">backup_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">delete_date</span><span class="si">}</span>
 <span class="k">fi</span>
