@@ -25,14 +25,5 @@
       <description>声明: 此文档很不完善，只是简约版本。用于本人学习React的简要记录，用于加深记忆。建议有相关疑问时，移步官网获取更新详细信息 JMX语法 类似</description>
     </item>
     
-    <item>
-      <title>Flink 入门简要笔记</title>
-      <link>http://www.unknowname.cn/post/flink/flink-init/</link>
-      <pubDate>Fri, 09 Apr 2021 16:00:11 +0800</pubDate>
-      
-      <guid>http://www.unknowname.cn/post/flink/flink-init/</guid>
-      <description>核心概念 流(Streams) 流分为无限与有限，无限为DataStream,有限为DataSet 状态(State) 状态是计算过程中的数据信息，</description>
-    </item>
-    
   </channel>
 </rss>

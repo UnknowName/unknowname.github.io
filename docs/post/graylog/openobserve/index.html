@@ -65,12 +65,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://www.unknowname.cn/post/graylog/openobserve/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-12-09T15:05:11&#43;08:00" />
-<meta property="article:modified_time" content="2024-12-09T15:05:11&#43;08:00" />
+<meta property="article:modified_time" content="2025-03-18T11:05:11&#43;08:00" />
 
 <meta itemprop="name" content="OpenObserve初探">
 <meta itemprop="description" content="OpenObserve初探"><meta itemprop="datePublished" content="2024-12-09T15:05:11&#43;08:00" />
-<meta itemprop="dateModified" content="2024-12-09T15:05:11&#43;08:00" />
-<meta itemprop="wordCount" content="609">
+<meta itemprop="dateModified" content="2025-03-18T11:05:11&#43;08:00" />
+<meta itemprop="wordCount" content="690">
 <meta itemprop="keywords" content="logs,openobserve," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="OpenObserve初探"/>
 <meta name="twitter:description" content="OpenObserve初探"/>
@@ -161,7 +161,7 @@
         <div class="post-category">
             <a href="/categories/tools/"> tools </a>
             </div>
-          <span class="more-meta"> 约 609 字 </span>
+          <span class="more-meta"> 约 690 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         
       </div>
@@ -237,7 +237,7 @@
 </span><span class="w">
 </span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="nt">vector</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">timberio/vector:0.42.0-debian</span><span class="w">
+</span><span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">timberio/vector:0.45.0-debian</span><span class="w">
 </span><span class="w">      </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">vector-agent</span><span class="w">
 </span><span class="w">      </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l">always</span><span class="w">
 </span><span class="w">      </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
@@ -249,7 +249,7 @@
 </span><span class="w">      </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span>- <span class="l">./vt_data:/var/lib/vector:rw</span><span class="w">
 </span><span class="w">      </span>- <span class="l">./vector.yaml:/etc/vector/vector.yaml:ro</span><span class="w">
-</span><span class="w">      </span><span class="nt">mem_limt</span><span class="p">:</span><span class="w"> </span><span class="l">1g</span><span class="w">
+</span><span class="w">      </span><span class="nt">mem_limit</span><span class="p">:</span><span class="w"> </span><span class="l">1g</span><span class="w">
 </span><span class="w">      </span><span class="nt">links</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span>- <span class="l">openobserver:ob</span><span class="w">
 </span><span class="w">
@@ -344,11 +344,16 @@
 </span><span class="lnt">68
 </span><span class="lnt">69
 </span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">data_dir</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/var/lib/vector&#34;</span><span class="w">
-</span><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="w"></span><span class="c"># address = &#34;127.0.0.1:8686&#34;</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="c"># Ingest data by tailing one or more files</span><span class="w">
 </span><span class="w"></span><span class="nt">sources</span><span class="p">:</span><span class="w">
@@ -358,8 +363,13 @@
 </span><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">udp</span><span class="w">
 </span><span class="w">    </span><span class="nt">receive_buffer_bytes</span><span class="p">:</span><span class="w"> </span><span class="m">181900</span><span class="w">
 </span><span class="w">    </span><span class="nt">decoding</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">codec</span><span class="p">:</span><span class="w"> </span><span class="l">bytes</span><span class="w">
+</span><span class="w">      </span><span class="nt">codec</span><span class="p">:</span><span class="w"> </span><span class="l">bytes</span><span class="w"> </span><span class="c"># mut be bytes,gelf can&#39;t decode</span><span class="w">
 </span><span class="w">      </span><span class="nt">lossylossy</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">framing</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l">chunked_gelf</span><span class="w">
+</span><span class="w">      </span><span class="nt">decompression</span><span class="p">:</span><span class="w"> </span><span class="l">auto</span><span class="w">
+</span><span class="w">      </span><span class="nt">timeout_secs</span><span class="p">:</span><span class="w"> </span><span class="m">120</span><span class="w"> </span><span class="c"># second</span><span class="w">
+</span><span class="w">      </span><span class="c"># pending_messages_limit: 10000 # prevent out of memory</span><span class="w">
 </span><span class="w">
 </span><span class="w">  </span><span class="nt">syslog_logs</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">syslog</span><span class="w">
@@ -380,8 +390,12 @@
 </span><span class="w">    </span><span class="nt">inputs</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span>- <span class="l">bytes_logs</span><span class="w">
 </span><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span><span class="sd">      .message = decode_gzip!(.message)
-</span><span class="sd">      . = parse_json!(.message)
+</span><span class="sd">      .message2, err = decode_gzip(.message)
+</span><span class="sd">      if err == null {
+</span><span class="sd">        . = parse_json!(.message2)
+</span><span class="sd">      } else {
+</span><span class="sd">        . = parse_json!(.message)
+</span><span class="sd">      }
 </span><span class="sd">      del(._forwarder)</span><span class="w">      
 </span><span class="w">
 </span><span class="w">
@@ -423,6 +437,7 @@
 <li><code>Vector</code>的<code>UDP</code>协议，如果数据过大，可能会丢失。</li>
 <li><code>Vector</code>在处理过程中，<code>.message</code>代表原始数据</li>
 <li><code>OpenObserver</code>可以通过<code>URI</code>来实现不同数据流，会自动生成索引</li>
+<li><code>GLEF</code>格式的日志，<code>JSON</code>化后，一定要有<code>message</code>字段，不然在<code>Graylog</code>展示页面中不会显示。</li>
 </ul>
 
     </div>
@@ -435,7 +450,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2024-12-09
+        2025-03-18
         
     </span>
   </p>

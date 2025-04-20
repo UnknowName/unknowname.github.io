@@ -683,15 +683,6 @@
     </item>
     
     <item>
-      <title>Flink 入门简要笔记</title>
-      <link>http://www.unknowname.cn/post/flink/flink-init/</link>
-      <pubDate>Fri, 09 Apr 2021 16:00:11 +0800</pubDate>
-      
-      <guid>http://www.unknowname.cn/post/flink/flink-init/</guid>
-      <description>核心概念 流(Streams) 流分为无限与有限，无限为DataStream,有限为DataSet 状态(State) 状态是计算过程中的数据信息，</description>
-    </item>
-    
-    <item>
       <title>MySQL分区总结</title>
       <link>http://www.unknowname.cn/post/database/mysql/mysql-partion/</link>
       <pubDate>Tue, 30 Mar 2021 20:32:11 +0800</pubDate>
