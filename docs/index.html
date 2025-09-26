@@ -151,6 +151,29 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/k8s/linkerd-cert/">Linkerd &#43; Cert-Manager自动更新控制面板证书</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2025-04-07 </span>
+      <div class="post-category">
+          <a href="/categories/kubernetes/"> Kubernetes </a>
+          </div>
+        <span class="more-meta"> 约 1221 字 </span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Prepartion 如果使用了Cilium作为CNI插件，则需要修改关闭一些Cilium的特性。 1 kubectl edit cm/cilium-config -n kube-system 增加以下内容 1 2 bpf-lb-sock-hostns-only:&#34;true&#34;cni.exclusive:&#34;false&#34; 获取binary 1 2 3 4 5 6 7 8
+    </div>
+    <div class="read-more">
+      <a href="/post/k8s/linkerd-cert/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/graylog/openobserve/">OpenObserve初探</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2024-12-09 </span>
@@ -238,29 +261,6 @@
     </div>
     <div class="read-more">
       <a href="/post/cncf/flentd/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/cncf/buildpack/">BuildPack</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2024-01-10 </span>
-      <div class="post-category">
-          <a href="/categories/tools/"> tools </a>
-          </div>
-        <span class="more-meta"> 约 80 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      基本使用 1 2 3 4 5 6 7 8 export DOCKER_AGRS=&#34;--rm -v /var/run/docker.sock:/var/run/docker.sock \ -v $(pwd):/workspace -w /workspace&#34; # 查看有哪些可用的builder docker run ${DOCKER_ARGS} buildpacksio/pack build suggest # 选择一个builder来构建项目镜像，在项目根目录内
-    </div>
-    <div class="read-more">
-      <a href="/post/cncf/buildpack/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

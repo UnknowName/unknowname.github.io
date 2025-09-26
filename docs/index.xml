@@ -6,7 +6,16 @@
     <description>Recent content on UnknowName</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 09 Dec 2024 15:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Apr 2025 11:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linkerd &#43; Cert-Manager自动更新控制面板证书</title>
+      <link>http://www.unknowname.cn/post/k8s/linkerd-cert/</link>
+      <pubDate>Mon, 07 Apr 2025 11:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/linkerd-cert/</guid>
+      <description>Prepartion 如果使用了Cilium作为CNI插件，则需要修改关闭一些Cilium的特性。 1 kubectl edit cm/cilium-config -n kube-system 增加以下内容 1 2 bpf-lb-sock-hostns-only:&amp;#34;true&amp;#34;cni.exclusive:&amp;#34;false&amp;#34; 获取binary 1 2 3 4 5 6 7 8</description>
+    </item>
+    
     <item>
       <title>OpenObserve初探</title>
       <link>http://www.unknowname.cn/post/graylog/openobserve/</link>
@@ -1058,6 +1067,15 @@
       
       <guid>http://www.unknowname.cn/post/english/p16/</guid>
       <description>冠词 a/an 只能修饰可数名词的单数，不能是复数和不可数名词 元音发音的单词，用an,其他用a 首次提到的人或事物 the 泛指一类事务，一般后面跟名词 The dog is cute</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.unknowname.cn/post/k8s/ingress-nginx-observibility/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/ingress-nginx-observibility/</guid>
+      <description>闲来无事，查看了下Ingress-nginx的文档，发现Ingress-nginx目前已支持Opentelemetry.它是通过opente</description>
     </item>
     
     <item>

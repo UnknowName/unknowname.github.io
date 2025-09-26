@@ -6,7 +6,16 @@
     <description>Recent content in Kubernetes on UnknowName</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 26 Jul 2023 15:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Apr 2025 11:05:11 +0800</lastBuildDate><atom:link href="http://www.unknowname.cn/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linkerd &#43; Cert-Manager自动更新控制面板证书</title>
+      <link>http://www.unknowname.cn/post/k8s/linkerd-cert/</link>
+      <pubDate>Mon, 07 Apr 2025 11:05:11 +0800</pubDate>
+      
+      <guid>http://www.unknowname.cn/post/k8s/linkerd-cert/</guid>
+      <description>Prepartion 如果使用了Cilium作为CNI插件，则需要修改关闭一些Cilium的特性。 1 kubectl edit cm/cilium-config -n kube-system 增加以下内容 1 2 bpf-lb-sock-hostns-only:&amp;#34;true&amp;#34;cni.exclusive:&amp;#34;false&amp;#34; 获取binary 1 2 3 4 5 6 7 8</description>
+    </item>
+    
     <item>
       <title>KEDA HPA一分钟实践</title>
       <link>http://www.unknowname.cn/post/k8s/cncf-keda/</link>
